@@ -1,0 +1,279 @@
+/* @theme kurs */
+/*
+ * Motyw slajdow kursu "AI Assisted Development".
+ * Zalozenia:
+ *   - sala oswietlona -> ciemny tekst na jasnym tle, wysoki kontrast
+ *   - ostatni rzad ma czytac -> minimalny rozmiar tekstu 22px, tabele 20px
+ *   - diagramy w CSS, nie w Mermaidzie -> zero dodatkowych narzedzi
+ */
+
+@import 'default';
+
+:root {
+  --tekst: #1a1a1a;
+  --tlo: #fbfbf9;
+  --akcent: #c0562f;
+  --akcent-jasny: #f5e6e0;
+  --szary: #6b6b6b;
+  --ramka: #d8d6d0;
+  --kod-tlo: #f2f1ed;
+  --zielony: #2d6a4f;
+  --czerwony: #a4243b;
+
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+section {
+  background: var(--tlo);
+  color: var(--tekst);
+  font-size: 26px;
+  line-height: 1.5;
+  padding: 60px 70px 70px;
+  justify-content: flex-start;
+}
+
+/* ---------------------------------------------------------------- naglowki */
+
+h1 {
+  font-size: 46px;
+  color: var(--tekst);
+  border-bottom: 4px solid var(--akcent);
+  padding-bottom: 12px;
+  margin: 0 0 28px;
+}
+
+h2 {
+  font-size: 36px;
+  color: var(--tekst);
+  margin: 0 0 22px;
+}
+
+h3 {
+  font-size: 28px;
+  color: var(--szary);
+  margin: 22px 0 10px;
+  font-weight: 600;
+}
+
+strong { color: var(--akcent); }
+em { color: var(--szary); font-style: normal; }
+
+/* ---------------------------------------------------------------- listy */
+
+ul, ol { margin: 0; }
+li { margin-bottom: 12px; }
+li::marker { color: var(--akcent); }
+
+/* ---------------------------------------------------------------- tabele */
+
+table {
+  font-size: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 8px 0;
+}
+
+th {
+  background: var(--akcent-jasny);
+  color: var(--tekst);
+  font-weight: 600;
+  text-align: left;
+  padding: 9px 12px;
+  border-bottom: 2px solid var(--akcent);
+}
+
+td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--ramka);
+  vertical-align: top;
+}
+
+tr:last-child td { border-bottom: none; }
+
+/* tabela gesta - gdy wierszy jest duzo */
+section.gesta table { font-size: 17px; }
+section.gesta td, section.gesta th { padding: 6px 9px; }
+
+/* ---------------------------------------------------------------- kod */
+
+code {
+  font-family: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  background: var(--kod-tlo);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.88em;
+}
+
+pre {
+  background: var(--kod-tlo);
+  border-left: 4px solid var(--akcent);
+  border-radius: 0;
+  padding: 16px 20px;
+  font-size: 20px;
+  line-height: 1.45;
+}
+
+pre code { background: none; padding: 0; font-size: 1em; }
+
+/* ---------------------------------------------------------------- cytat */
+
+blockquote {
+  border-left: 5px solid var(--akcent);
+  background: var(--akcent-jasny);
+  margin: 16px 0;
+  padding: 16px 24px;
+  font-size: 26px;
+  color: var(--tekst);
+}
+
+blockquote p { margin: 0; }
+
+/* ---------------------------------------------------------------- slajd tytulowy */
+
+section.tytul {
+  justify-content: center;
+  text-align: left;
+  background: var(--tekst);
+  color: var(--tlo);
+}
+
+section.tytul h1 {
+  color: var(--tlo);
+  border-bottom: 4px solid var(--akcent);
+  font-size: 54px;
+}
+
+section.tytul h2 { color: var(--akcent); font-size: 30px; font-weight: 400; }
+section.tytul p, section.tytul li { color: #cfcdc7; font-size: 24px; }
+section.tytul strong { color: var(--tlo); }
+
+/* ---------------------------------------------------------------- slajd-hasło */
+
+section.haslo {
+  justify-content: center;
+  text-align: center;
+}
+
+section.haslo h2 {
+  font-size: 44px;
+  line-height: 1.35;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+section.haslo p { font-size: 26px; color: var(--szary); margin-top: 28px; }
+
+/* ---------------------------------------------------------------- lab */
+
+section.lab { background: #f4f1ea; }
+section.lab h1 { border-bottom-color: var(--zielony); }
+section.lab strong { color: var(--zielony); }
+
+/* ---------------------------------------------------------------- diagramy w CSS */
+
+.przeplyw {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 24px 0;
+  font-size: 21px;
+}
+
+.przeplyw.pion { flex-direction: column; align-items: center; gap: 0; }
+
+.krok {
+  flex: 1;
+  background: #fff;
+  border: 2px solid var(--ramka);
+  border-radius: 6px;
+  padding: 14px 16px;
+  text-align: center;
+  line-height: 1.35;
+}
+
+.krok.wyroz { border-color: var(--akcent); background: var(--akcent-jasny); }
+.krok.dobry { border-color: var(--zielony); }
+.krok.zly   { border-color: var(--czerwony); }
+.krok small { display: block; color: var(--szary); font-size: 0.78em; margin-top: 4px; }
+
+.strzalka {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--akcent);
+  font-size: 30px;
+  padding: 0 12px;
+  flex: 0 0 auto;
+}
+
+.przeplyw.pion .strzalka { padding: 6px 0; transform: rotate(90deg); }
+.przeplyw.pion .krok { width: 78%; flex: none; }
+
+/* rozgalezienie: pytanie -> dwie odpowiedzi */
+.rozgalezienie { display: flex; gap: 22px; margin: 18px 0; font-size: 21px; }
+.rozgalezienie > div { flex: 1; }
+
+.galaz {
+  border: 2px solid var(--ramka);
+  border-radius: 6px;
+  padding: 14px 16px;
+  background: #fff;
+  height: 100%;
+}
+
+.galaz .etykieta {
+  display: inline-block;
+  font-size: 0.8em;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.galaz.tak .etykieta { background: #d8efe2; color: var(--zielony); }
+.galaz.nie .etykieta { background: #f6dde1; color: var(--czerwony); }
+
+/* drabina: ponumerowane stopnie, od darmowego do kosztownego */
+.drabina { display: flex; flex-direction: column; gap: 8px; margin: 20px 0; font-size: 22px; }
+
+.drabina .stopien {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 2px solid var(--ramka);
+  border-left: 6px solid var(--akcent);
+  border-radius: 5px;
+  padding: 11px 18px;
+  background: #fff;
+}
+
+.drabina .stopien .nr {
+  font-weight: 700;
+  color: var(--akcent);
+  font-size: 1.15em;
+  min-width: 26px;
+}
+
+.drabina .stopien .cena { margin-left: auto; color: var(--szary); font-size: 0.82em; }
+
+/* dwie kolumny */
+.kolumny { display: flex; gap: 32px; }
+.kolumny > div { flex: 1; }
+
+/* ---------------------------------------------------------------- stopka */
+
+section::after {
+  color: var(--szary);
+  font-size: 16px;
+  right: 34px;
+  bottom: 22px;
+}
+
+section.tytul::after, section.haslo::after { content: ''; }
+
+footer {
+  color: var(--szary);
+  font-size: 16px;
+  left: 34px;
+  bottom: 22px;
+}

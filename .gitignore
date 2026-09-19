@@ -1,0 +1,27 @@
+# Systemowe
+.DS_Store
+Thumbs.db
+
+# Notatki autorskie, program zrodlowy, decyzje z incepcji - NIE dla uczestnikow
+.kb/
+
+# Wynik renderowania slajdow - zrodlem jest .md, nie HTML/PDF
+slajdy/*.html
+slajdy/*.pdf
+slajdy/*.pptx
+
+# Marp CLI zainstalowany lokalnie
+node_modules/
+
+# Python (skrypty pomocnicze w korzeniu)
+__pycache__/
+*.pyc
+
+# Edytory
+.idea/
+.vscode/
+*.swp
+
+# Kopie zapasowe
+*.bak
+*.orig

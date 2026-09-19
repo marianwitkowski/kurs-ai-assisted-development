@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Sekrety i konfiguracja lokalna
+.env
+.env.local
+
+# Claude Code: ustawienia osobiste i worktree
+# settings.local.json tworzysz w labie 6.1 - jest twoj, nie zespolu
+.claude/settings.local.json
+.claude/worktrees/
+
+# SQLite. Baza JEST generowana przez seed.py, nie commitowana:
+# seed.py nie jest deterministyczny miedzy wersjami biblioteki SQLite
+# (ta sama zawartosc logiczna, inny uklad stron pliku), wiec commitowana baza
+# brudzilaby sie u kazdego i blokowala `git checkout`.
+rozliczenia.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Brudnopis uczestnika (laby 1.1, 2.1, 7.1)
+notatki/
+
+# Systemowe i kopie zapasowe (lab 8.1 uzywa sed -i.bak)
+.DS_Store
+Thumbs.db
+*.bak
+*.orig
+*.swp
+
+# Edytory
+.idea/
+.vscode/

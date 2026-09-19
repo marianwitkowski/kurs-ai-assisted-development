@@ -1,0 +1,3 @@
+[submodule "repo-cwiczeniowe"]
+	path = repo-cwiczeniowe
+	url = https://github.com/marianwitkowski/rozliczenia-cwiczenia.git

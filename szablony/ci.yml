@@ -1,0 +1,47 @@
+# Wzór workflow GitHub Actions - te same bramki co lokalnie.
+# Na szkoleniu NIE uruchamiamy tego; bramka chodzi lokalnie przez `make gate`.
+#
+# Zasada: CI uruchamia DOKŁADNIE to, co bramka lokalna. Rozjazd między nimi
+# kończy się tym, że ludzie przestają ufać jednej z nich.
+
+name: bramka
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  bramka:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Skan sekretów potrzebuje historii, żeby sprawdzić też nowe commity.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Zależności
+        run: pip install -r requirements.txt
+
+      - name: Baza demonstracyjna
+        run: python seed.py
+
+      - name: Bramka
+        run: make gate
+
+  # Skan licencji zależności. Wymaga ustalenia listy dopuszczonych licencji -
+  # patrz AI-ZASADY.md, sekcja 5.
+  #
+  # licencje:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-python@v5
+  #       with: { python-version: "3.12" }
+  #     - run: pip install -r requirements.txt pip-licenses
+  #     - run: pip-licenses --fail-on="GPL-3.0;AGPL-3.0"

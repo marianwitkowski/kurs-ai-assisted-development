@@ -17,9 +17,10 @@ cat .claude/settings.local.json     # ma zawierać worktree.baseRef
 > tej samej gałęzi bazowej co `claude --worktree` - czyli domyślnej gałęzi zdalnego
 > repozytorium, chyba że `worktree.baseRef` jest ustawiony na `"head"`.
 >
-> To ustawienie powstało w labie 6.1, w pliku `.claude/settings.local.json`,
-> który jest **nieśledzony** - `git checkout lab-6-2-start` go nie przyniesie.
-> Po checkoucie albo `git stash -u` wykonanym po labie 6.1 trzeba je odtworzyć:
+> To ustawienie powstało w labie 6.1, w pliku `.claude/settings.local.json`.
+> Plik jest w `.gitignore`, więc przetrwał `git checkout lab-6-2-start` i `git stash -u`.
+> Jeśli go nie ma - bo start nastąpił od razu od labu 6.2 albo po labie 6.1 wykonano
+> `git clean -xdf` - trzeba go odtworzyć:
 >
 > ```bash
 > echo '{"worktree": {"baseRef": "head"}}' > .claude/settings.local.json
@@ -180,7 +181,7 @@ git commit -m "Subagent migrator z izolacja w worktree"
 ## Pułapki
 
 **Subagent bez `maxTurns`.** W trakcie pracy nie widać go wcale. Limit tur jest jedynym
-mechanizmem, który zatrzyma pętlę, zanim zje budżet.
+hamulcem działającym bez udziału człowieka, który zatrzyma pętlę, zanim zje budżet.
 
 **`description` mówiące tylko, co agent robi.** Model czyta ten opis, decydując,
 czy sięgnąć po agenta samodzielnie. Zdanie o tym, do czego agent **nie** służy,

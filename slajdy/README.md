@@ -7,6 +7,12 @@ w podręczniku, który uczestnik ma w repozytorium.
 ## Budowanie
 
 Potrzebny tylko Node (`npx` ściąga `marp-cli` przy pierwszym uruchomieniu).
+Dist-tag `@latest` w `Makefile` wymusza odpytanie rejestru npm przy **każdym**
+wywołaniu, także gdy pakiet leży już w cache `npx`, więc bez sieci `make html`
+się nie uda. Decki trzeba zbudować przed wyjazdem - gotowe `.html` działają
+offline. Alternatywa: przypiąć wersję (`@marp-team/marp-cli@4.x`) i zainstalować
+lokalnie. `sprawdz-srodowisko.sh` tego nie weryfikuje - sprawdza wyłącznie
+środowisko uczestnika, nie narzędzia prelegenta.
 
 ```bash
 make html      # osiem plików .html - to wystarcza do prowadzenia
@@ -47,9 +53,10 @@ Przy wymuszonym skracaniu obowiązuje kolejność cięć:
 
 - **slajdy z klasą `lab` zostają** - zapowiadają ćwiczenie i bez nich
   uczestnik nie wie, po co je robi,
-- slajd z tezą modułu zostaje - w siedmiu deckach to klasa `haslo`, w module 8
-  teza siedzi na slajdzie zamykającym („Zasada bez mechanizmu jest życzeniem").
-  To jedno zdanie zostaje w głowie po tygodniu,
+- slajd z tezą modułu zostaje - w siedmiu deckach to ostatni slajd klasy `haslo`
+  (moduł 5 ma dwa takie slajdy, tezą jest ten końcowy), w module 8 teza siedzi
+  na przedostatnim slajdzie („Zasada bez mechanizmu jest życzeniem"), bo deck
+  zamyka slajd labowy. To jedno zdanie zostaje w głowie po tygodniu,
 - do cięcia nadają się slajdy z pojedynczą tabelą, która powtarza to,
   co uczestnik ma w podręczniku.
 

@@ -73,7 +73,9 @@ Zanim będzie hook, musi być co uruchamiać.
 ```bash
 cat >> Makefile <<'EOF'
 
-gate:
+.PHONY: gate
+
+gate: rozliczenia.db
 	@ruff check app tests
 	@pytest -q
 EOF
@@ -85,6 +87,10 @@ make gate
 >
 > `pytest` pokazuje 4 ostrzeżenia `DeprecationWarning` z `datetime.utcnow()`.
 > Bramka ich **nie** traktuje jako czerwonych. Usuwa je lab 6.1.
+>
+> Wzorcowy `Makefile` z kolejnego tagu ma `gate` w tej samej liście `.PHONY`, co pozostałe
+> cele. Osobna linia `.PHONY: gate` znaczy dokładnie to samo - make sumuje prerekwizyty
+> `.PHONY` ze wszystkich wystąpień.
 
 ---
 
@@ -232,13 +238,19 @@ rm tests/test_czerwony.py
 echo "$WE_PIERWSZA" | .claude/hooks/bramka.sh >/dev/null 2>&1; echo "3. zielona                  -> $?  (ma być 0)"
 printf 'def test_czerwony():\n    assert 1 == 2\n' > tests/test_czerwony.py
 echo "$WE_PIERWSZA" | .claude/hooks/bramka.sh >/dev/null 2>&1; echo "4. znowu czerwona           -> $?  (ma być 2)"
-rm tests/test_czerwony.py
 
-echo '{"cwd":"'"$PWD"'"}' | .claude/hooks/bramka.sh >/dev/null 2>&1; echo "5. brak pola w JSON         -> $?  (ma być 0)"
+echo '{"cwd":"'"$PWD"'"}' | .claude/hooks/bramka.sh >/dev/null 2>&1; echo "5. brak pola w JSON         -> $?  (ma być 2)"
+rm tests/test_czerwony.py
 ```
 
-**Krok 5 jest istotą testu.** Pole `stop_hook_active` może nie przyjść - `jq -r '.stop_hook_active // false'`
-musi dać wartość domyślną, inaczej hook porówna pusty string i zachowa się nieprzewidywalnie.
+**Krok 5 jest istotą testu** - i dlatego bramka musi być przy nim **czerwona**. Na zielonej
+hook kończy się `exit 0` jeszcze przed sięgnięciem po `stop_hook_active`, więc nie mierzy
+niczego. Pole może nie przyjść, a wtedy brak pola ma znaczyć „pierwsza próba": blokada, czyli 2.
+
+`jq -r '.stop_hook_active'` zwraca dla brakującego pola literał `null`, nie pusty string -
+`// false` jest więc higieną czytelności, a nie zabezpieczeniem. Zabezpieczeniem jest
+porównanie `== "true"`; hook sprawdzający `!= "false"` potraktowałby `null` jak kolejną próbę
+i ten test by oblał.
 
 ---
 
@@ -300,8 +312,8 @@ i wymusza kasowanie przy zielonej bramce. Schemat wejścia wypada przejrzeć,
 zanim powstanie obejście.
 
 **Za długa lista blokad.** Blokada na `rm` w ogóle, `git push` w ogóle albo
-`curl` zatrzymuje pracę, nie ryzyko. Po dwóch godzinach ktoś wyłącza hook i nie zostaje
-nic.
+`curl` zatrzymuje pracę, nie ryzyko. Hook, który przeszkadza częściej, niż chroni,
+zostaje wyłączony - i nie zostaje nic.
 
 **Formatowanie całego katalogu w hooku `PostToolUse`.** `ruff format app/` przy każdej edycji
 dorzuca do diffa pliki, których nikt nie ruszał, i robi review nieczytelnym.

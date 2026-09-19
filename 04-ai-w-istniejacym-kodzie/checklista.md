@@ -23,7 +23,7 @@ Samoocena wymaga uczciwych odpowiedzi. Każde „nie" wskazuje **lekcję**, do k
 - [ ] Wiem, dlaczego refaktoryzacja i zmiana zachowania nie mogą być w jednym commicie. → *rozwiązanie 4.3*
 - [ ] Wiem, że „mechaniczna" migracja prawie nigdy nie jest w pełni mechaniczna. → *4.7, lab 4.1 krok 4*
 
-## Przy pięciu wolnych minutach
+## Ćwiczenie dodatkowe
 
 Otworzyć plik z własnego projektu, którego wszyscy się boją. Napisać trzy zdania w formie
 „JEŻELI… TO…" o jego zachowaniu - i sprawdzić, czy któreś z nich da się potwierdzić

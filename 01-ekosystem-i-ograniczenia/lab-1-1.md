@@ -269,8 +269,7 @@ Zapisać `notatki/model-to-task.md` (katalog `notatki/` jest gitignorowany, to b
 
 `/effort` z wpisanym poziomem **zapisuje go jako domyślny i stosuje w kolejnych sesjach**.
 To samo robi wybór modelu w `/model`. Bez tego kroku reszta kursu - piętnaście
-kolejnych labów - idzie na konfiguracji wybranej pięć minut temu do jednego pytania
-o progi rabatowe.
+kolejnych labów - idzie na konfiguracji dobranej do jednego pytania o progi rabatowe.
 
 W praktyce oznacza to jedno z dwojga, oba złe:
 

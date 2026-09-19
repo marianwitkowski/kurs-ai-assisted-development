@@ -26,7 +26,7 @@ Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której
 - [ ] Umiem zbudować golden set, który działa offline i sprawdza źródło decyzji. → *7.7, lab 7.2*
 - [ ] Wiem, przed czym próg pewności **nie** chroni. → *lab 7.2 krok 5*
 
-## Przy pięciu wolnych minutach
+## Ćwiczenie dodatkowe
 
 Otworzyć `/usage` i sprawdzić atrybucję. Serwer MCP, plugin albo skill, który odpowiada
 za więcej niż kilka procent zużycia, a nie jest używany w tym projekcie - do wyłączenia

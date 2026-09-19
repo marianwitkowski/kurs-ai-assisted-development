@@ -200,7 +200,7 @@ Różnica nie leży w modelu, tylko w tym, czy odpowiedź ma się o co zaczepić
 <!--
 CO POWIEDZIEĆ: Pytanie „wyjaśnij, jak działa X" zakłada istnienie X, więc model odpowiada
 na pytanie, które dostał. Drugie sformułowanie zleca czynność i z góry opisuje, co zrobić
-przy pustym wyniku. To jest reguła na cały kurs: twierdzenie o twoim kodzie bez cytatu
+przy pustym wyniku. To jest reguła na cały kurs: twierdzenie o kodzie bez cytatu
 z pliku i numeru linii jest hipotezą, nie odpowiedzią.
 NA CO UWAŻAĆ: Nie zdradzaj tu przykładu z labu ani tego, co wyjdzie w kroku 2.
 Cała wartość ćwiczenia leży w tym, że sala zobaczy to na własnych oczach.
@@ -215,13 +215,13 @@ Cała wartość ćwiczenia leży w tym, że sala zobaczy to na własnych oczach.
 - **`Esc`** - przerywa pracę modelu natychmiast; koszt przerwania po trzech sekundach
   jest zerowy, koszt czekania do końca jest pełny
 
-Sesja niesie wszystko: pliki sprzed pół godziny, wyniki komend, ślepe uliczki.
+Sesja niesie wszystko: pliki przeczytane na jej początku, wyniki komend, ślepe uliczki.
 Cała historia jest wysyłana przy każdym zapytaniu.
 
 <!--
 CO POWIEDZIEĆ: Rozrost kontekstu kosztuje dwa razy: płacicie za historię i tracicie jakość,
 bo właściwa instrukcja tonie wśród nieistotnych szczegółów. Najgorszy objaw jest trzeci:
-model wraca do podejścia, które godzinę temu odrzuciliście.
+model wraca do podejścia, które zostało wcześniej odrzucone.
 NA CO UWAŻAĆ: `Esc` to najważniejszy klawisz z tej listy i najrzadziej używany.
 Ludzie czekają, aż model skończy iść w złą stronę.
 PYTANIE Z SALI: „Czym `/clear` różni się od `/rewind`?" `/clear` czyści kontekst i kończy
@@ -284,6 +284,7 @@ tag `lab-1-1-start` · produkt `notatki/model-to-task.md`
 - **Krok 2** - trzy sformułowania tego samego pytania o funkcję; zapisać wszystkie trzy odpowiedzi
 - **Krok 3** - pytanie wymagające rozumowania: `sonnet`/`medium` kontra `opus`/`high`
 - **Krok 4** - `/context`, `/clear`, `/context` i różnica między odczytami
+- **Krok 5** - notatka `notatki/model-to-task.md`: tabela obserwacji i własna reguła doboru
 - **Krok 6** - **przywrócenie `/model sonnet` i `/effort high`**; ten krok nie jest opcjonalny
 
 Niezacommitowana praca: `git stash push -u -m "moje-1-1"` przed `git checkout`.

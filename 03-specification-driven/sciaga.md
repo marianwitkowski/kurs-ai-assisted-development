@@ -11,7 +11,8 @@
 
 Pasek statusu: `⏸ plan mode on`. Wyjście bez zatwierdzania: `Shift+Tab`.
 
-> Na Pro/Max sesja startuje w trybie **auto**. Cykl: auto → Manual → accept edits → plan.
+> Na Pro/Max sesja startuje w trybie **auto**. Kolejność w cyklu zależy od wersji i dostępnych
+> trybów - **naciskać, aż pasek statusu pokaże `⏸ plan mode on`**, nie liczyć naciśnięć.
 
 **Zatwierdzenie:** „w trybie auto" / „z auto-akceptacją edycji" / „ręcznie zatwierdzam edycje" /
 „planujemy dalej".

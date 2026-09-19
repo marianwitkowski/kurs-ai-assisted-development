@@ -50,7 +50,7 @@ Musi się opłacić, a nie zawsze się opłaca.
 <!--
 CO POWIEDZIEĆ: Prawa kolumna jest ważniejsza od lewej. Najdroższy błąd to nie zły
 prompt, tylko zrównoleglenie czegoś, co było sekwencyjne. Reguła na dole jest
-operacyjna: to test, który robi się na kartce w minutę.
+operacyjna: to test, który robi się na kartce, bez uruchamiania czegokolwiek.
 NA CO UWAŻAĆ: Sala instynktownie szuka miejsc, gdzie „da się puścić równolegle".
 Odwróć to pytanie: gdzie te zadania się zetkną?
 -->
@@ -129,7 +129,7 @@ CO POWIEDZIEĆ: Subagent to nie jest „drugi pracownik". To jest sposób na to,
 czytanie trzydziestu plików nie trafiło do okna kontekstowego sesji głównej. Przyrost
 w sesji głównej jest taki sam, czy przeczytał trzy pliki, czy trzydzieści.
 NA CO UWAŻAĆ: Pusty kontekst znaczy też, że subagent nie wie nic z dotychczasowej rozmowy
-sprzed dziesięciu minut. To najczęstsza przyczyna bezużytecznego wyniku.
+prowadzonej do tej pory. To najczęstsza przyczyna bezużytecznego wyniku.
 -->
 
 ---
@@ -267,8 +267,8 @@ Zapowiedz to teraz, żeby wiedzieli, czego szukać.
 
 | Konflikt | Koszt |
 |---|---|
-| w jednej linii, przewidziany | minuta |
-| w dwustu liniach, nieprzewidziany | wieczór |
+| w jednej linii, przewidziany | pomijalny |
+| w dwustu liniach, nieprzewidziany | porównywalny z ponownym napisaniem |
 
 <!--
 CO POWIEDZIEĆ: Nie unikamy konfliktu, tylko go lokalizujemy. Przed startem trzeba wypisać
@@ -339,7 +339,8 @@ echo '{"worktree": {"baseRef": "head"}}' > .claude/settings.local.json
 
 **Lab 6.1** - trzy worktree, trzy zadania, **jeden zaplanowany konflikt**
 w `app/rabaty.py`. Migracja `datetime.utcnow()`: **pięć wystąpień w czterech plikach**.
-Kryterium akceptacji: ostrzeżeń z **4 na 0**, `make gate` zielone, **47 testów**.
+Kryterium akceptacji: ostrzeżeń z **4 na 0**, `grep -rn utcnow app/` pusty,
+`make gate` zielone, testów więcej niż 32 startowych (wzorcowo **47**).
 
 **Lab 6.2** - `.claude/agents/migrator.md` z `isolation: worktree`,
 `maxTurns: 25` i narzuconym formatem wyniku. `/context` przed i po.

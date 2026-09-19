@@ -7,16 +7,19 @@ git show lab-4-1-start:tests/test_odsetki.py
 ```
 
 ```
+ CLAUDE.md             |   1 -
  app/main.py           |  10 +++++
  app/odsetki.py        | 104 ++++++++++++++++++++++++++++++++++++
  app/raporty.py        |  39 +++++++++++-
  tests/__init__.py     |   0
  tests/test_odsetki.py | 114 ++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 266 insertions(+), 1 deletion(-)
+ 6 files changed, 266 insertions(+), 2 deletions(-)
 ```
 
-**Pięć plików, jedna linia usunięta** (import w `raporty.py`). To jest diff mieszczący się
-w zakresie. Wszystko ponad to jest sygnałem, że zakres się rozszerzył.
+**Sześć plików, dwie linie usunięte**: import w `raporty.py` oraz wpis „Testów (katalog
+`tests/` nie istnieje)." w `CLAUDE.md`, który po tym labie przestał być prawdą. Ta druga
+zmiana to świadomy wyjątek od zakresu - opis projektu aktualizuje się razem z projektem.
+Wszystko ponad to jest sygnałem, że zakres się rozszerzył.
 
 ---
 
@@ -122,7 +125,7 @@ zostawia ślad.**
 
 Dobra odpowiedź agenta w tym kroku to taka, która **najpierw mówi, że specyfikacja tego nie
 rozstrzyga**, a dopiero potem proponuje. Kod napisany od razu, bez komentarza, to świeży
-przykład dopowiedzenia - dwadzieścia minut po module o dopowiadaniu.
+przykład dopowiedzenia - zaraz po module o dopowiadaniu.
 
 ---
 

@@ -15,9 +15,9 @@ da się przeczytać, 400 - przejrzeć wyrywkowo, 4000 przechodzi na nadzieję.
 
 | Krok | Diff | Weryfikacja | Koszt pomyłki |
 |---|---|---|---|
-| jedna funkcja + test | ~50 linii | lektura całości | minuty |
-| jeden moduł | ~300 linii | przegląd wyrywkowy | godzina |
-| „zrób tę funkcjonalność" | 1500+ linii | brak weryfikacji | dni, często na produkcji |
+| jedna funkcja + test | ~50 linii | lektura całości | cofnięcie jednego commita |
+| jeden moduł | ~300 linii | przegląd wyrywkowy | ponowny przegląd całego modułu |
+| „zrób tę funkcjonalność" | 1500+ linii | brak weryfikacji | wychodzi na produkcji |
 
 Reguła praktyczna: **krok kończy się w momencie, w którym repo jest w stanie nadającym się
 do commita.** Krok, dla którego nie da się napisać sensownego komunikatu commita, był za duży
@@ -137,8 +137,10 @@ tury**), `PostToolBatch`, `PreCompact`, `TaskCreated`, `TaskCompleted`, `ConfigC
 | `SessionStart`, `SessionEnd`, `FileChanged`, `CwdChanged` | pokazuje stderr **tylko użytkownikowi** |
 | `PermissionRequest`, `PermissionDenied`, `Notification`, `Setup` | ignoruje całkowicie |
 
-Pierwszy wiersz jest użyteczny: to **jedyny** sposób, żeby hook `PostToolUse` powiedział coś
-modelowi. Przy kodzie 0 stderr idzie wyłącznie do logu debugowania i model go nie widzi.
+Pierwszy wiersz jest użyteczny: to jedyna droga dla **stderr**. Przy kodzie 0 stderr idzie
+wyłącznie do logu debugowania i model go nie widzi. Pozostałe drogi do modelu działają przy
+kodzie 0 i wymagają JSON-a na stdout: `additionalContext`, `decision: "block"` z `reason`
+oraz `updatedToolOutput`, który podmienia sam wynik narzędzia.
 
 **stdout trafia do modelu tylko przy czterech zdarzeniach:** `SessionStart`,
 `UserPromptSubmit`, `UserPromptExpansion`, `PostModelSwitch`. Przy pozostałych idzie

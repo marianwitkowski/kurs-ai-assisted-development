@@ -153,6 +153,14 @@ print(odsetki.odsetki_za_opoznienie(Decimal('10000.00'), date(2026,1,10), date(2
 
 Ma wyjść kwota za **jeden** dzień (`3.97`), nie zero i nie za dwa dni.
 
+> Komenda zakłada nazewnictwo z rozwiązania wzorcowego, a krok 1 nazw nie narzucał.
+> `AttributeError` oznacza tylko inną nazwę funkcji - podstawić własną nazwę i kolejność
+> argumentów z sygnatur wypisanych w kroku 1.
+>
+> `None` zamiast kwoty oznacza, że próg R10 trafił do funkcji liczącej. Sekcja 2
+> specyfikacji wymienia dwie funkcje: licząca zwraca surową kwotę, a R7, R8 i R10
+> należą do tej „nadającej się do użycia w `app/powiadomienia.py`".
+
 ---
 
 ## Krok 4 - adapter i endpoint

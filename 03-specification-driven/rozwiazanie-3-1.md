@@ -114,7 +114,7 @@ przeczytania i wyłowienia tych, których nikt nie potwierdził.
 - jakiejkolwiek zmiany w app/rozliczenia.py i oblicz_fakture().
 ```
 
-Sześć linii, które w labie 3.2 oszczędzają pół godziny czytania diffa.
+Sześć linii, które w labie 3.2 oszczędzają czytanie diffa poza zakresem.
 Bez nich agent doda numerację not, bo „nota musi mieć numer", i zapis do bazy,
 bo „przecież trzeba to gdzieś trzymać".
 

@@ -29,9 +29,9 @@ przechodzi przez review jak kod.
 
 | Krok | Diff | Weryfikacja | Koszt pomyłki |
 |---|---|---|---|
-| jedna funkcja + test | ~50 linii | lektura całości | minuty |
-| jeden moduł | ~300 linii | przegląd wyrywkowy | godzina |
-| „zrób tę funkcjonalność" | 1500+ linii | brak weryfikacji | dni, często na produkcji |
+| jedna funkcja + test | ~50 linii | lektura całości | cofnięcie jednego commita |
+| jeden moduł | ~300 linii | przegląd wyrywkowy | ponowny przegląd całego modułu |
+| „zrób tę funkcjonalność" | 1500+ linii | brak weryfikacji | wychodzi na produkcji |
 
 **Krok kończy się tam, gdzie repo nadaje się do commita.**
 
@@ -183,7 +183,7 @@ Blokuje wyłącznie dwójka.
 
 | Zdarzenie | Co robi kod 2 |
 |---|---|
-| `PreToolUse`, `UserPromptSubmit`, `Stop`, `SubagentStop` i dziewięć innych | **blokuje** |
+| `PreToolUse`, `UserPromptSubmit`, `Stop`, `SubagentStop` i kilkanaście innych | **blokuje** |
 | `PostToolUse`, `PostToolUseFailure` | nie blokuje, ale **pokazuje stderr modelowi** |
 | `SessionStart`, `SessionEnd`, `FileChanged`, `CwdChanged` | pokazuje stderr **tylko użytkownikowi** |
 | `PermissionRequest`, `PermissionDenied`, `Notification`, `Setup` | ignoruje całkowicie |

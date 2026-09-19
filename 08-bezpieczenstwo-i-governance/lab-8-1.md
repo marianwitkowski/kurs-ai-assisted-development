@@ -184,7 +184,7 @@ Skanuje pliki śledzone przez gita. Kilka wzorców, które faktycznie wpadają
 do repozytoriów: klucze API, klucze prywatne, przypisania hasła do zmiennej.
 Krótka lista, zrozumiała - nie zastępujemy gitleaks, ma być szybki.
 
-Kod wyjścia 1 przy znalezieniu.
+Kod wyjścia 1 przy znalezieniu. Zrób plik wykonywalnym.
 ```
 
 Sprawdzenie skuteczności - sekret wraca do pliku:

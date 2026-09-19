@@ -22,7 +22,7 @@ Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której
 - [ ] Umiem rozpoznać moment, w którym specyfikacja milczy - i wiem, że wtedy
       wybieram wariant zostawiający ślad. → *rozwiązanie 3.2*
 
-## Przy pięciu wolnych minutach
+## Ćwiczenie dodatkowe
 
 Wziąć ostatnie zadanie realnie otrzymane w pracy i wypisać z pamięci trzy rzeczy
 rozstrzygnięte w nim samodzielnie, bo „to oczywiste". Potem sprawdzić, czy dla kogoś

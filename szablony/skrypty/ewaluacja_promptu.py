@@ -13,10 +13,19 @@ kosztuje tokeny i nie jest deterministyczny.
 Dwa prompty naraz:
 
     PYTHONPATH=. python skrypty/ewaluacja_promptu.py tests/golden/vat.jsonl \\
-        --prompt-b promptt/wariant_b.txt
+        --prompt-b prompty/wariant_b.txt
 
 Wtedy wypisuje obie trafnosci obok siebie i liste przypadkow, ktore sie roznia.
 To jest jedyny sposob, zeby powiedziec "nowy prompt jest lepszy" z pokryciem w danych.
+
+Wymagania przed uruchomieniem:
+  - `pip install anthropic` (nie ma go w requirements.txt repozytorium cwiczeniowego),
+  - `export ANTHROPIC_API_KEY=...` - klient tworzony w `przebieg()` czyta ten klucz,
+  - zbior .jsonl, w kazdej linii obiekt z polami `opis` i `oczekiwana`.
+
+Import `app.klasyfikacja_vat` jest zaszyty pod repozytorium cwiczeniowe. Poza nim
+skrypt jest przykladem do przepisania: podmienic import oraz nazwy pol na wlasny
+modul klasyfikatora.
 """
 
 import argparse

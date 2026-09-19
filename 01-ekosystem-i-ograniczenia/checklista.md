@@ -16,7 +16,7 @@ Lista do uczciwego przejścia. Każde „nie" wskazuje **lekcję**, do której w
 - [ ] Umiem powiedzieć, co z tego kursu przeniosę do narzędzia, którego używam w firmie,
       a co będę musiał przetłumaczyć. → *1.4*
 
-## Przy pięciu wolnych minutach
+## Ćwiczenie dodatkowe
 
 Otworzyć `app/rozliczenia.py` i policzyć, ile linii ma `oblicz_fakture`. Ta liczba wraca
 w module 4.

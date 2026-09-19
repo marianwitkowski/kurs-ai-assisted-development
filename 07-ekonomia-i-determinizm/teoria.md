@@ -124,6 +124,11 @@ Prompt cache (main): 14 requests · 91% of input tokens from cache · 2 misses
 To jest różnica, która zmienia sposób pracy: na subskrypcji przerwa na kawę nie kosztuje,
 na kluczu API domyślnie kosztuje przeliczenie całego kontekstu.
 
+**Godzina na subskrypcji dotyczy głównej rozmowy i tylko w ramach limitu planu.**
+Subagenci, workflows, forki i kompakcja dostają pięć minut nawet na subskrypcji
+(osobne ustawienie `subagentPromptCacheTtl` / `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`),
+a po przejściu na usage credits główna rozmowa też spada do pięciu minut.
+
 **To domyślka, nie limit platformy.** Godzinę na kluczu API włącza się jawnie:
 ustawieniem `promptCacheTtl: "1h"` (v2.1.242+) albo `ENABLE_PROMPT_CACHING_1H=1`.
 W API bezpośrednio: `cache_control: {"type": "ephemeral", "ttl": "1h"}`.
@@ -258,10 +263,10 @@ Tam są prawdziwe liczby: `usage.input_tokens`, `usage.output_tokens`,
 
 **Każda kategoria wejścia ma inną cenę**, więc pomnożenie sumy przez jedną stawkę daje
 zły wynik: zwykłe wejście po pełnej, zapis do cache'u 1,25 raza drożej przy TTL 5 minut
-i 2 razy przy TTL 1 godziny, odczyt po jednej dziesiątej. Rozbicie zapisu po TTL jest
-w `usage.cache_creation`.
+i 2 razy przy TTL 1 godziny, odczyt po jednej dziesiątej (na Fable 5.1 po 0,025 -
+patrz lekcja 1.2). Rozbicie zapisu po TTL jest w `usage.cache_creation`.
 
-Gotowy skrypt: `skrypty/pomiar_kosztu.py` - uruchamia to samo zadanie w trzech rolach
+Gotowy skrypt: `skrypty/pomiar_kosztu.py` - uruchamia to samo zadanie w czterech rolach
 i wypisuje tabelę. Koszt jest **zmierzony** z pola `usage` każdej odpowiedzi, a nie
 oszacowany z długości tekstu. Rola zbieracza faktów jedzie na Haiku **bez pola `effort`**,
 bo ten model go nie obsługuje - podanie go byłoby błędem kontraktu, nawet gdyby API
@@ -388,7 +393,8 @@ Trzy rzeczy, które robią golden set użytecznym:
 2. Cache jest **per model**. Kaskada modeli to kaskada cache'y.
 3. Kolejność renderowania: `tools` → `system` → `messages`. Stabilne na początek.
 4. `usage.cache_read_input_tokens` równe zero przy powtórzeniach = cichy invalidator.
-5. TTL cache'u: godzina na subskrypcji, pięć minut na kluczu API.
+5. TTL cache'u: godzina na subskrypcji tylko dla głównej rozmowy i w ramach limitu planu;
+   subagenci, workflows i kompakcja mają pięć minut zawsze, klucz API też pięć minut.
 6. Hook `PreToolUse` może odfiltrować wyjście komendy, zanim wejdzie do kontekstu.
 7. Batch API: połowa ceny, wyniki **w dowolnej kolejności**, kluczowanie po `custom_id`.
 8. Na Pro/Max pomiar idzie paskami limitu i atrybucją, nie kwotą z bloku `Session`.

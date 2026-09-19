@@ -133,7 +133,7 @@ dokument wyglądający na kompletny. Sekcja ZAŁOŻONE powstaje z pytań, nie z 
 technika z modułu 3: najpierw lista pytań, bez odpowiadania na nie.
 
 **Test napisany po implementacji.** Sprawdza, że kod robi to, co robi. Kontrolowany błąd
-rozstrzyga to w minutę.
+w kodzie rozstrzyga, czy test cokolwiek chroni.
 
 **Pominięcie autoryzacji.** Flaga reklamacji zmienia kwoty na fakturze. Pole, które
 zmienia kwoty i da się ustawić z zewnątrz, jest granicą zaufania - moduł 8 w całości

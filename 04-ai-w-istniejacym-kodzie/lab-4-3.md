@@ -97,7 +97,7 @@ git diff tests/       # MUSI być puste
 
 ## Krok 3 - polowanie na uproszczenia
 
-Nawet przy zielonych testach diff wymaga przeglądu pod kątem czterech konkretnych miejsc.
+Nawet przy zielonych testach diff wymaga przeglądu pod kątem pięciu konkretnych miejsc.
 To są te, które agent „poprawia" najczęściej:
 
 | Co sprawdzić | Gdzie szukać w diffie | Dlaczego to ważne |

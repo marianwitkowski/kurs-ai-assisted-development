@@ -25,11 +25,11 @@ Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której
 - [ ] Wiem, co robić po przerwaniu, i że „spróbuj jeszcze raz" nie jest odpowiedzią. → *6.6*
 - [ ] Umiem uczciwie policzyć, czy równoległość się opłaciła. → *lab 6.1 krok 5*
 
-## Przy wolnych pięciu minutach
+## Ćwiczenie dodatkowe
 
 Wziąć z własnego backlogu zadanie, które wygląda na równoległe. Wypisać, których plików
 dotknie każdy fragment. Gdy po tym ćwiczeniu zrównoleglenie nadal wygląda na wykonalne -
-jest kandydat na poniedziałek. Gdy nie - zaoszczędzony wieczór.
+jest kandydat do zrównoleglenia. Gdy nie - koszt scalania został uniknięty.
 
 ---
 

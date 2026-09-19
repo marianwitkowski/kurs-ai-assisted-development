@@ -26,7 +26,7 @@ color: cyan
 | `tools` | bez `WebFetch`, bez `Task` - przekształcenie mechaniczne ich nie potrzebuje |
 | `model: sonnet` | zadanie nie wymaga rozumowania, wymaga konsekwencji |
 | `isolation: worktree` | agent pracuje we własnym katalogu; główny checkout zostaje nietknięty |
-| `maxTurns: 25` | **jedyny mechanizm**, który zatrzyma pętlę - subagenta nie widać w trakcie |
+| `maxTurns: 25` | **jedyny hamulec bez udziału człowieka**, który zatrzyma pętlę - subagenta nie widać w trakcie (pozostałe twarde limity: teoria.md) |
 
 ### Zdanie, które robi najwięcej
 
@@ -113,8 +113,8 @@ a błędna hipoteza postawiona w trzeciej turze zniknie ze streszczenia.
 
 ## Najczęstsze potknięcia
 
-**Brak `maxTurns`.** Subagenta nie widać. Limit tur jest jedynym mechanizmem,
-który przerwie pętlę, zanim zje budżet.
+**Brak `maxTurns`.** Subagenta nie widać. Limit tur jest jedynym hamulcem
+działającym bez udziału człowieka, który przerwie pętlę, zanim zje budżet.
 
 **`description` mówiące tylko, co agent robi.** Połowa wartości opisu to zdanie
 o tym, do czego agent **nie** służy.

@@ -72,7 +72,9 @@ czerwona, stop_hook_active=true  → exit 0 + {"systemMessage": "..."}
 
 Wejście `Stop` niesie **`stop_hook_active`** (`true`, gdy tura trwa dalej przez poprzednią
 blokadę) oraz twardy limit: po **8 kolejnych blokadach** Claude Code kończy turę sam.
-Własny znacznik jest niepotrzebny. `jq -r '.stop_hook_active // false'` - pole może nie przyjść.
+Własny znacznik jest niepotrzebny. W `jq -r '.stop_hook_active // false'` samo `// false`
+jest higieną czytelności: brakujące pole daje literał `null`. Zabezpieczeniem jest
+porównanie `== "true"` - warunek `!= "false"` potraktowałby `null` jak kolejną próbę.
 
 ## Pliki ustawień - precedencja
 

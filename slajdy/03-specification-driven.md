@@ -156,7 +156,7 @@ od wersji i od tego, które tryby opcjonalne są dostępne. Pasek statusu jest j
 <!--
 CO POWIEDZIEĆ: Plan, który mówi „zrobię X, potem Y, potem Z", nie wnosi nic - to lista rzeczy,
 które i tak by się wydarzyły. Żądaj tych czterech elementów, a z planu zrobi się dokument,
-który da się odrzucić w pięć minut.
+który da się odrzucić na podstawie samej treści.
 PYTANIE Z SALI: „Czy nie szybciej poprawić plan promptem?" Zwykle nie. `Ctrl+G` otwiera plan
 w edytorze i szybciej jest skreślić trzy linie, niż tłumaczyć agentowi, dlaczego są złe.
 -->
@@ -251,7 +251,7 @@ Agent, który pisze testy patrząc na własny kod, produkuje testy przechodzące
 > **To, co ma nie powstać, nie wynika z niczego - musi być napisane.**
 
 <!--
-CO POWIEDZIEĆ: Pięć linii, które w labie 3.2 oszczędzają pół godziny czytania diffa.
+CO POWIEDZIEĆ: Zakres negatywny oszczędza w labie 3.2 czytanie diffa poza zakresem.
 Bez nich agent doda numerację not, bo „nota musi mieć numer", i zapis do bazy,
 bo „przecież trzeba to gdzieś trzymać". I będzie miał rację, bo nikt nie powiedział, że nie.
 NA CO UWAŻAĆ: To jest też odpowiedź na pytanie, po co w specyfikacji sekcja „Otwarte pytania".

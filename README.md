@@ -323,7 +323,7 @@ Ta sama zasada w innej skali:
 | Kod na starcie | 17 plików `app/` + `seed.py`, ~1440 linii, **zero testów** |
 | Kod na końcu | + testy, dokumentacja, hooki, skill, subagent, klasyfikator VAT |
 | Testy na końcu | **116** |
-| Zasiane problemy | SQL Injection, brak autoryzacji w 4 endpointach, sekret w kodzie, funkcja na 157 linii, cztery nieudokumentowane reguły biznesowe, jeden prawdziwy błąd, przestarzałe API i zależności |
+| Zasiane problemy | SQL Injection, brak autoryzacji w 4 endpointach, sekret w kodzie, funkcja na 157 linii, sześć nieudokumentowanych reguł biznesowych, jeden prawdziwy błąd, przestarzałe API i zależności |
 | Tagi labów | 17 |
 
 Wszystkie problemy są **celowe**. Część z nich to reguły biznesowe, których nie wolno

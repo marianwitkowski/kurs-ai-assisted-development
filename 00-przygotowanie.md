@@ -1,8 +1,8 @@
 # Przygotowanie przed szkoleniem
 
-> **Do wykonania przed modułem 1.** Pierwsza godzina kursu jest
-> na pracę z kodem, nie na instalację. Przygotowanie z wyprzedzeniem zostawia czas
-> na rozwiązanie problemów.
+> **Do wykonania przed modułem 1.** Moduł 1 zaczyna się od pracy z kodem,
+> nie od instalacji. Przygotowanie z wyprzedzeniem zostawia miejsce
+> na rozwiązanie problemów ze środowiskiem.
 
 Większość tego to czekanie na pobieranie - można uruchomić i zająć się czymś innym.
 
@@ -161,7 +161,7 @@ Oczekiwany wynik na czystym środowisku:
 Podsumowanie
   bledow: 0, ostrzezen: 0
 
-Wszystko gotowe. Do zobaczenia na szkoleniu.
+Srodowisko gotowe.
 ```
 
 ---

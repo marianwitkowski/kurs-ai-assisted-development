@@ -25,11 +25,11 @@ Odpowiedzi tylko dla siebie, uczciwie. Każde „nie" wskazuje **lekcję**, do k
 - [ ] Umiem rozstrzygnąć, czy coś ma być `CLAUDE.md`, regułą, skillem czy hookiem. → *5.4*
 - [ ] Moje hooki i skille są **w repozytorium**, nie w katalogu domowym. → *rozwiązania*
 
-## Przy pięciu wolnych minutach
+## Ćwiczenie dodatkowe
 
 Do wypisania trzy reguły powtarzane w zespole na każdym review.
 Przy każdej rozstrzygnięcie: `CLAUDE.md`, skill czy hook. Reguła, która wypadła
-na „hook", a nie jest zautomatyzowana, to zadanie na poniedziałek.
+na „hook", a nie jest zautomatyzowana, jest zadaniem do zrobienia.
 
 ---
 

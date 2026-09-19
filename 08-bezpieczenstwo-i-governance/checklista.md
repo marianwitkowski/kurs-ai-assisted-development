@@ -32,7 +32,7 @@ Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której
       i uczciwie oznaczam te, których nie egzekwuję niczym. → *8.8*
 - [ ] Wiem, czego **nie** wpisywać do komunikatów commitów i opisów pull requestów. → *8.8*
 
-## Na pięć wolnych minut
+## Ćwiczenie dodatkowe
 
 Otworzyć własne repozytorium robocze i sprawdzić jedno:
 czy jest w nim endpoint, który sprawdza token, a nie sprawdza, czyj jest zasób.

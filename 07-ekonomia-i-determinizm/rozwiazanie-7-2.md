@@ -6,15 +6,16 @@ git show lab-8-1-start:tests/golden/vat.jsonl
 git diff --stat lab-7-2-start lab-8-1-start
 ```
 
+Siedem plików, same dodania - liczby linii podaje sama komenda:
+
 ```
- app/klasyfikacja_vat.py       | 205 +++++++++++++++++++++++
- skrypty/README.md             |  19 ++
- skrypty/batch_klasyfikacja.py |  95 +++++++++++
- skrypty/klasyfikuj_api.py     |  64 ++++++++
- skrypty/pomiar_kosztu.py      |  84 ++++++++++
- tests/golden/vat.jsonl        |  20 +++
- tests/test_golden_vat.py      | 114 ++++++++++++
- 7 files changed, 601 insertions(+)
+ app/klasyfikacja_vat.py
+ skrypty/README.md
+ skrypty/batch_klasyfikacja.py
+ skrypty/klasyfikuj_api.py
+ skrypty/pomiar_kosztu.py
+ tests/golden/vat.jsonl
+ tests/test_golden_vat.py
 ```
 
 ---

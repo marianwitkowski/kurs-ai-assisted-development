@@ -75,8 +75,9 @@ echo '{"worktree": {"baseRef": "head"}}' > .claude/settings.local.json
 >   && mv /tmp/s.json .claude/settings.local.json
 > ```
 >
-> **Tego pliku nie należy kasować po labie** - lab 6.2 też go potrzebuje, a jest nieśledzony,
-> więc `git stash -u` i `git checkout` go zabiorą.
+> **Tego pliku nie należy kasować po labie** - lab 6.2 też go potrzebuje. Jest w `.gitignore`,
+> więc ani `git stash -u`, ani `git checkout <tag>` go nie ruszą; zabierze go dopiero
+> `git stash -a` albo `git clean -xdf`.
 
 `"head"` każe tworzyć worktree z **bieżącego lokalnego `HEAD`** - czyli z bieżącego tagu.
 
@@ -195,7 +196,7 @@ make gate musi być zielone, a pytest ma przestać pokazywać DeprecationWarning
 **pięć wystąpień w czterech plikach** (`app/raporty.py` ma dwa), z czego cztery to
 domyślne wartości parametrów, a piąte (`app/rabaty.py`) jest wewnątrz decyzji o cenie
 pozycji. Zamiana jest równoważna we wszystkich pięciu
-(wynik od razu trafia do `.date()`), ale **w czwartym nie usuwa głębszego problemu**:
+(wynik od razu trafia do `.date()`), ale **w piątym nie usuwa głębszego problemu**:
 przeliczenie faktury nadal zależy od zegara.
 
 Agent, który napisze „wszystkie cztery to prosta zamiana", pominął to rozróżnienie.
@@ -290,7 +291,7 @@ Wiedza, **kiedy tego nie robić**, jest tu warta tyle samo co umiejętność zro
 - [ ] Konflikt rozwiązany tak, że obie zmiany zostały zachowane.
 - [ ] `grep -rn "utcnow" app/` nic nie zwraca.
 - [ ] `pytest` pokazuje **0 ostrzeżeń** (było 4).
-- [ ] `make gate` zielone, 47 testów.
+- [ ] `make gate` zielone, testów więcej niż 32 startowych (wzorcowo 47).
 - [ ] `git worktree list` pokazuje tylko główny checkout, branche usunięte.
 - [ ] Rozstrzygnięte, czy w tym przypadku równoległość się opłaciła.
 

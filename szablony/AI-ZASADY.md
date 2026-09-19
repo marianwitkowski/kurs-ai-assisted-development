@@ -249,7 +249,7 @@ Zasada bez mechanizmu jest życzeniem. Zestawienie, co czym egzekwujemy:
 | Format i lint | hook `PostToolUse`, lint w bramce | `.claude/settings.json` |
 | Testy przed zakończeniem pracy | hook `Stop` | `.claude/settings.json` |
 | Niebezpieczne komendy | hook `PreToolUse` | `.claude/settings.json` |
-| Brak odczytu `.env` przez agenta | `permissions.deny` | `.claude/settings.json` |
+| Brak odczytu `.env` narzędziem `Read` (odczyt komendą w Bashu nie jest tym objęty) | `permissions.deny`: `Read(./.env)`, `Read(./.env.*)` | `.claude/settings.json` |
 | Przegląd bezpieczeństwa diffa | skill `/przeglad-bezpieczenstwa` - procedura, ktoś musi ją wywołać | `.claude/skills/` |
 | Konwencje projektu | `CLAUDE.md` | repozytorium |
 | Nowe zależności | review + `CLAUDE.md` | proces |

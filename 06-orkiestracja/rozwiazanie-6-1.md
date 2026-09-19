@@ -130,7 +130,7 @@ czyli osobne zadanie z testami.
 
 Wzorcowy komunikat commita mówi to wprost:
 
-> W trzech miejscach to domyslna wartosc parametru i zamiana jest rownowazna.
+> W czterech miejscach to domyslna wartosc parametru i zamiana jest rownowazna.
 > W app/rabaty.py wynik trafia od razu do .date(), wiec zamiana tez jest rownowazna -
 > ale nie usuwa glebszego problemu: przeliczenie faktury nadal zalezy od zegara.
 

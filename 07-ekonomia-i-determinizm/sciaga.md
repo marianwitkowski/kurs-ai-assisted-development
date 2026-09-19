@@ -27,6 +27,9 @@ Maks. **4 punkty** na żądanie. Minimalny prefiks 512-4096 tokenów (krócej - 
 **TTL domyślny: 1 h na subskrypcji, 5 min na kluczu API.** To domyślka, nie limit -
 na kluczu API godzinę włącza `promptCacheTtl: "1h"` albo `ENABLE_PROMPT_CACHING_1H=1`;
 w API bezpośrednio `cache_control: {"type":"ephemeral","ttl":"1h"}`.
+Godzina obejmuje wyłącznie główną rozmowę w ramach limitu planu: subagenci, workflows,
+forki i kompakcja mają 5 min nawet na subskrypcji (`subagentPromptCacheTtl`), a po
+przejściu na usage credits główna rozmowa też spada do 5 min.
 
 **Weryfikacja: `usage.cache_read_input_tokens`.** Zero przy powtórzeniach = cichy invalidator.
 

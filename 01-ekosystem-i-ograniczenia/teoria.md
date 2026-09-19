@@ -99,11 +99,14 @@ Poza wyborem modelu dostępne jest sterowanie **głębokością rozumowania**: `
 > **Nie każdy model obsługuje effort.** Działa na Opusie, Sonnecie 5 i Fable.
 > **Haiku 4.5 go nie obsługuje** - ustawienie poziomu nic tam nie zmienia.
 > Przy ustawieniu poziomu, którego model nie ma, Claude Code schodzi do najwyższego
-> obsługiwanego (`xhigh` na Opusie 4.6 działa jak `high`).
+> obsługiwanego poziomu nie wyższego niż zadany (na modelu bez `xhigh` ustawienie
+> `xhigh` działa jak `high`).
 >
 > Druga rzecz: `/effort` z **wpisanym** poziomem zapisuje go jako **domyślny
-> na kolejne sesje**. To samo robi wybór modelu w `/model`. Łatwo o tym zapomnieć
-> i przez tydzień płacić za Opusa na `max`.
+> na kolejne sesje**. To samo robi wybór modelu w `/model`. Wyjątkiem jest `max`:
+> obowiązuje tylko w bieżącej sesji, chyba że ustawia go zmienna środowiskowa
+> `CLAUDE_CODE_EFFORT_LEVEL`. O zapisanym poziomie łatwo zapomnieć i długo płacić
+> za Opusa na `xhigh`.
 
 Zasada: **najpierw schodzić z effortu, dopiero potem z modelu.** Nowszy model na niskim efforcie
 często wypada lepiej niż starszy na wysokim - a przy tym nie rozbija cache'u
@@ -159,7 +162,7 @@ Odpowiedź bez punktu zaczepienia w rzeczywistości pozostaje hipotezą.
 
 ### Rozrost kontekstu
 
-Im dłużej trwa sesja, tym więcej model niesie ze sobą: pliki przeczytane pół godziny temu,
+Im dłużej trwa sesja, tym więcej model niesie ze sobą: pliki przeczytane na początku sesji,
 wyniki komend, ślepe uliczki. Konsekwencje:
 
 - **rośnie koszt** - cała historia jest wysyłana przy każdym zapytaniu,

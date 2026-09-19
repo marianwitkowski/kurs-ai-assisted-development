@@ -6,7 +6,7 @@
 |---|---|
 | `claude` | start sesji w bieżącym katalogu |
 | `/model` | zmiana modelu, pokazuje listę i ceny |
-| `/effort` | `low` · `medium` · `high` · `xhigh` · `max`. **Haiku nie obsługuje.** Wpisany poziom **zapisuje się jako domyślny na kolejne sesje** |
+| `/effort` | `low` · `medium` · `high` · `xhigh` · `max`. **Haiku nie obsługuje.** Wpisany poziom **zapisuje się jako domyślny na kolejne sesje**, poza `max` - ten obowiązuje tylko w bieżącej sesji |
 | `/context` | co zajmuje okno kontekstowe |
 | `/usage` | zużycie, limity planu, atrybucja, statystyki cache |
 | `/clear` | koniec zadania, wyczyszczenie kontekstu |
@@ -20,9 +20,12 @@
 
 | Model | ID | Kontekst | We $/1M | Wy $/1M |
 |---|---|---|---|---|
+| Fable 5.1 | `claude-fable-5-1` | 1M | 10 | 50 |
 | Opus 5 | `claude-opus-5` | 1M | 5 | 25 |
 | Sonnet 5 | `claude-sonnet-5` | 1M | 2 | 10 |
 | Haiku 4.5 | `claude-haiku-4-5` | 200K | 1 | 5 |
+
+Odczyt z cache kosztuje na Fable 0,025 ceny wejścia zamiast 0,1.
 
 Sprawdzenie na żywo: `/model` albo `client.models.list()`.
 

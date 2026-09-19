@@ -23,7 +23,7 @@ Lista do uczciwego przejścia. Każde „nie" wskazuje **lekcję**, do której w
 - [ ] Wiem, że serwer MCP dostarcza modelowi tekst, który działa na niego jak instrukcja. → *2.6*
 - [ ] Mój `CLAUDE.md` nie zawiera ani jednego sekretu, danych osobowych ani treści klienta. → *2.4*
 
-## Na pięć wolnych minut
+## Ćwiczenie dodatkowe
 
 Otworzyć `~/.claude/CLAUDE.md`, jeśli istnieje, i sprawdzić, czy któraś z reguł osobistych
 nie stoi w sprzeczności z regułami dopisanymi przed chwilą do pliku projektowego.

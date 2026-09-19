@@ -143,7 +143,7 @@ Wynik testu:
 2. czerwona, po blokadzie   -> 0   (nie blokujemy w kółko)
 3. zielona                  -> 0
 4. znowu czerwona           -> 2   (uzbrojenie wraca samo)
-5. brak pola w JSON         -> 0   (domyslka // false)
+5. brak pola w JSON         -> 2   (czerwona bramka; brak pola = pierwsza proba)
 ```
 
 ### Dlaczego to jest ważniejsze niż sam hook

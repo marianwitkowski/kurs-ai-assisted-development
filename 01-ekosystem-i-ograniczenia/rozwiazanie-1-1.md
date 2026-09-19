@@ -218,5 +218,5 @@ historii rozmowy, a nie wpływ modelu. Pomiar jest w kroku 1a, w czystym kontek�
 pewnie - jeden jest zmyślony, drugi sprawdzony. Różni je nie ton, tylko to,
 czy odpowiedź ma punkt zaczepienia w pliku.
 
-**Pominięcie kroku 4.** `/context` jest narzędziem używanym przez cały drugi kurs.
+**Pominięcie kroku 4.** `/context` jest narzędziem używanym przez całą dalszą część kursu.
 Pierwszy kontakt z nim dopiero w module 7 jest za późny.

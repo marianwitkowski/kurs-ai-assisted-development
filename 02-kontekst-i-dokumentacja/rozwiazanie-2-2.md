@@ -59,7 +59,7 @@ Z wyniku `/init` zostają tylko komendy uruchomieniowe - i to po sprawdzeniu, ż
 
 ## Krok 3 - struktura wzorcowego `CLAUDE.md`
 
-55 linii, cztery sekcje:
+56 linii, pięć sekcji:
 
 | Sekcja | Po co |
 |---|---|
@@ -67,6 +67,7 @@ Z wyniku `/init` zostają tylko komendy uruchomieniowe - i to po sprawdzeniu, ż
 | Konwencje | polskie nazwy, `Decimal` zamiast `float`, zaokrąglanie tylko przez `vat.zaokraglij()`, długość linii |
 | Ostrzeżenia | `oblicz_fakture()` zawiera nieudokumentowane reguły; kolejność operacji ma skutki finansowe |
 | Czego nie ma | brak testów, brak migracji, kursy walut wpisane ręcznie |
+| Praca ze zmianami | zmiana w `app/` bez testu wymaga wyraźnej zgody, żadnej nowej zależności bez pytania, każde twierdzenie o kodzie poparte ścieżką i numerem linii |
 
 ### Kluczowy fragment - ostrzeżenie napisane uczciwie
 
@@ -160,9 +161,9 @@ git diff --stat lab-2-2-start lab-3-1-start
 ```
 
 ```
- CLAUDE.md            |  55 +++++++++++++++++++++++++
+ CLAUDE.md            |  56 +++++++++++++++++++++++++
  docs/architektura.md | 114 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 169 insertions(+)
+ 2 files changed, 170 insertions(+)
 ```
 
 Dwa pliki, żadnej zmiany w kodzie. Cała wartość tego labu leży w tym, co model teraz wie
@@ -178,7 +179,7 @@ i do kontekstu każdej sesji. Wzorcowy `docs/architektura.md` wspomina o problem
 (`app/db.py` skleja zapytania, kursy są wpisane ręcznie), ale **nie cytuje żadnej wartości**.
 
 **„Plik na 150 linii jest lepszy, bo kompletniejszy."** Do zmierzenia. Jeżeli odpowiedź w kroku 4
-jest taka sama jak przy 55 liniach, to nadmiar nic nie kupił - a kosztuje w każdej sesji
+jest taka sama jak przy 56 liniach, to nadmiar nic nie kupił - a kosztuje w każdej sesji
 do końca projektu.
 
 **Wpisanie do `CLAUDE.md` reguły, która musi zadziałać zawsze.** „Nigdy nie commituj

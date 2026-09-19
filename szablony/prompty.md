@@ -195,19 +195,24 @@ uzasadnij każdą jednym zdaniem.
 ### Bramka na `Stop` z bezpiecznikiem
 
 ```
-UWAGA - bezpiecznik. Exit 2 na Stop każe modelowi pracować dalej. Hook, który zawsze
-zwraca 2 przy czerwonej bramce, zapętla sesję. Dokumentacja nie przewiduje pola
-chroniącego przed tym - bezpiecznik musisz napisać sam.
+UWAGA - ochrona przed pętlą. Exit 2 na Stop każe modelowi pracować dalej, więc hook,
+który zawsze zwraca 2 przy czerwonej bramce, zapętliłby sesję. Nie pisz własnego
+znacznika: wejście hooka niesie już pole stop_hook_active, a Claude Code kończy turę
+sam po ośmiu kolejnych blokadach.
 
 Maszyna stanów:
-  bramka zielona            -> SKASUJ znacznik, exit 0
-  czerwona, brak znacznika  -> ustaw znacznik, exit 2, wynik na stderr
-  czerwona, jest znacznik   -> exit 0 + JSON {"systemMessage": "..."}
+  bramka zielona                    -> exit 0
+  czerwona, stop_hook_active=false  -> exit 2, wynik na stderr
+  czerwona, stop_hook_active=true   -> exit 0 + JSON {"systemMessage": "..."}
 
-Znacznik: plik w katalogu z .scratchpad_dir, w nazwie .session_id.
-Pole .scratchpad_dir BYWA NIEOBECNE - zrób ścieżkę zapasową ${TMPDIR:-/tmp}.
-Bramkę uruchom w katalogu z pola .cwd, NIE w ${CLAUDE_PROJECT_DIR}.
+Czytaj z wejścia: .stop_hook_active (domyślnie false, gdy pola brak) oraz .cwd.
+Bramkę uruchom w katalogu z pola .cwd, NIE w ${CLAUDE_PROJECT_DIR} - w worktree
+te dwie ścieżki są różne.
 ```
+
+> **Ten hook wymusza próbę naprawy, nie uniemożliwia zakończenia pracy.** Po pierwszej
+> blokadzie przepuszcza turę z ostrzeżeniem. Blokadą, której nie da się ominąć,
+> jest wymagany check w ustawieniach repozytorium.
 
 ---
 

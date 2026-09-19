@@ -17,8 +17,8 @@ git show lab-4-1-start:tests/test_odsetki.py
 ```
 
 **Sześć plików, dwie linie usunięte**: import w `raporty.py` oraz wpis „Testów (katalog
-`tests/` nie istnieje)." w `CLAUDE.md`, który po tym labie przestał być prawdą. Ta druga
-zmiana to świadomy wyjątek od zakresu - opis projektu aktualizuje się razem z projektem.
+`tests/` nie istnieje)." w `CLAUDE.md`, który po tym labie przestał być prawdą.
+Ta druga zmiana jest w kroku 5 labu - opis projektu aktualizuje się razem z projektem.
 Wszystko ponad to jest sygnałem, że zakres się rozszerzył.
 
 ---

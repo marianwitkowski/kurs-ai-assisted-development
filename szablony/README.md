@@ -1,15 +1,20 @@
 # Szablony do zabrania do firmy
 
-`settings.json`, hooki, subagent, `skan_sekretow.sh` i `gitignore-fragment`
-to kopie ze stanu końcowego repozytorium ćwiczeniowego (tag `lab-8-2-koniec`).
+`settings.json`, hooki, subagent i `skan_sekretow.sh` to kopie ze stanu końcowego
+repozytorium ćwiczeniowego (tag `lab-8-2-koniec`).
 Działają, ale z zaszytymi komendami, ścieżkami i tagami tego repozytorium,
 które wymagają podmiany - kolumna obok wymienia je z numerami linii.
 
-`skills/przeglad-bezpieczenstwa/SKILL.md` jest **jedynym wyjątkiem**: różni się od wersji
-z repozytorium ćwiczeniowego zakresem domyślnym. Tam sięga po tag `lab-1-1-start`,
-którego poza tym repozytorium nie ma - skill przestawałby działać po pierwszym
-wywołaniu. Tutaj domyślnie bierze `git diff origin/main...HEAD`, potem `git diff HEAD~1`.
-Reszta pliku - checklista, format raportu, zasady - jest identyczna.
+Dwa pliki **celowo różnią się** od swoich odpowiedników w repozytorium ćwiczeniowym,
+bo tamte wersje są poprawne tylko wewnątrz kursu:
+
+- `skills/przeglad-bezpieczenstwa/SKILL.md` - zakres domyślny. W repozytorium sięga
+  po tag `lab-1-1-start`, którego poza nim nie ma, więc skill przestawałby działać
+  po pierwszym wywołaniu bez argumentu. Tutaj bierze `git diff origin/main...HEAD`,
+  potem `git diff HEAD~1`. Checklista, format raportu i zasady - bez zmian.
+- `gitignore-fragment` - wpisy projektowe zostały oznaczone jako `PRZYKLAD`, a komentarze
+  odsyłające do labów usunięte. Uzasadnienia, dla których warto ignorować dany rodzaj
+  pliku, zostały; podmiany wymagają dwie pozycje oznaczone w pliku.
 
 `CLAUDE.md` i `AI-ZASADY.md` też stamtąd pochodzą, są jednak dokumentami do napisania
 od nowa pod własny projekt. Pozostałe pozycje - `prompty.md`, obie checklisty,
@@ -31,7 +36,7 @@ na potrzeby kursu, w repozytorium ćwiczeniowym ich nie ma; to przykłady do prz
 | `checklista-review.md` | moduł 8 | do procesu review |
 | `szablon-specyfikacji.md` | moduł 3 | do `specyfikacje/` w swoim repo |
 | `ci.yml` | moduł 5 i 8 | wzór workflow GitHub Actions |
-| `gitignore-fragment` | cały kurs | cały `.gitignore` repozytorium ćwiczeniowego; część uniwersalną (Python, edytory, systemowe) zabrać bez zmian; wpisy projektowe (`rozliczenia.db` z komentarzem o `seed.py`, `notatki/`) zastąpić własnymi, a komentarze odsyłające do labów (`settings.local.json`, `*.bak`) skrócić albo usunąć |
+| `gitignore-fragment` | cały kurs | część uniwersalną (Python, edytory, systemowe) zabrać bez zmian; dwie pozycje oznaczone `PRZYKLAD` zastąpić własnymi |
 | `skrypty/ewaluacja_promptu.py` | moduł 7 | ewaluacja promptu na oznaczonym zbiorze - przykład do przepisania pod własny moduł klasyfikatora; wywołuje model, więc kosztuje |
 | `checklista-gotowosci.md` | moduł 7 i 8 | przed wpuszczeniem modelu do produktu |
 

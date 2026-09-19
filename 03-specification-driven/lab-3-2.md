@@ -198,13 +198,21 @@ print(r.json()[0])
 
 ---
 
-## Krok 5 - commit
+## Krok 5 - opis projektu i commit
+
+`CLAUDE.md` wymienia w sekcji „Czego w repozytorium nie ma" wiersz
+„Testów (katalog `tests/` nie istnieje).". Po tym labie katalog istnieje, więc wiersz
+przestał być prawdą i idzie do usunięcia. To nie jest rozszerzenie zakresu: **opis
+projektu jest częścią projektu** i dezaktualizuje się razem z nim (moduł 2).
 
 ```bash
 make test && make lint
-git add app/odsetki.py tests/ app/raporty.py app/main.py
+git add app/odsetki.py tests/ app/raporty.py app/main.py CLAUDE.md
 git commit -m "Noty odsetkowe wedlug specyfikacji"
 ```
+
+> Nieaktualny wiersz w `CLAUDE.md` kosztuje więcej niż jego brak: model czyta ten plik
+> przy każdej sesji i dostaje z niego nieprawdę o repozytorium, w którym pracuje.
 
 ---
 
@@ -213,7 +221,8 @@ git commit -m "Noty odsetkowe wedlug specyfikacji"
 - [ ] `make test` przechodzi, `make lint` przechodzi.
 - [ ] Testy powstały **przed** implementacją i nie były zmieniane, żeby przeszły.
 - [ ] Liczby w testach są dosłownie ze specyfikacji.
-- [ ] Diff nie wychodzi poza zakres z sekcji 2 specyfikacji.
+- [ ] Diff nie wychodzi poza zakres z sekcji 2 specyfikacji - poza `CLAUDE.md` z kroku 5.
+- [ ] Wiersz „Testów (katalog `tests/` nie istnieje)." zniknął z `CLAUDE.md`.
 - [ ] Każda reguła R1-R10 daje się wskazać w kodzie.
 - [ ] Rozstrzygnięcie przypadku faktury walutowej w raporcie zbiorczym jest znane
       - razem z tym, że specyfikacja tego nie rozstrzygała.

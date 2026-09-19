@@ -1,11 +1,11 @@
 # Rozwiązanie wzorcowe - lab 7.1
 
-Ten lab nie ma artefaktu w repozytorium. Ma liczby, które zmierzyłeś sam.
+Ten lab nie ma artefaktu w repozytorium. Ma liczby zmierzone samodzielnie.
 Poniżej to, co powinny pokazać, i jak je czytać.
 
 ---
 
-## Krok 2 i 3 - sedno pomiaru
+## Krok 2 i 3 - istota pomiaru
 
 To samo pytanie, dwie sesje:
 
@@ -19,7 +19,7 @@ To samo pytanie, dwie sesje:
 
 Kluczowe zdanie, które ma zostać z tego labu:
 
-> Pytanie warte dwudziestu tokenów niesie ze sobą wszystko, co zgromadziłeś wcześniej -
+> Pytanie warte dwudziestu tokenów niesie ze sobą cały kontekst zgromadzony wcześniej -
 > i tak będzie przy **każdym** następnym pytaniu w tej sesji.
 
 Dlatego `/clear` między niepowiązanymi zadaniami jest najtańszą optymalizacją,
@@ -29,7 +29,7 @@ jaka istnieje: kosztuje jedno naciśnięcie i działa natychmiast.
 
 Okno to **sufit**, nie budżet. Dwie rzeczy dzieją się jednocześnie:
 
-- **płacisz** za wszystko, co w nim siedzi, przy każdym żądaniu,
+- **płaci się** za wszystko, co w nim siedzi, przy każdym żądaniu,
 - **jakość spada** - instrukcja utopiona wśród czterdziestu przeczytanych plików
   działa słabiej niż ta sama instrukcja w czystej sesji.
 
@@ -39,7 +39,7 @@ Druga konsekwencja jest mniej oczywista i ważniejsza.
 
 ## Krok 4 - statystyki cache
 
-Linia, której szukasz w `/usage`:
+Linia do odszukania w `/usage`:
 
 ```
 Prompt cache (main): 14 requests · 91% of input tokens from cache · 2 misses
@@ -73,7 +73,7 @@ Wszystko odpowiada poprawnie, tylko drożej. Bez zajrzenia w tę linię nie ma j
 
 ## Krok 1 - czego szukać w `/usage` na subskrypcji
 
-**Paski limitu planu** - to jest twój realny budżet. Blok `Session` pokazuje też kwotę
+**Paski limitu planu** - to jest realny budżet. Blok `Session` pokazuje też kwotę
 w dolarach, ale na Pro/Max jest ona liczona lokalnie po cenniku katalogowym
 i **nie ma związku z rachunkiem**. Z dokumentacji:
 
@@ -84,7 +84,7 @@ i **nie ma związku z rachunkiem**. Z dokumentacji:
 **Atrybucja** jest tym, na co naprawdę warto patrzeć: pokazuje, ile zużycia idzie
 na skille, subagentów, pluginy i **poszczególne serwery MCP**.
 
-Typowe znalezisko: podłączony serwer MCP, którego nikt nie używa, a który zjada
+Typowe znalezisko: podłączony serwer MCP, którego nikt nie używa, a który kosztuje
 kilka procent każdej sesji. `/mcp` pozwala go wyłączyć.
 
 **Flagi zachowań** zapalają się, gdy coś odpowiada za ponad 10% zużycia - najczęściej
@@ -130,14 +130,14 @@ Stosunek: ~7× więcej tokenów wejściowych za tę samą odpowiedź.
 
 ## Najczęstsze potknięcia
 
-**Brak `/clear` między krokiem 2 a 3.** Wtedy porównujesz sumę, nie przyrost, i wychodzi,
-że „czysta sesja też dużo zużywa".
+**Brak `/clear` między krokiem 2 a 3.** Wtedy porównywana jest suma, nie przyrost,
+i wychodzi, że „czysta sesja też dużo zużywa".
 
-**Przełączanie modelu w kroku 4.** Wyzeruje trafienia cache i zobaczysz liczbę,
-która nic nie znaczy.
+**Przełączanie modelu w kroku 4.** Zeruje trafienia cache, a wynikowa liczba
+nic nie znaczy.
 
 **Czytanie kwoty z bloku `Session` jako rachunku.** Na subskrypcji to jest szacunek
-po cenniku katalogowym, a nie to, co płacisz.
+po cenniku katalogowym, a nie rzeczywisty koszt.
 
-**Pominięcie atrybucji.** To jedyne miejsce, w którym zobaczysz koszt, który ponosisz,
-zanim w ogóle zaczniesz pracę.
+**Pominięcie atrybucji.** To jedyne miejsce, w którym widać koszt ponoszony jeszcze
+przed rozpoczęciem pracy.

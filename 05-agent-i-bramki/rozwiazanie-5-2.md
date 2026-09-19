@@ -14,7 +14,7 @@ Jeden plik, 83 linie.
 Prompt „przejrzyj kod pod kątem bezpieczeństwa" daje za każdym razem inny zakres.
 Model sam decyduje, co przeczytać i czego szukać, więc:
 
-- **nie wiesz, czego nie sprawdzono** - brak ustalenia wygląda jak brak problemu,
+- **nie wiadomo, czego nie sprawdzono** - brak ustalenia wygląda jak brak problemu,
 - **dwa przeglądy nie są porównywalne** - nie da się powiedzieć „ta sama checklista,
   inny wynik",
 - **koszt jest nieprzewidywalny** - raz trzy pliki, raz całe repo.
@@ -63,8 +63,8 @@ Zmiany niezacommitowane:
 Komendy uruchamiają się **zanim model zobaczy treść skilla**. Model dostaje diff w kontekście
 i nie może o nim zapomnieć ani wybrać innego zakresu.
 
-Problem: na czystym drzewie oba bloki są puste. Jutro w module 8 wywołasz skill zaraz
-po `git checkout` i dostaniesz pusty raport.
+Problem: na czystym drzewie oba bloki są puste. W module 8 skill wywołany zaraz
+po `git checkout` zwróciłby pusty raport.
 
 Rozwiązanie w treści skilla:
 
@@ -147,8 +147,9 @@ Poprawny raport zawiera:
 ...oraz **siedem** wierszy tabeli checklisty, z `n/d` przy punktach, które tego diffa
 nie dotyczą, i niepustą sekcją „Czego nie sprawdzałem".
 
-Jeżeli twój raport ma trzy wiersze checklisty zamiast siedmiu - model „dostosował"
-checklistę do diffa. Dopisz do skilla wprost: *żadnego punktu nie wolno pominąć milcząco*.
+Raport z trzema wierszami checklisty zamiast siedmiu oznacza, że model „dostosował"
+checklistę do diffa. Skill wymaga wtedy zdania wprost: *żadnego punktu nie wolno pominąć
+milcząco*.
 
 ---
 

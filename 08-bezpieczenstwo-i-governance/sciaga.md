@@ -7,7 +7,7 @@
 | Uwierzytelnienie | kto to jest? | `kontrahent_z_tokenu(authorization)` |
 | **Autoryzacja** | czy wolno mu to zobaczyć? | `zasob.wlasciciel_id != kontrahent_id` |
 
-Szukaj miejsc, w których **wynik funkcji autoryzacyjnej jest wywoływany, ale nieużywany**.
+Szukać miejsc, w których **wynik funkcji autoryzacyjnej jest wywoływany, ale nieużywany**.
 Analiza statyczna tego nie złapie.
 
 **Cudzy zasób → 404, nie 403.** 403 potwierdza, że zasób istnieje.
@@ -62,7 +62,7 @@ git log -p --all -- <plik> | grep -c "<wzorzec>"
 ```
 
 > Usunięcie sekretu z pliku **nie usuwa go z repozytorium**.
-> **Unieważnij sekret.** Przepisanie historii to kosmetyka wykonywana po tym.
+> **Sekret trzeba unieważnić.** Przepisanie historii to kosmetyka wykonywana po tym.
 
 ## Review kodu tworzonego z agentem
 
@@ -94,7 +94,7 @@ gdzie fizycznie i jak długo?
 
 ## Egzekwowanie
 
-Przy każdej zasadzie dopisz kolumnę **czym to egzekwujemy**:
+Przy każdej zasadzie dopisać kolumnę **czym to egzekwujemy**:
 hook / CI / skill / `permissions.deny` / `CLAUDE.md` (**prośba**) / **proces** / **nic**.
 
 Wiersze z „nic" to lista zadań. Wiersze z „proces" są w porządku -

@@ -24,7 +24,7 @@ Do `.gitignore`, zanim ktokolwiek użyje worktree:
 | `worktree.baseRef: "fresh"` | **domyślne** - branch z domyślnej gałęzi **remote** |
 | `worktree.baseRef: "head"` | branch z bieżącego lokalnego `HEAD` |
 
-> **Pułapka:** `"fresh"` na branchu feature daje worktree **bez twoich zmian**.
+> **Pułapka:** `"fresh"` na branchu feature daje worktree **bez zmian z tego brancha**.
 > Do izolowania pracy w toku: `{"worktree": {"baseRef": "head"}}`.
 
 ## Środowisko per worktree
@@ -73,7 +73,7 @@ Kolejność wyboru modelu: parametr wywołania → frontmatter →
 
 **Subagent = własny pusty kontekst + streszczenie na wyjściu.**
 
-## Format wyniku - narzuć go
+## Format wyniku - do narzucenia
 
 ```
 ZAKRES: …
@@ -94,7 +94,7 @@ RYZYKA: …
 | Po funkcjach | średnie |
 | „Autor i recenzent" | **to nie jest podział równoległy** |
 
-**Scalaj od najmniejszego zasięgu.**
+**Scalanie od najmniejszego zasięgu.**
 
 ## Objawy agenta w pętli
 

@@ -5,12 +5,12 @@
 ## Krok 1 - pomiar zerowy
 
 W świeżej sesji okno zajmuje prompt systemowy, definicje narzędzi i ewentualne narzędzia MCP.
-Sekcja **Memory files** w stanie startowym repo jest pusta albo zawiera wyłącznie twój
-`~/.claude/CLAUDE.md` - bo `repo-cwiczeniowe/CLAUDE.md` jeszcze nie istnieje.
-Dodasz go w następnym labie i wtedy zobaczysz go w tej sekcji.
+Sekcja **Memory files** w stanie startowym repo jest pusta albo zawiera wyłącznie
+`~/.claude/CLAUDE.md` użytkownika - bo `repo-cwiczeniowe/CLAUDE.md` jeszcze nie istnieje.
+Powstaje on w następnym labie i wtedy pojawia się w tej sekcji.
 
-Jeśli masz podłączone serwery MCP, ich koszt też tu widać. Warto zerknąć, ile zjadają,
-zanim w ogóle zacząłeś pracę.
+Przy podłączonych serwerach MCP ich koszt też tu widać. Warto sprawdzić, ile kosztują,
+zanim praca w ogóle się zacznie.
 
 ---
 
@@ -21,7 +21,7 @@ Odpowiedź: `stawka_progowa()` w `app/rabaty.py:37`, korzystająca ze stałej `P
 z `app/rabaty.py:9-13`.
 
 Odpowiedź jest poprawna. Cena - 9 000 tokenów, które zostaną w kontekście do końca sesji
-i polecą z **każdym** kolejnym zapytaniem.
+i trafią do **każdego** kolejnego zapytania.
 
 ---
 
@@ -33,14 +33,14 @@ Model wykonuje jedno wyszukiwanie (`grep -rn "prog" app/` albo podobne), trafia 
 **Różnica: około dwudziestokrotna, przy identycznej odpowiedzi.**
 
 To jest najważniejsza liczba w tym labie. Nie zależy od modelu, od planu ani od wielkości okna.
-Zależy wyłącznie od tego, jak sformułowałeś prompt.
+Zależy wyłącznie od sformułowania promptu.
 
 **Dlaczego działa.** „Przeczytaj wszystkie pliki w katalogu" to instrukcja proceduralna - model
 robi dokładnie to. „Znajdź, gdzie liczony jest X" to instrukcja celowa - model sam wybiera
 najtańszą drogę do celu, a `Grep` jest tańszy niż `Read`.
 
-**Uogólnienie:** mów agentowi, **co ma ustalić**, nie **jak ma czytać**. Narzuconą procedurę
-wykona dosłownie, nawet jeśli jest kosztowna.
+**Uogólnienie:** agentowi podaje się, **co ma ustalić**, a nie **jak ma czytać**. Narzuconą
+procedurę wykona dosłownie, nawet jeśli jest kosztowna.
 
 ---
 
@@ -66,11 +66,11 @@ i milczy o tym, *dlaczego*.
 brzmiącą stanowczo. Najczęściej: „to celowa reguła, rabat nie łączy się z promocją".
 
 **To jest trafna hipoteza podana jako fakt.** Model nie miał podstaw, żeby to rozstrzygnąć.
-Co więcej - jest tylko w połowie trafna, o czym przekonasz się w module 4.
+Co więcej - jest tylko w połowie trafna, co rozstrzyga moduł 4.
 (Podpowiedź: ten sam `if` obsługuje też przypadek promocji, która **wygasła**.)
 
 **Wniosek, który ten lab ma zostawić:** brak dokumentacji nie powoduje, że model milczy.
-Powoduje, że model **zgaduje pewnym tonem** - i płacisz za to zgadywanie kontekstem.
+Powoduje, że model **zgaduje pewnym tonem** - a to zgadywanie kosztuje kontekst.
 Trzy linijki w `CLAUDE.md` zastąpiłyby tysiące tokenów czytania **i** usunęłyby zgadywanie.
 
 ---
@@ -90,9 +90,9 @@ Trzy linijki w `CLAUDE.md` zastąpiłyby tysiące tokenów czytania **i** usunę
 | Po celowanym grepie | **~400 tokenów** | **ta sama odpowiedź, ~20x taniej** |
 | Po pytaniu "dlaczego" | ~3 000 tokenów | model przeczytał 4 pliki i tak zgadł |
 
-> Procenty okna zależą od modelu i od twojej konfiguracji (serwery MCP, pliki kontekstowe),
-> więc nie podajemy ich jako wzorca - wpisz swoje. **Stały jest stosunek**: ~9 000 kontra ~400
-> tokenów za identyczną odpowiedź.
+> Procenty okna zależą od modelu i od konfiguracji (serwery MCP, pliki kontekstowe),
+> więc powyższe liczby nie są wzorcem - pochodzą z jednej sesji. **Stały jest stosunek**:
+> ~9 000 kontra ~400 tokenów za identyczną odpowiedź.
 
 ## Odpowiedź na pytanie o rabat i promocję (dosłownie)
 
@@ -117,7 +117,7 @@ pytanie wygląda na darmowe. Porównanie traci sens.
 
 **Wniosek „grep jest zawsze lepszy".** Nie jest. Gdy zadanie polega na zrozumieniu przepływu
 przez pięć modułów, model musi je przeczytać. Chodzi o to, żeby czytał **dlatego, że zadanie
-tego wymaga**, a nie dlatego, że tak mu kazałeś.
+tego wymaga**, a nie dlatego, że tak brzmiało polecenie.
 
 **Pominięcie kroku 4.** To jest jedyny krok, który uzasadnia istnienie następnego labu.
 Bez zobaczenia, jak model zgaduje, pisanie `CLAUDE.md` wygląda na biurokrację.

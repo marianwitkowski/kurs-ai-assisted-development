@@ -17,7 +17,7 @@ Najczęstsze:
 |---|---|---|
 | Stopa odsetek | jedna, na sztywno, często „ustawowe" bez wartości | jest ich kilka rodzajów, zmieniają się w czasie |
 | Pierwszy dzień | dzień po terminie | bywa: od terminu, od doręczenia, od wezwania |
-| Podstawa | brutto z faktury | u nas: `do_zaplaty`, czyli po odliczeniu zaliczki |
+| Podstawa | brutto z faktury | w repo podstawa to `do_zaplaty`, czyli kwota po odliczeniu zaliczki |
 | Rok bazowy | 365 | bywa 360 (umowy) albo 366 w latach przestępnych |
 | Wpłaty częściowe | **pomijane** | w repo jest `app/platnosci.py` z wpłatami |
 | Korekty | **pomijane** | w repo jest `app/korekty.py` |
@@ -25,18 +25,18 @@ Najczęstsze:
 | Próg minimalny | nie istnieje | koszt obsługi noty na 80 groszy przewyższa kwotę |
 | Zaokrąglanie | domyślne Pythona | `ROUND_HALF_UP` do grosza, i tylko na końcu |
 
-Zwróć uwagę, że **dwa pominięcia dotyczą modułów, które są w tym repo**. Agent nie musiał
+**Dwa pominięcia dotyczą modułów, które są w tym repo.** Agent nie musiał
 ich zgadywać - musiał je zauważyć. Nie zauważył, bo nikt nie kazał mu szukać.
 
-**To jest wynik kroku 1:** liczba, którą zapisałeś. Jeśli wyszło mniej niż sześć,
-sprawdź listę powyżej - prawdopodobnie część rozstrzygnięć była tak cicha, że ich nie
-zarejestrowałeś. To jest dokładnie ten problem.
+**To jest wynik kroku 1:** zapisana liczba. Wynik poniżej sześciu wymaga porównania
+z listą powyżej - część rozstrzygnięć bywa tak cicha, że przechodzi niezauważona.
+To jest dokładnie ten problem.
 
 ---
 
 ## Krok 2 - czym różni się lista pytań
 
-Ten sam model, to samo repo, inne polecenie. Zamiast propozycji dostajesz 8-15 pytań,
+Ten sam model, to samo repo, inne polecenie. Zamiast propozycji przychodzi 8-15 pytań,
 zwykle z odniesieniami do kodu:
 
 > - Od jakiej podstawy liczyć - `Rozliczenie.brutto` czy `Rozliczenie.do_zaplaty`
@@ -96,9 +96,9 @@ We wzorcowej specyfikacji jest ich pięć. Najważniejsze:
 To jest **znany, zapisany, świadomie zaakceptowany błąd**. Różnica między nim a błędem
 z dopowiedzenia jest cała: ten jest w dokumencie, przeszedł przez czyjeś oczy i ma termin.
 
-Jeżeli twoja sekcja „Otwarte pytania" jest pusta - model przeniósł niepewność do sekcji
-„Reguły obliczeniowe", gdzie wygląda na ustaloną. Przeczytaj reguły jeszcze raz
-i wyszukaj te, których nikt ci nie potwierdził.
+Pusta sekcja „Otwarte pytania" oznacza, że model przeniósł niepewność do sekcji
+„Reguły obliczeniowe", gdzie wygląda na ustaloną. Reguły wymagają wtedy ponownego
+przeczytania i wyłowienia tych, których nikt nie potwierdził.
 
 ---
 
@@ -114,12 +114,12 @@ i wyszukaj te, których nikt ci nie potwierdził.
 - jakiejkolwiek zmiany w app/rozliczenia.py i oblicz_fakture().
 ```
 
-Sześć linii, które w labie 3.2 zaoszczędzą ci pół godziny czytania diffa.
+Sześć linii, które w labie 3.2 oszczędzają pół godziny czytania diffa.
 Bez nich agent doda numerację not, bo „nota musi mieć numer", i zapis do bazy,
 bo „przecież trzeba to gdzieś trzymać".
 
-**Zakres negatywny jest ważniejszy od pozytywnego.** To, co masz zrobić, wynika z wymagania.
-To, czego nie masz robić, nie wynika z niczego - musi być napisane.
+**Zakres negatywny jest ważniejszy od pozytywnego.** To, co ma powstać, wynika z wymagania.
+To, co ma nie powstać, nie wynika z niczego - musi być napisane.
 
 ---
 
@@ -136,6 +136,6 @@ nazwy funkcji i pętle - to nie jest specyfikacja, tylko plan zapisany nie tam, 
 Reguły mówią **co ma być prawdą**, plan mówi **jak to osiągnąć**.
 
 **Przyjęcie liczb od modelu bez sprawdzenia.** Wartości w kryteriach akceptacji można
-policzyć w trzy linijki Pythona. Jeśli model podał 123,45 zamiast 123,15, a ty tego
-nie sprawdziłeś, to właśnie utrwaliłeś halucynację jako kryterium akceptacji -
-i test napisany do niej będzie „przechodził" na złym kodzie.
+policzyć w trzy linijki Pythona. Niesprawdzona wartość 123,45 zamiast 123,15 utrwala
+halucynację jako kryterium akceptacji - a test napisany do niej będzie „przechodził"
+na złym kodzie.

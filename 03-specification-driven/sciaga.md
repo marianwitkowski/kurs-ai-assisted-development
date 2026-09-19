@@ -24,7 +24,7 @@ Pasek statusu: `⏸ plan mode on`. Wyjście bez zatwierdzania: `Shift+Tab`.
 3. Ryzyka - co może się zepsuć poza obszarem zmiany.
 4. Jak to zweryfikujemy.
 
-Punkt 2 jest najważniejszy: **założenia wypisane to założenia, które możesz odrzucić.**
+Punkt 2 jest najważniejszy: **założenia wypisane to założenia, które da się odrzucić.**
 
 ## Cztery techniki przeciw dopowiadaniu
 
@@ -45,13 +45,13 @@ Kryteria akceptacji jako liczby: <wejście> → <oczekiwany wynik>.
 
 ## Czego unikać w prompcie
 
-| Nie pisz | Napisz |
+| Sformułowanie do unikania | Zamiast tego |
 |---|---|
 | „w razie potrzeby dodaj…" | wprost, czy ma dodać |
 | „zrób to porządnie" | konkretne kryterium |
-| „obsłuż przypadki brzegowe" | wymień które |
-| „jak w reszcie projektu" | wskaż plik wzorcowy |
-| „na razie uproszczona wersja" | wypisz, czego **nie** robimy |
+| „obsłuż przypadki brzegowe" | wymienić, które |
+| „jak w reszcie projektu" | wskazać plik wzorcowy |
+| „na razie uproszczona wersja" | wypisać, czego **nie** robimy |
 
 ## Workflow
 

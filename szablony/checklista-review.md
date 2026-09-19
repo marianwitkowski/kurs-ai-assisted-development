@@ -3,7 +3,7 @@
 Do użycia **po** przejściu bramek automatycznych. Jeśli recenzent wyłapuje nieużywane
 importy, bramka jest źle ustawiona.
 
-## Zanim zaczniesz czytać
+## Przed czytaniem
 
 - [ ] Bramka automatyczna przeszła (format, lint, testy, skan sekretów).
 - [ ] Opis zmiany mówi **co i dlaczego**, nie jakim narzędziem.

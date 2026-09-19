@@ -1,5 +1,7 @@
 # Checklista samooceny - moduł 8
 
+Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
+
 - [ ] Wiem, że katalog podatności się nie zmienił - zmieniło się tempo i to,
       jak płytko autor zna kod. → *8.1*
 - [ ] Umiem wskazać, co model robi dobrze, a co źle w kwestii bezpieczeństwa,
@@ -30,12 +32,12 @@
       i uczciwie oznaczam te, których nie egzekwuję niczym. → *8.8*
 - [ ] Wiem, czego **nie** wpisywać do komunikatów commitów i opisów pull requestów. → *8.8*
 
-## Jeśli zostało ci pięć minut
+## Na pięć wolnych minut
 
-Otwórz repozytorium, nad którym pracujesz, i sprawdź jedno:
+Otworzyć własne repozytorium robocze i sprawdzić jedno:
 czy jest w nim endpoint, który sprawdza token, a nie sprawdza, czyj jest zasób.
 
-To zajmuje pięć minut i jest najczęstszą luką w systemach, które „mają uwierzytelnianie".
+To jest najczęstsza luka w systemach, które „mają uwierzytelnianie".
 
 ---
 

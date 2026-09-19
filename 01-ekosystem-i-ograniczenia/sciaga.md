@@ -1,6 +1,6 @@
 # Ściąga - moduł 1
 
-## Komendy, bez których nie ruszysz
+## Komendy niezbędne od startu
 
 | Komenda | Do czego |
 |---|---|
@@ -9,7 +9,7 @@
 | `/effort` | `low` · `medium` · `high` · `xhigh` · `max`. **Haiku nie obsługuje.** Wpisany poziom **zapisuje się jako domyślny na kolejne sesje** |
 | `/context` | co zajmuje okno kontekstowe |
 | `/usage` | zużycie, limity planu, atrybucja, statystyki cache |
-| `/clear` | koniec zadania, czyścimy kontekst |
+| `/clear` | koniec zadania, wyczyszczenie kontekstu |
 | `/rewind` | cofnięcie rozmowy **i** kodu |
 | `/status` | wersja, model, załadowane pliki ustawień |
 | `Shift+Tab` | przełączanie trybu uprawnień (w tym planowania) |
@@ -37,15 +37,15 @@ Sprawdzenie na żywo: `/model` albo `client.models.list()`.
 | Review bezpieczeństwa | Opus | `high`-`max` |
 | Debug bez hipotezy | Opus | `xhigh` |
 
-**Najpierw schodź z effortu, potem z modelu.** Cache jest przypisany do modelu.
+**Najpierw schodzić z effortu, potem z modelu.** Cache jest przypisany do modelu.
 
 ## Cztery tryby porażki
 
 | Tryb | Reguła przeciwdziałania |
 |---|---|
-| Halucynacja | żądaj cytatu: plik + numer linii |
+| Halucynacja | wymuszony cytat: plik + numer linii |
 | Błędne założenie | precyzyjna specyfikacja (moduł 3) |
-| Nadmierna pewność | kalibruj po weryfikowalności, nie po tonie |
+| Nadmierna pewność | kalibracja po weryfikowalności, nie po tonie |
 | Rozrost kontekstu | `/clear` między zadaniami |
 
 ## Pliki kontekstowe innych narzędzi

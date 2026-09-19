@@ -1,28 +1,28 @@
 # AI Assisted Development - podręcznik uczestnika
 
-Tworzenie oprogramowania z pomocą AI i agentów. Dwa dni, osiem modułów, szesnaście labów
-na jednym repozytorium.
+Tworzenie oprogramowania z pomocą AI i agentów. Osiem modułów, 48 lekcji, szesnaście labów
+na jednym repozytorium. **Kurs nie narzuca tempa.**
 
 **Autor:** Marian Witkowski · **Wersja:** 1.0 · **Data:** 2026-09-16
 **Materiał wewnętrzny - nie do dalszej dystrybucji.**
 
 ---
 
-## Zanim przyjdziesz
+## Przygotowanie środowiska
 
-**[00-przygotowanie.md](00-przygotowanie.md)** - zrób to najpóźniej na dwa dni przed
-szkoleniem. Piętnaście minut. Pierwsza godzina dnia 1 nie jest na instalację.
+**[00-przygotowanie.md](00-przygotowanie.md)** - do wykonania przed modułem 1.
+Instalacja w trakcie pierwszego labu kosztuje więcej niż przeprowadzona wcześniej.
 
 ```bash
 git clone --recurse-submodules https://github.com/marianwitkowski/kurs-ai-assisted-development.git
-cd kurs-ai-assisted-development/repo-cwiczeniowe
-../sprawdz-srodowisko.sh
+cd kurs-ai-assisted-development
+./sprawdz-srodowisko.sh
 ```
 
-> Bez `--recurse-submodules` katalog `repo-cwiczeniowe/` będzie pusty.
-> Ratunek: `git submodule update --init --recursive`.
+> Bez `--recurse-submodules` katalog `repo-cwiczeniowe/` zostaje pusty.
+> Naprawa: `git submodule update --init --recursive`.
 
-> **Aktywuj środowisko w każdym nowym terminalu, zanim uruchomisz `claude`:**
+> **Środowisko wymaga aktywacji w każdym nowym terminalu, przed uruchomieniem `claude`:**
 > `source .venv/bin/activate`. Od modułu 5 hook bramki woła `make gate`, a ten
 > używa gołych `ruff` i `pytest` - hook dziedziczy `PATH` po procesie Claude Code.
 
@@ -34,90 +34,208 @@ Każdy moduł ma ten sam układ:
 
 | Plik | Co to jest |
 |---|---|
-| `teoria.md` | rozdział do czytania - na sali i za miesiąc |
+| `teoria.md` | lekcje modułu - rozdział do czytania teraz i za miesiąc |
 | `lab-N-M.md` | ćwiczenie z gotowymi promptami do skopiowania |
-| `rozwiazanie-N-M.md` | **przeczytaj dopiero po labie**: co powinieneś zobaczyć i dlaczego |
+| `rozwiazanie-N-M.md` | **do czytania dopiero po labie**: jaki jest oczekiwany wynik i dlaczego |
 | `sciaga.md` | ściąga: komendy, składnia, liczby - do trzymania obok terminala |
-| `checklista.md` | samoocena na koniec modułu |
+| `checklista.md` | samoocena na koniec modułu; odsyłacz `→ 5.2` wskazuje lekcję |
 
 Rozwiązania nie są kluczem odpowiedzi. Tłumaczą, **dlaczego** wzorcowe rozwiązanie
-wygląda tak, a nie inaczej - i wypisują najczęstsze potknięcia.
+wygląda tak, a nie inaczej, i wypisują najczęstsze potknięcia.
 
 **[slajdy/](slajdy/README.md)** - deck Marp na każdy moduł, dla prowadzącego.
 Slajdy to punkty zaczepienia: tabele decyzyjne, diagramy, liczby. Proza zostaje tutaj.
-Skrypt trenera siedzi w notatkach prelegenta (`make html`, potem klawisz `P`).
+Skrypt prowadzącego jest w notatkach prelegenta (`make html`, potem klawisz `P`).
 
 ### Repozytorium ćwiczeniowe
 
-Jedno repozytorium przez oba dni. Każdy lab ma **tag startowy**:
+Jedno repozytorium przez cały kurs. Każdy lab ma **tag startowy**:
 
 ```bash
 cd repo-cwiczeniowe
 git checkout lab-4-2-start
 ```
 
-**Utknąłeś w labie? Przeskocz na tag kolejnego i jedź dalej.** Tagi istnieją właśnie po to -
-nieudany lab nie może wykluczyć cię z reszty dnia.
+**Przy zablokowanym labie można przejść na tag kolejnego.** Tagi istnieją właśnie po to:
+nieukończony lab nie wyklucza z dalszej części kursu.
 
-Niedokończona praca **zablokuje** `git checkout` - także pliki nieśledzone. Odłóż ją:
+Cztery laby są fundamentem dla późniejszych. Przy pomijaniu któregoś warto przeczytać
+przynajmniej jego rozwiązanie:
+
+| Lab | Na nim stoi |
+|---|---|
+| **4.2** Odtworzenie intencji i testy zabezpieczające | 4.3, 5.1 |
+| **5.1** Trzy hooki i deterministyczna bramka | 6.1, 8.1 |
+| **5.2** Skill jako artefakt zespołowy | 8.1 |
+| **7.2** Determinizm w produkcie: klasyfikator VAT | 8.2 |
+
+Niedokończona praca **blokuje** `git checkout`, także pliki nieśledzone. Odkłada ją `git stash`:
 
 ```bash
 git stash push -u -m "moje-4-1"
 git checkout lab-4-2-start
 ```
 
-Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
-`git switch -c` tu **nie pomoże** - nie commituje, więc nie odblokowuje skoku.
+Powrót do odłożonej pracy: `git stash list` i `git stash apply stash@{0}`.
+`git switch -c` tu **nie pomaga** - nie commituje, więc nie odblokowuje skoku.
 
 ---
 
-## Dzień 1 - podstawy pracy z AI w kodzie
+## Moduły i lekcje
 
-| Moduł | Temat | Laby | Ściąga |
-|---|---|---|---|
-| [1](01-ekosystem-i-ograniczenia/teoria.md) | **Ekosystem i ograniczenia modeli** - klasy narzędzi, dobór modelu do roli, cztery tryby porażki | [1.1](01-ekosystem-i-ograniczenia/lab-1-1.md) | [ściąga](01-ekosystem-i-ograniczenia/sciaga.md) |
-| [2](02-kontekst-i-dokumentacja/teoria.md) | **Kontekst i dokumentacja LLM-ready** - okno kontekstowe, `CLAUDE.md`, standardy projektu, MCP | [2.1](02-kontekst-i-dokumentacja/lab-2-1.md) · [2.2](02-kontekst-i-dokumentacja/lab-2-2.md) | [ściąga](02-kontekst-i-dokumentacja/sciaga.md) |
-| [3](03-specification-driven/teoria.md) | **Specification-Driven Development** - tryb planowania, techniki przeciw dopowiadaniu, pełny cykl | [3.1](03-specification-driven/lab-3-1.md) · [3.2](03-specification-driven/lab-3-2.md) | [ściąga](03-specification-driven/sciaga.md) |
-| [4](04-ai-w-istniejacym-kodzie/teoria.md) | **AI w istniejącym kodzie** - odtwarzanie intencji, reguła czy błąd, testy zabezpieczające, migracje | [4.1](04-ai-w-istniejacym-kodzie/lab-4-1.md) · [4.2](04-ai-w-istniejacym-kodzie/lab-4-2.md) · [4.3](04-ai-w-istniejacym-kodzie/lab-4-3.md) | [ściąga](04-ai-w-istniejacym-kodzie/sciaga.md) |
+Osiem modułów, 48 lekcji, 16 labów. Moduły idą po kolei: każdy lab startuje ze stanu,
+w którym zakończył się poprzedni. Lekcje w module układają się w ciąg, ale każda jest
+samodzielna i da się do niej wrócić osobno.
 
-## Dzień 2 - agenci, skalowanie, jakość, governance
+### Moduł 1 - Ekosystem i ograniczenia modeli
 
-| Moduł | Temat | Laby | Ściąga |
-|---|---|---|---|
-| [5](05-agent-i-bramki/teoria.md) | **Agent i deterministyczne bramki** - hooki, kody wyjścia, bramka na `Stop`, skille jako artefakty zespołowe | [5.1](05-agent-i-bramki/lab-5-1.md) · [5.2](05-agent-i-bramki/lab-5-2.md) | [ściąga](05-agent-i-bramki/sciaga.md) |
-| [6](06-orkiestracja/teoria.md) | **Orkiestracja wieloagentowa** - worktree, subagenci, podział zadań, budżety tur | [6.1](06-orkiestracja/lab-6-1.md) · [6.2](06-orkiestracja/lab-6-2.md) | [ściąga](06-orkiestracja/sciaga.md) |
-| [7](07-ekonomia-i-determinizm/teoria.md) | **Ekonomia i determinizm** - routing modeli, prompt caching, Batch API, AI w produkcie, golden set | [7.1](07-ekonomia-i-determinizm/lab-7-1.md) · [7.2](07-ekonomia-i-determinizm/lab-7-2.md) | [ściąga](07-ekonomia-i-determinizm/sciaga.md) |
-| [8](08-bezpieczenstwo-i-governance/teoria.md) | **Bezpieczeństwo i governance** - autoryzacja per zasób, prompt injection, sekrety, RODO i AI Act, zasady zespołowe | [8.1](08-bezpieczenstwo-i-governance/lab-8-1.md) · [8.2](08-bezpieczenstwo-i-governance/lab-8-2.md) | [ściąga](08-bezpieczenstwo-i-governance/sciaga.md) |
+Klasy narzędzi, dobór modelu do roli, cztery tryby porażki.
+
+| Lekcja | Temat |
+|---|---|
+| [1.1](01-ekosystem-i-ograniczenia/teoria.md) | Trzy klasy narzędzi, trzy różne kontrakty |
+| [1.2](01-ekosystem-i-ograniczenia/teoria.md) | Model-to-Task Mapping |
+| [1.3](01-ekosystem-i-ograniczenia/teoria.md) | Cztery tryby, w których model zawodzi |
+| [1.4](01-ekosystem-i-ograniczenia/teoria.md) | Środowisko kursu: Claude Code |
+| [1.5](01-ekosystem-i-ograniczenia/teoria.md) | Czego ten kurs nie obiecuje |
+
+**Laby:** [Lab 1.1](01-ekosystem-i-ograniczenia/lab-1-1.md) Model-to-Task Mapping na żywym repo
+
+[ściąga](01-ekosystem-i-ograniczenia/sciaga.md) · [checklista](01-ekosystem-i-ograniczenia/checklista.md)
 
 ---
 
-## Ile to realnie trwa
+### Moduł 2 - Kontekst i dokumentacja LLM-ready
 
-Sumy czasów z nagłówków labów, wobec dnia 9:00-17:00 minus obiad (45 min)
-i dwie przerwy (2 × 15 min) = **405 minut netto dziennie**.
+Okno kontekstowe, `CLAUDE.md`, standardy projektu, MCP.
 
-| | Laby | Zostaje na teorię | Na moduł |
-|---|---|---|---|
-| Dzień 1 (M1-M4) | 4 h 25 | 140 min | **35 min** |
-| Dzień 2 (M5-M8) | 4 h 50 | 115 min | **28 min** |
-| Razem | **9 h 15** | 255 min | |
+| Lekcja | Temat |
+|---|---|
+| [2.1](02-kontekst-i-dokumentacja/teoria.md) | Okno kontekstowe to budżet, nie pojemnik |
+| [2.2](02-kontekst-i-dokumentacja/teoria.md) | RAG, long context, pliki projektowe - kiedy które |
+| [2.3](02-kontekst-i-dokumentacja/teoria.md) | Dokumentacja użyteczna dla ludzi i dla modeli |
+| [2.4](02-kontekst-i-dokumentacja/teoria.md) | `CLAUDE.md` - mechanika |
+| [2.5](02-kontekst-i-dokumentacja/teoria.md) | Definiowanie standardów i ich egzekwowanie |
+| [2.6](02-kontekst-i-dokumentacja/teoria.md) | MCP - jeszcze jeden kanał kontekstu |
 
-Laby zajmują **69% czasu netto** - powyżej zakładanych 60%.
+**Laby:** [Lab 2.1](02-kontekst-i-dokumentacja/lab-2-1.md) Audyt okna kontekstowego · [Lab 2.2](02-kontekst-i-dokumentacja/lab-2-2.md) Pliki kontekstowe dla tego repozytorium
 
-**To domyka się bez zapasu.** Trzydzieści minut na moduł teorii wystarczy na przejście
-przez materiał, ale nie zostawia miejsca na pytania, obsunięcia labów ani omówienie wyników.
-Zaplanuj, co tniesz, **zanim** zaczniesz się spóźniać:
+[ściąga](02-kontekst-i-dokumentacja/sciaga.md) · [checklista](02-kontekst-i-dokumentacja/checklista.md)
 
-| Co przyciąć | Ile odzyskujesz | Co tracisz |
-|---|---|---|
-| Lab 6.1: zadania A i B zamiast trzech | ~20 min | konflikt przy scalaniu - **nie tnij tego, to sedno labu** |
-| Lab 7.1: prowadzący mierzy na rzutniku, sala patrzy | ~20 min | własny pomiar w notatkach |
-| Lab 4.1: krok 1 z gotowej listy zamiast od zera | ~10 min | doświadczenie „agent podał zły numer linii" |
-| Lab 1.1: krok 3 (porównanie rozumowania) | ~10 min | jedyne miejsce, gdzie widać wartość mocniejszego modelu |
-| Lab 6.2: demonstracja zamiast wykonania | ~15 min | uruchomienie własnego subagenta |
+---
 
-Nie tnij: **4.2** (na nim stoi 4.3 i 5.1), **5.1** (na nim stoi 6.1 i 8.1),
-**5.2** (na nim stoi 8.1), **7.2** (na nim stoi 8.2).
+### Moduł 3 - Specification-Driven Development
+
+Tryb planowania, techniki przeciw dopowiadaniu, pełny cykl.
+
+| Lekcja | Temat |
+|---|---|
+| [3.1](03-specification-driven/teoria.md) | Dlaczego agent wymaga precyzyjnej specyfikacji |
+| [3.2](03-specification-driven/teoria.md) | Tryb planowania |
+| [3.3](03-specification-driven/teoria.md) | Jak pytać, żeby model nie dopowiadał |
+| [3.4](03-specification-driven/teoria.md) | Workflow: wymaganie → specyfikacja → plan → implementacja → testy → review |
+| [3.5](03-specification-driven/teoria.md) | Przekładanie wymagania biznesowego na zadania |
+
+**Laby:** [Lab 3.1](03-specification-driven/lab-3-1.md) Specyfikacja przed kodem · [Lab 3.2](03-specification-driven/lab-3-2.md) Implementacja według specyfikacji
+
+[ściąga](03-specification-driven/sciaga.md) · [checklista](03-specification-driven/checklista.md)
+
+---
+
+### Moduł 4 - AI w istniejącym kodzie
+
+Odtwarzanie intencji, reguła czy błąd, testy zabezpieczające, migracje.
+
+| Lekcja | Temat |
+|---|---|
+| [4.1](04-ai-w-istniejacym-kodzie/teoria.md) | Dlaczego legacy jest trudniejsze niż nowy kod |
+| [4.2](04-ai-w-istniejacym-kodzie/teoria.md) | Rozpoznawanie: wzorce, antywzorce, code smells |
+| [4.3](04-ai-w-istniejacym-kodzie/teoria.md) | Odtwarzanie intencji ze starego kodu |
+| [4.4](04-ai-w-istniejacym-kodzie/teoria.md) | Reguła czy błąd - rozróżnienie, na którym wszystko stoi |
+| [4.5](04-ai-w-istniejacym-kodzie/teoria.md) | Testy zabezpieczające (characterization tests) |
+| [4.6](04-ai-w-istniejacym-kodzie/teoria.md) | Jak nie dopuścić do „uproszczenia" |
+| [4.7](04-ai-w-istniejacym-kodzie/teoria.md) | Planowanie migracji |
+
+**Laby:** [Lab 4.1](04-ai-w-istniejacym-kodzie/lab-4-1.md) Mapa ryzyka i plan migracji · [Lab 4.2](04-ai-w-istniejacym-kodzie/lab-4-2.md) Odtworzenie intencji i testy zabezpieczające · [Lab 4.3](04-ai-w-istniejacym-kodzie/lab-4-3.md) Refaktoryzacja pod ochroną testów
+
+[ściąga](04-ai-w-istniejacym-kodzie/sciaga.md) · [checklista](04-ai-w-istniejacym-kodzie/checklista.md)
+
+---
+
+### Moduł 5 - Agent i deterministyczne bramki
+
+Hooki, kody wyjścia, bramka na `Stop`, skille jako artefakty zespołowe.
+
+| Lekcja | Temat |
+|---|---|
+| [5.1](05-agent-i-bramki/teoria.md) | Małe kroki i kontrola zmian |
+| [5.2](05-agent-i-bramki/teoria.md) | Hooki - egzekucja zamiast prośby |
+| [5.3](05-agent-i-bramki/teoria.md) | `CLAUDE.md` a hook - kiedy które |
+| [5.4](05-agent-i-bramki/teoria.md) | Skille jako artefakty zespołowe |
+
+**Laby:** [Lab 5.1](05-agent-i-bramki/lab-5-1.md) Trzy hooki i deterministyczna bramka · [Lab 5.2](05-agent-i-bramki/lab-5-2.md) Skill jako artefakt zespołowy
+
+[ściąga](05-agent-i-bramki/sciaga.md) · [checklista](05-agent-i-bramki/checklista.md)
+
+---
+
+### Moduł 6 - Orkiestracja wieloagentowa
+
+Worktree, subagenci, podział zadań, budżety tur.
+
+| Lekcja | Temat |
+|---|---|
+| [6.1](06-orkiestracja/teoria.md) | Kiedy równoległość ma sens, a kiedy jest kosztem |
+| [6.2](06-orkiestracja/teoria.md) | Orkiestrator i wykonawcy |
+| [6.3](06-orkiestracja/teoria.md) | Subagenci: kontekst i wynik |
+| [6.4](06-orkiestracja/teoria.md) | Git worktree |
+| [6.5](06-orkiestracja/teoria.md) | Dzielenie zadania na niezależne fragmenty |
+| [6.6](06-orkiestracja/teoria.md) | Budżety i przerywanie |
+
+**Laby:** [Lab 6.1](06-orkiestracja/lab-6-1.md) Trzy worktree, trzy zadania, jeden konflikt · [Lab 6.2](06-orkiestracja/lab-6-2.md) Subagent z izolacją i budżetem
+
+[ściąga](06-orkiestracja/sciaga.md) · [checklista](06-orkiestracja/checklista.md)
+
+---
+
+### Moduł 7 - Ekonomia i determinizm
+
+Routing modeli, prompt caching, Batch API, AI w produkcie, golden set.
+
+| Lekcja | Temat |
+|---|---|
+| [7.1](07-ekonomia-i-determinizm/teoria.md) | Kolejność, w której obniża się koszty |
+| [7.2](07-ekonomia-i-determinizm/teoria.md) | Routing modeli do roli |
+| [7.3](07-ekonomia-i-determinizm/teoria.md) | Prompt caching |
+| [7.4](07-ekonomia-i-determinizm/teoria.md) | Kontrola rozrostu kontekstu |
+| [7.5](07-ekonomia-i-determinizm/teoria.md) | Batch API |
+| [7.6](07-ekonomia-i-determinizm/teoria.md) | Pomiar |
+| [7.7](07-ekonomia-i-determinizm/teoria.md) | Determinizm w produkcie |
+
+**Laby:** [Lab 7.1](07-ekonomia-i-determinizm/lab-7-1.md) Pomiar kosztu i higiena kontekstu · [Lab 7.2](07-ekonomia-i-determinizm/lab-7-2.md) Determinizm w produkcie: klasyfikator VAT
+
+[ściąga](07-ekonomia-i-determinizm/sciaga.md) · [checklista](07-ekonomia-i-determinizm/checklista.md)
+
+---
+
+### Moduł 8 - Bezpieczeństwo i governance
+
+Autoryzacja per zasób, prompt injection, sekrety, RODO i AI Act, zasady zespołowe.
+
+| Lekcja | Temat |
+|---|---|
+| [8.1](08-bezpieczenstwo-i-governance/teoria.md) | Security-first: co się zmienia, a co nie |
+| [8.2](08-bezpieczenstwo-i-governance/teoria.md) | Luka, której nie złapie żadne narzędzie |
+| [8.3](08-bezpieczenstwo-i-governance/teoria.md) | Prompt injection |
+| [8.4](08-bezpieczenstwo-i-governance/teoria.md) | Sekrety |
+| [8.5](08-bezpieczenstwo-i-governance/teoria.md) | Nowa rola dewelopera i code review |
+| [8.6](08-bezpieczenstwo-i-governance/teoria.md) | Kiedy AI można używać, a kiedy nie |
+| [8.7](08-bezpieczenstwo-i-governance/teoria.md) | RODO i AI Act - pytania, nie odpowiedzi |
+| [8.8](08-bezpieczenstwo-i-governance/teoria.md) | Zasady zespołowe, które da się wyegzekwować |
+
+**Laby:** [Lab 8.1](08-bezpieczenstwo-i-governance/lab-8-1.md) Audyt bezpieczeństwa własnym skillem · [Lab 8.2](08-bezpieczenstwo-i-governance/lab-8-2.md) Prompt injection i zasady zespołowe
+
+[ściąga](08-bezpieczenstwo-i-governance/sciaga.md) · [checklista](08-bezpieczenstwo-i-governance/checklista.md)
 
 ---
 
@@ -130,15 +248,15 @@ repozytorium, nie przykłady do przepisania:
 subagent z izolacją w worktree · skan sekretów · `AI-ZASADY.md` ·
 biblioteka promptów · checklista review · szablon specyfikacji · wzór workflow CI
 
-W `szablony/README.md` jest **kolejność wdrażania**. Nie wdrażaj wszystkiego naraz -
-projekt, który nie przechodzi wszystkich bramek od pierwszego dnia, kończy się
-wyłączonymi bramkami.
+W `szablony/README.md` jest **kolejność wdrażania**. Wdrażanie wszystkiego naraz kończy się
+wyłączonymi bramkami: projekt, który od początku nie przechodzi żadnej z nich, uczy zespół
+omijania ich, a nie stosowania.
 
 ---
 
 ## Nić przewodnia kursu
 
-Przez oba dni wraca ta sama zasada, w czterech odsłonach:
+Przez cały kurs wraca ta sama zasada, w czterech odsłonach:
 
 | Moduł | Prośba | Egzekucja |
 |---|---|---|
@@ -149,8 +267,8 @@ Przez oba dni wraca ta sama zasada, w czterech odsłonach:
 
 Ta sama zasada w innej skali:
 
-> **Artefakt w repozytorium bije wiedzę w głowie.** Specyfikacja, hook, skill, subagent,
-> golden set, zasady zespołowe - wszystko, co ma działać jutro bez ciebie,
+> **Artefakt w repozytorium znaczy więcej niż wiedza w głowie.** Specyfikacja, hook, skill,
+> subagent, golden set, zasady zespołowe - wszystko, co ma działać bez obecności autora,
 > musi być plikiem przechodzącym przez review.
 
 ---
@@ -167,4 +285,4 @@ Ta sama zasada w innej skali:
 | Tagi labów | 17 |
 
 Wszystkie problemy są **celowe**. Część z nich to reguły biznesowe, których nie wolno
-naprawiać - rozróżnienie tego jest treścią modułu 4.
+naprawiać; rozróżnienie jednego od drugiego jest treścią modułu 4.

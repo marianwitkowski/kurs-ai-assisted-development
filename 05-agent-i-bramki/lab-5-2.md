@@ -1,6 +1,6 @@
 # Lab 5.2 - Skill jako artefakt zespołowy
 
-**Czas: ~40 min** · **Tag startowy: `lab-5-2-start`** · **Produkt: `.claude/skills/przeglad-bezpieczenstwa/SKILL.md`**
+**Tag startowy: `lab-5-2-start`** · **Produkt: `.claude/skills/przeglad-bezpieczenstwa/SKILL.md`**
 
 ---
 
@@ -12,14 +12,14 @@ git checkout lab-5-2-start
 make gate          # zielone; hooki z labu 5.1 są w repo
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** -
+> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-5-1"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -34,20 +34,20 @@ make gate          # zielone; hooki z labu 5.1 są w repo
 
 ## Cel
 
-Zbudować `/przeglad-bezpieczenstwa` - workflow, który jutro faktycznie znajdzie luki
+Zbudować `/przeglad-bezpieczenstwa` - workflow, który w module 8 faktycznie znajdzie luki
 w tym repozytorium. I zrozumieć, dlaczego to musi być plik w repo, a nie prompt w notatniku.
 
 ---
 
-## Krok 1 - dlaczego nie prompt (5 min)
+## Krok 1 - dlaczego nie prompt
 
-Zanim napiszesz skill, zobacz, co zastępujesz:
+Zanim powstanie skill, warto zobaczyć, co zastępuje:
 
 ```
 Przejrzyj kod tego serwisu pod kątem bezpieczeństwa.
 ```
 
-Zanotuj trzy rzeczy:
+Do zanotowania trzy rzeczy:
 - ile plików przeczytał (`/context` przed i po),
 - czy sprawdził **wszystkie** kategorie, czy tylko te, które rzuciły mu się w oczy,
 - czy raport da się porównać z raportem kolegi.
@@ -62,7 +62,7 @@ sprawdzone, czy pominięte.
 
 ---
 
-## Krok 2 - szkielet skilla (8 min)
+## Krok 2 - szkielet skilla
 
 ```
 Utwórz .claude/skills/przeglad-bezpieczenstwa/SKILL.md.
@@ -76,15 +76,15 @@ Frontmatter (--- musi być w pierwszej linii pliku):
 Treść na razie pusta, dopiszemy ją w kolejnym kroku.
 ```
 
-**Zapamiętaj jedną rzecz:** nazwa komendy bierze się z **nazwy katalogu**,
+**Jedna rzecz do zapamiętania:** nazwa komendy bierze się z **nazwy katalogu**,
 nie z pola `name`. Katalog `przeglad-bezpieczenstwa` daje `/przeglad-bezpieczenstwa`.
 Pole `name` to tylko etykieta na liście skilli.
 
-Sprawdź, czy się załadował - zacznij pisać `/przeglad` i zobacz, czy podpowiada.
+Sprawdzenie, czy się załadował: po wpisaniu `/przeglad` ma pojawić się podpowiedź.
 
 ---
 
-## Krok 3 - wstrzyknięcie diffa (7 min)
+## Krok 3 - wstrzyknięcie diffa
 
 To jest mechanizm, który odróżnia skill od wklejonego promptu.
 
@@ -106,7 +106,7 @@ po niego sięgać i nie może o nim zapomnieć.
 
 Na czystym drzewie `git diff HEAD` jest pusty. Skill nie ma czego przeglądać.
 
-Dopisz do treści skilla instrukcję na ten przypadek:
+Treść skilla wymaga instrukcji na ten przypadek:
 
 ```markdown
 **Jeżeli oba powyższe bloki są puste**, a użytkownik nie podał argumentu, uruchom
@@ -114,11 +114,11 @@ Dopisz do treści skilla instrukcję na ten przypadek:
 Nie przeglądaj całego repozytorium, gdy masz konkretny diff.
 ```
 
-Bez tego jutro, w module 8, wywołasz skill na czystym repo i dostaniesz pusty raport.
+Bez tego wywołanie skilla na czystym repo w module 8 kończy się pustym raportem.
 
 ---
 
-## Krok 4 - checklista (10 min)
+## Krok 4 - checklista
 
 Tu jest cała wartość skilla. Checklista ma być **stała** - to ona sprawia,
 że dwa przeglądy są porównywalne.
@@ -138,7 +138,7 @@ Dopisz zasadę: model ma przejść WSZYSTKIE punkty po kolei i przy każdym,
 który nie dotyczy tego diffa, wpisać "n/d". Żadnego nie wolno pominąć milcząco.
 ```
 
-**Punkt 2 sformułuj precyzyjnie.** To jest luka, która jutro ma zostać znaleziona,
+**Punkt 2 wymaga precyzyjnego sformułowania.** To jest luka, która w module 8 ma zostać znaleziona,
 a jest najtrudniejsza do wykrycia, bo kod *wygląda* poprawnie:
 
 ```markdown
@@ -153,7 +153,7 @@ zobaczy wywołanie `_kontrahent_z_naglowka()` i uzna, że autoryzacja jest.
 
 ---
 
-## Krok 5 - format raportu (5 min)
+## Krok 5 - format raportu
 
 ```
 Dopisz sekcję "Format raportu". Ma wymuszać:
@@ -173,9 +173,9 @@ tranzytywnych" zamienia raport w to, czym naprawdę jest: przeglądem konkretneg
 
 ---
 
-## Krok 6 - test (5 min)
+## Krok 6 - test
 
-Zrób kontrolowaną zmianę i przejrzyj ją:
+Kontrolowana zmiana do przejrzenia:
 
 ```bash
 cat >> app/db.py <<'EOF'
@@ -190,7 +190,7 @@ EOF
 /przeglad-bezpieczenstwa
 ```
 
-Sprawdź:
+Do sprawdzenia:
 - [ ] czy raport ma **wszystkie siedem** wierszy w tabeli checklisty,
 - [ ] czy znalazł wstrzyknięcie SQL z numerem linii,
 - [ ] czy nie zgłosił problemów stylistycznych,
@@ -200,7 +200,7 @@ Sprawdź:
 git checkout -- app/db.py
 ```
 
-Teraz test na czystym drzewie - tak będzie jutro:
+Teraz test na czystym drzewie - tak będzie w module 8:
 
 ```
 /przeglad-bezpieczenstwa lab-1-1-start
@@ -209,11 +209,11 @@ Teraz test na czystym drzewie - tak będzie jutro:
 Ma przejrzeć diff od stanu startowego i wypełnić całą tabelę checklisty.
 Diff obejmuje też realny kod: nowy moduł `app/odsetki.py`, nowy endpoint
 `/raporty/odsetki` w `app/main.py` i refaktoryzację `app/rozliczenia.py`.
-Spodziewaj się `n/d` przy sekretach, ścieżkach plików i zależnościach,
-a `ok`/`ZNALEZIONO` przy autoryzacji, walidacji i wycieku danych.
+Oczekiwany wynik: `n/d` przy sekretach, ścieżkach plików i zależnościach,
+`ok`/`ZNALEZIONO` przy autoryzacji, walidacji i wycieku danych.
 
-> **Zapamiętaj ten wynik.** Jutro w module 8 zobaczysz, dlaczego przegląd **diffa**
-> nie znajduje luk, które są w repozytorium od pierwszego commita - i czym się to różni
+> **Ten wynik przydaje się w module 8.** Moduł 8 pokazuje, dlaczego przegląd **diffa**
+> nie znajduje luk obecnych w repozytorium od pierwszego commita - i czym się to różni
 > od przeglądu **całego projektu**.
 
 ```bash
@@ -239,7 +239,7 @@ Przegląd, który po drodze poprawia, traci wartość dowodową: nie wiadomo, co
 a co jest.
 
 **Checklista, która „dostosowuje się do diffa".** Cała wartość leży w tym, że jest stała.
-Jeśli model sam decyduje, które punkty pominąć, wracasz do promptu z kroku 1.
+Model decydujący sam, które punkty pominąć, sprowadza skill z powrotem do promptu z kroku 1.
 
 **Nazwa komendy z pola `name`.** Nie. Z nazwy katalogu. `name: Przegląd bezpieczeństwa`
 w katalogu `sec-review` daje komendę `/sec-review`.
@@ -247,8 +247,8 @@ w katalogu `sec-review` daje komendę `/sec-review`.
 **Brak `---` w pierwszej linii.** Frontmatter musi zaczynać plik. Pusta linia przed nim
 oznacza, że cały blok zostanie potraktowany jako treść.
 
-**Skill zamiast hooka.** Skill trzeba wywołać. Jeśli chcesz, żeby przegląd działał się
-zawsze, to jest zadanie dla hooka albo CI. Skill jest wtedy, gdy człowiek decyduje,
+**Skill zamiast hooka.** Skill trzeba wywołać. Przegląd, który ma dziać się
+zawsze, jest zadaniem dla hooka albo CI. Skill wchodzi wtedy, gdy człowiek decyduje,
 że teraz.
 
 ---

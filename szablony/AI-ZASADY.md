@@ -1,7 +1,7 @@
 # Zasady korzystania z AI w zespole
 
 **Wersja szablonowa.** Ten plik jest punktem wyjścia, nie gotową polityką.
-Sekcje oznaczone **[DO USTALENIA]** wymagają decyzji w twojej organizacji,
+Sekcje oznaczone **[DO USTALENIA]** wymagają decyzji po stronie organizacji,
 a części prawne - potwierdzenia z działem prawnym albo inspektorem ochrony danych.
 
 Dokument dotyczy **pracy nad kodem**. Zasady dla AI w produkcie są w sekcji 6.
@@ -18,7 +18,7 @@ Dokument dotyczy **pracy nad kodem**. Zasady dla AI w produkcie są w sekcji 6.
 | Prototypy i eksperymenty | ✅ | |
 | Kod obsługujący dane osobowe | ⚠️ | kod tak, **dane produkcyjne nie** |
 | Kod w komponentach bezpieczeństwa (uwierzytelnianie, kryptografia, autoryzacja) | ⚠️ | wymaga przeglądu drugiej osoby, zawsze |
-| Kod objęty umową z klientem zakazującą narzędzi zewnętrznych | ❌ | sprawdź umowę **przed** rozpoczęciem |
+| Kod objęty umową z klientem zakazującą narzędzi zewnętrznych | ❌ | umowa do sprawdzenia **przed** rozpoczęciem |
 | Repozytoria z kodem osób trzecich na licencji zakazującej | ❌ | |
 
 **[DO USTALENIA]** Lista projektów i klientów, których umowy ograniczają użycie narzędzi AI.
@@ -44,7 +44,7 @@ załączonych plików, wyników komend uruchamianych przez agenta.
 
 ### Do danych testowych
 
-Używaj generatora danych syntetycznych, nie kopii produkcji. W tym repozytorium
+Obowiązuje generator danych syntetycznych, nie kopia produkcji. W tym repozytorium
 robi to `seed.py` - deterministycznie, z syntetycznymi NIP-ami.
 
 Anonimizacja kopii produkcyjnej jest trudniejsza, niż wygląda, i zwykle niepełna.
@@ -73,7 +73,7 @@ Odpowiedzi udziela dział prawny albo inspektor ochrony danych, nie zespół.
    albo danych testowych są dane osób fizycznych - tak, niezależnie od tego,
    czy było to zamierzone.
 2. **Jaka jest podstawa prawna i czy jest umowa powierzenia przetwarzania?**
-   Dostawca narzędzia przetwarza dane w twoim imieniu.
+   Dostawca narzędzia przetwarza dane w imieniu organizacji.
 3. **Gdzie fizycznie trafiają dane i jak długo są przechowywane?**
    To rozstrzyga o wyborze endpointu: API dostawcy, chmura firmowa (Bedrock, Vertex, Foundry),
    instalacja własna.
@@ -92,7 +92,7 @@ ocena skutków (DPIA), jeśli wymagana.
 Rozporządzenie UE o sztucznej inteligencji. Obowiązki zależą od **roli** i od **klasy ryzyka**,
 a poszczególne części rozporządzenia stosuje się od różnych dat.
 
-**Nie próbuj rozstrzygnąć tego samodzielnie.** Poniżej struktura pytań do zadania prawnikom -
+**Tego nie rozstrzyga się samodzielnie.** Poniżej struktura pytań do zadania prawnikom -
 nie odpowiedzi.
 
 | Pytanie | Dlaczego istotne |
@@ -165,12 +165,11 @@ Wzorcem jest `app/klasyfikacja_vat.py`.
 ### Serwery MCP i narzędzia zewnętrzne
 
 Serwer MCP dostarcza modelowi **tekst**, który działa na niego jak instrukcja:
-opisy narzędzi, nazwy zasobów, zwracane dane. Serwer, któremu nie ufasz,
-może sterować agentem.
+opisy narzędzi, nazwy zasobów, zwracane dane. Niezaufany serwer może sterować agentem.
 
 - Podłączamy wyłącznie serwery z listy zatwierdzonych.
 - Nowy serwer wymaga przeglądu: kto go utrzymuje, do czego ma dostęp, co zwraca.
-- Nieużywane serwery wyłączamy - zjadają kontekst i poszerzają powierzchnię ataku.
+- Nieużywane serwery wyłączamy - zużywają kontekst i poszerzają powierzchnię ataku.
 
 **[DO USTALENIA]** Lista zatwierdzonych serwerów MCP i osoba, która ją utrzymuje.
 
@@ -252,8 +251,8 @@ Zasada bez mechanizmu jest życzeniem. Zestawienie, co czym egzekwujemy:
 | Konwencje projektu | `CLAUDE.md` | repozytorium |
 | Nowe zależności | review + `CLAUDE.md` | proces |
 
-Zwróć uwagę na ostatni wiersz: część zasad **nie da się** wyegzekwować mechanicznie
-i pozostaje procesem. To jest w porządku, pod warunkiem że wiadomo które.
+Ostatni wiersz jest tu istotny: część zasad zostaje procesem, bo **nie da się** ich
+wyegzekwować mechanicznie. To jest w porządku, pod warunkiem że wiadomo które.
 
 ---
 

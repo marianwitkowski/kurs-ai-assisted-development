@@ -120,7 +120,7 @@ czy użyła właściwej.
 
 ### Dlaczego 404, a nie 403
 
-403 mówi: „ten zasób istnieje, ale nie wolno ci go zobaczyć". Przy sekwencyjnych
+403 mówi: „ten zasób istnieje, ale pytający nie ma do niego prawa". Przy sekwencyjnych
 identyfikatorach pozwala policzyć cudze faktury i wywnioskować obroty konkurencji.
 
 Test pilnuje, żeby oba przypadki wyglądały identycznie:
@@ -158,7 +158,7 @@ to ten sam problem przeniesiony w inne miejsce - a `os.environ.get(..., "")` bez
 daje ciche wysłanie z pustym nagłówkiem, czyli błąd trudniejszy do zdiagnozowania
 niż brak klucza.
 
-Zwróć uwagę na komentarz `TODO(ROZL-412)`. Jest z **tego samego commita** co klucz.
+Komentarz `TODO(ROZL-412)` pochodzi z **tego samego commita** co klucz.
 Ktoś wiedział, że tak nie powinno być, i zostawił to na później. To jest najczęstsza
 droga sekretu do repozytorium.
 
@@ -202,11 +202,11 @@ niż przez przypadkowe dopasowanie.
 
 ---
 
-## Krok 6 - sedno całego labu
+## Krok 6 - istota całego labu
 
 ```bash
 git log -p --all -- app/konfiguracja.py | grep -c "ksef_live_"
-# wynik > 0 - dokładna liczba zależy od tego, ile commitów zdążyłeś zrobić
+# wynik > 0 - dokładna liczba zależy od liczby commitów wykonanych w labie
 ```
 
 Klucz jest usunięty z pliku i **nadal jest w repozytorium**. Zostanie tam.

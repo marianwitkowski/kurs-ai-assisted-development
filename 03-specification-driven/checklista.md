@@ -1,5 +1,7 @@
 # Checklista samooceny - moduł 3
 
+Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
+
 - [ ] Umiem wyjaśnić, dlaczego agent nie dopyta, tylko dopowie - i że to właściwość,
       a nie usterka do naprawienia lepszym modelem. → *3.1*
 - [ ] Wiem, dlaczego błędne założenie jest groźniejsze od halucynacji. → *3.1*
@@ -20,11 +22,11 @@
 - [ ] Umiem rozpoznać moment, w którym specyfikacja milczy - i wiem, że wtedy
       wybieram wariant zostawiający ślad. → *rozwiązanie 3.2*
 
-## Jeśli zostało ci pięć minut
+## Przy pięciu wolnych minutach
 
-Weź ostatnie zadanie, które realnie dostałeś w pracy, i wypisz z pamięci trzy rzeczy,
-które w nim rozstrzygnąłeś sam, bo „to oczywiste". Sprawdź, czy dla kogoś innego
-były oczywiste tak samo.
+Wziąć ostatnie zadanie realnie otrzymane w pracy i wypisać z pamięci trzy rzeczy
+rozstrzygnięte w nim samodzielnie, bo „to oczywiste". Potem sprawdzić, czy dla kogoś
+innego były oczywiste tak samo.
 
 ---
 

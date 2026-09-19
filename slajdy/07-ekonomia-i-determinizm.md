@@ -10,7 +10,7 @@ footer: 'AI Assisted Development · Moduł 7'
 
 # Ekonomia i determinizm
 
-## Moduł 7 · dzień 2
+## Moduł 7 · 7 lekcji · 2 laby
 
 Kolejność obniżania kosztów, prompt caching, Batch API.
 Potem model przestaje być narzędziem programisty i staje się częścią produktu.
@@ -18,10 +18,9 @@ Potem model przestaje być narzędziem programisty i staje się częścią produ
 **Zmiana modelu na tańszy jest ostatnim ruchem, nie pierwszym.**
 
 <!--
-CO POWIEDZIEĆ: pierwsza połowa modułu to pieniądze: co obniża koszt i w jakiej kolejności.
-Druga to determinizm: jak zbudować fragment produktu, który działa bez ciebie, mimo że
+CO POWIEDZIEĆ: Pierwsza połowa modułu to pieniądze: co obniża koszt i w jakiej kolejności.
+Druga to determinizm: jak zbudować fragment produktu, który działa bez autora, mimo że
 w środku siedzi model.
-CZAS: ~1 min
 -->
 
 ---
@@ -29,24 +28,23 @@ CZAS: ~1 min
 # Kolejność, w której obniża się koszty
 
 <div class="drabina">
-  <div class="stopien"><span class="nr">1</span><span>Higiena kontekstu: <code>/clear</code>, celowane czytanie</span><span class="cena">nic nie tracisz</span></div>
-  <div class="stopien"><span class="nr">2</span><span>Prompt caching</span><span class="cena">nic nie tracisz</span></div>
-  <div class="stopien"><span class="nr">3</span><span>Batch API</span><span class="cena">-50%, tracisz natychmiastowość</span></div>
-  <div class="stopien"><span class="nr">4</span><span>Niższy <code>effort</code></span><span class="cena">tracisz głębokość rozumowania</span></div>
-  <div class="stopien"><span class="nr">5</span><span>Tańszy model</span><span class="cena">tracisz jakość <strong>i cache</strong></span></div>
+  <div class="stopien"><span class="nr">1</span><span>Higiena kontekstu: <code>/clear</code>, celowane czytanie</span><span class="cena">bez strat</span></div>
+  <div class="stopien"><span class="nr">2</span><span>Prompt caching</span><span class="cena">bez strat</span></div>
+  <div class="stopien"><span class="nr">3</span><span>Batch API</span><span class="cena">-50%, kosztuje natychmiastowość</span></div>
+  <div class="stopien"><span class="nr">4</span><span>Niższy <code>effort</code></span><span class="cena">kosztuje głębokość rozumowania</span></div>
+  <div class="stopien"><span class="nr">5</span><span>Tańszy model</span><span class="cena">kosztuje jakość <strong>i cache</strong></span></div>
 </div>
 
-**Cache jest przypisany do modelu.** Skakanie między modelami w jednej sesji
+**Cache jest przypisany do modelu.** Przeskakiwanie między modelami w jednej sesji
 oznacza budowanie cache'u od nowa za każdym razem.
 
 <!--
-CO POWIEDZIEĆ: najczęstszy błąd to zacząć od piątego stopnia, bo jest najbardziej widoczny.
+CO POWIEDZIEĆ: Najczęstszy błąd to zacząć od piątego stopnia, bo jest najbardziej widoczny.
 Cztery stopnie nad nim nie kosztują jakości, a dwa pierwsze nie kosztują nic.
-NA CO UWAŻAĆ: ostatni wiersz ma dopisek, o którym łatwo zapomnieć - tańszy model zabiera
+NA CO UWAŻAĆ: Ostatni wiersz ma dopisek, o którym łatwo zapomnieć - tańszy model zabiera
 nie tylko jakość, ale i cache, bo cache jest per model.
 PYTANIE Z SALI: „Okno ma milion tokenów, po co ta higiena?" Okno to nie budżet, tylko
-sufit. Płacisz za to, co w nim siedzi, przy każdym zapytaniu.
-CZAS: ~3 min
+sufit. Opłacie podlega to, co w nim siedzi, przy każdym zapytaniu.
 -->
 
 ---
@@ -68,14 +66,13 @@ frontmatter `model:` ma nad nią pierwszeństwo.
 > **Haiku nie obsługuje effortu.**
 
 <!--
-CO POWIEDZIEĆ: przypisuj model do roli w procesie, a nie do wrażenia, że zadanie jest
+CO POWIEDZIEĆ: Przypisuj model do roli w procesie, a nie do wrażenia, że zadanie jest
 trudne. Rola mówi, ile kosztuje błąd, i to jest właściwe kryterium.
-NA CO UWAŻAĆ: czwarty wiersz ma dopisek „bez effortu" nie przez przypadek - dla Haiku
+NA CO UWAŻAĆ: Czwarty wiersz ma dopisek „bez effortu" nie przez przypadek - dla Haiku
 nie ma czego ustawiać, `low` dotyczy tylko wariantu z Sonnetem.
 PYTANIE Z SALI: „Zbuduję kaskadę: tani model robi pierwsze podejście, drogi poprawia?"
 Najpierw zmierz prostszy wariant: mocniejszy model na niższym efforcie. Kaskada to dwa
 modele, czyli dwa cache'e i dwa razy więcej kodu do utrzymania.
-CZAS: ~3 min
 -->
 
 ---
@@ -102,11 +99,10 @@ messages=[{"role": "user", "content": f"Opis pozycji: {opis}"}],
 Zmiana **jednego bajtu** w prefiksie unieważnia wszystko po niej.
 
 <!--
-CO POWIEDZIEĆ: kolejność renderowania to tools, system, messages. Wszystko, co stabilne,
+CO POWIEDZIEĆ: Kolejność renderowania to tools, system, messages. Wszystko, co stabilne,
 ląduje przed ostatnim punktem cache'owania, wszystko zmienne po nim.
-NA CO UWAŻAĆ: sala myśli o cache'u jak o cache'u odpowiedzi. To cache prefiksu wejścia:
+NA CO UWAŻAĆ: Sala myśli o cache'u jak o cache'u odpowiedzi. To cache prefiksu wejścia:
 liczy się, czy początek żądania jest bajt w bajt taki sam.
-CZAS: ~3 min
 -->
 
 ---
@@ -126,13 +122,12 @@ oznacza cichy invalidator. W Claude Code to samo widać w `/usage`, w linii
 `Prompt cache (main)`.
 
 <!--
-CO POWIEDZIEĆ: to jest kategoria błędu, której nie widać: wszystko działa poprawnie,
+CO POWIEDZIEĆ: To jest kategoria błędu, której nie widać: wszystko działa poprawnie,
 tylko drożej. Nie ma innego sposobu, żeby to wykryć, niż spojrzeć na licznik odczytów
 z cache'u.
-NA CO UWAŻAĆ: w labie 7.1 zdarza się zero trafień. Najczęstsze przyczyny to przełączanie
+NA CO UWAŻAĆ: W labie 7.1 zdarza się zero trafień. Najczęstsze przyczyny to przełączanie
 modelu między pytaniami, zmiana zestawu serwerów MCP i edycja plików kontekstowych
 w trakcie sesji.
-CZAS: ~3 min
 -->
 
 ---
@@ -152,14 +147,13 @@ Limity: maksymalnie **4 punkty cache'owania** na żądanie,
 minimalny prefiks **512-4096 tokenów** zależnie od modelu.
 
 <!--
-CO POWIEDZIEĆ: ta jedna liczba zmienia sposób pracy. Na subskrypcji można wstać od
+CO POWIEDZIEĆ: Ta jedna liczba zmienia sposób pracy. Na subskrypcji można wstać od
 biurka, na kluczu API domyślnie płaci się za powrót.
-NA CO UWAŻAĆ: prefiks krótszy niż minimum po prostu się nie zacache'uje i nikt o tym
+NA CO UWAŻAĆ: Prefiks krótszy niż minimum po prostu się nie zacache'uje i nikt o tym
 nie poinformuje.
 PYTANIE Z SALI: „Jak sprawdzić, który TTL faktycznie poszedł?"
 `claude -p "hello" --output-format json` i pole `usage.cache_creation` - zapisy godzinne
 raportowane są jako `ephemeral_1h_input_tokens`.
-CZAS: ~2 min
 -->
 
 ---
@@ -169,8 +163,8 @@ CZAS: ~2 min
 | | `/clear` | `/compact <instrukcja>` |
 |---|---|---|
 | Koszt | **zero** | duże żądanie: czyta całą historię, żeby ją streścić |
-| Kiedy | między niepowiązanymi zadaniami | gdy potrzebujesz ciągłości |
-| Zanim użyjesz | `/rename`, jeśli chcesz wrócić przez `/resume` | powiedz, co zachować |
+| Kiedy | między niepowiązanymi zadaniami | gdy potrzebna jest ciągłość |
+| Przed użyciem | `/rename`, gdy sesja ma być dostępna przez `/resume` | wskazanie, co zachować |
 
 **Co przeżywa kompakcję:** projektowy `CLAUDE.md` z korzenia - czytany ponownie z dysku.
 Instrukcja podana tylko w rozmowie przepada.
@@ -178,16 +172,15 @@ Instrukcja podana tylko w rozmowie przepada.
 Stałe instrukcje kompakcji wpisuje się do `CLAUDE.md` pod `# Compact instructions`.
 
 <!--
-CO POWIEDZIEĆ: jedna sesja to jedno zadanie. Gdy ciągłość nie jest potrzebna, `/clear`
+CO POWIEDZIEĆ: Jedna sesja to jedno zadanie. Gdy ciągłość nie jest potrzebna, `/clear`
 jest darmowy, a kompakcja nie - sama jest dużym żądaniem.
-NA CO UWAŻAĆ: kompakcja bez potrzeby ciągłości to płacenie za streszczenie historii,
+NA CO UWAŻAĆ: Kompakcja bez potrzeby ciągłości to płacenie za streszczenie historii,
 która i tak nie będzie potrzebna. Pytanie brzmi zawsze: czy potrzebuję ciągłości.
-CZAS: ~2 min
 -->
 
 ---
 
-# Filtruj w powłoce, nie w kontekście
+# Filtrowanie w powłoce, nie w kontekście
 
 <div class="przeplyw">
   <div class="krok zly">10 000 linii logu<small>surowe wyjście <code>pytest</code></small></div>
@@ -203,17 +196,16 @@ CZAS: ~2 min
 ```
 
 > `updatedInput` zastępuje **całe** wejście narzędzia, nie scala się z nim.
-> W `jq` buduj je przez `(.tool_input + {command: $filtered})`.
+> W `jq` buduje się je przez `(.tool_input + {command: $filtered})`.
 
 To samo robi subagent zwracający streszczenie (moduł 6), skill zamiast rozdętego
 `CLAUDE.md` (moduł 2), CLI zamiast serwera MCP.
 
 <!--
-CO POWIEDZIEĆ: hook `PreToolUse` może przerobić komendę, zanim się wykona. Filtrowanie
+CO POWIEDZIEĆ: Hook `PreToolUse` może przerobić komendę, zanim się wykona. Filtrowanie
 przenosi się z kontekstu modelu do powłoki, gdzie jest darmowe.
-NA CO UWAŻAĆ: to najbardziej niedoceniana dźwignia z całego modułu - ten sam mechanizm
+NA CO UWAŻAĆ: To najbardziej niedoceniana dźwignia z całego modułu - ten sam mechanizm
 hooka, który w module 5 blokował, tutaj tylko przycina wejście.
-CZAS: ~3 min
 -->
 
 ---
@@ -228,15 +220,14 @@ CZAS: ~3 min
 | Nie nadaje się do | czegokolwiek interaktywnego |
 | Gdzie działa | klucz API, **nie** subskrypcja Pro/Max |
 
-> **Wyniki wracają w dowolnej kolejności.** Kluczuj po `custom_id`, nigdy po pozycji
+> **Wyniki wracają w dowolnej kolejności.** Kluczowanie po `custom_id`, nigdy po pozycji
 > na liście.
 
 <!--
-CO POWIEDZIEĆ: wszystko, na co nikt nie czeka, powinno iść batchem. To jedyna dźwignia,
+CO POWIEDZIEĆ: Wszystko, na co nikt nie czeka, powinno iść batchem. To jedyna dźwignia,
 która daje połowę ceny i nie kosztuje jakości.
-NA CO UWAŻAĆ: kluczowanie po pozycji na liście przechodzi testy na paczce
+NA CO UWAŻAĆ: Kluczowanie po pozycji na liście przechodzi testy na paczce
 trzyelementowej i psuje dane na tysiącu.
-CZAS: ~2 min
 -->
 
 ---
@@ -258,15 +249,14 @@ Kalibracja z dokumentacji: ok. **13 USD** na dewelopera na dzień aktywny,
 **150-250 USD** miesięcznie we wdrożeniach korporacyjnych.
 
 <!--
-CO POWIEDZIEĆ: tańsze zapytanie, które wymaga trzech kolejnych tur, nie jest tańsze.
+CO POWIEDZIEĆ: Tańsze zapytanie, które wymaga trzech kolejnych tur, nie jest tańsze.
 Dlatego liczy się koszt na ukończone zadanie, a nie na zapytanie.
-NA CO UWAŻAĆ: blok `Session` w `/usage` pokazuje kwotę w dolarach, ale na subskrypcji
+NA CO UWAŻAĆ: Blok `Session` w `/usage` pokazuje kwotę w dolarach, ale na subskrypcji
 ta liczba nie ma związku z rachunkiem - jest liczona lokalnie po cenniku katalogowym.
 Istotne są paski limitu i atrybucja.
-PYTANIE Z SALI: „Co zrobić z tą wiedzą dziś?" Otworzyć `/usage` i spojrzeć na atrybucję.
-Jeśli serwer MCP, plugin albo skill zjada więcej niż kilka procent, a nie używasz go
-w tym projekcie, wyłącz go teraz. Serwery MCP wyłącza `/mcp`.
-CZAS: ~3 min
+PYTANIE Z SALI: „Co zrobić z tą wiedzą od razu?" Otworzyć `/usage` i spojrzeć na atrybucję.
+Jeśli serwer MCP, plugin albo skill odpowiada za więcej niż kilka procent zużycia,
+a nie jest używany w tym projekcie, wyłączcie go teraz. Serwery MCP wyłącza `/mcp`.
 -->
 
 ---
@@ -285,16 +275,15 @@ Schemat gwarantuje **kształt**, nie **sens** - stawka spoza słownika, data w p
 i absurdalna kwota to sprawdzenia w kodzie.
 
 <!--
-CO POWIEDZIEĆ: model zwraca wynik i pewność, ale to kod decyduje, czy tej pewności
+CO POWIEDZIEĆ: Model zwraca wynik i pewność, ale to kod decyduje, czy tej pewności
 wystarczy. Model, który sam decyduje, czy jest wystarczająco pewny, jest modelem
 bez nadzoru.
-NA CO UWAŻAĆ: kolejność jest częścią projektu. Reguła twarda sprawdzana po modelu
+NA CO UWAŻAĆ: Kolejność jest częścią projektu. Reguła twarda sprawdzana po modelu
 oznacza płacenie za pozycje, które rozstrzyga jedno słowo kluczowe - w repozytorium
 ćwiczeniowym reguły pokrywają 4 z 12 unikalnych opisów.
 PYTANIE Z SALI: „Skoro model może być pewny i w błędzie, to po co próg?" Próg chroni
 przed niepewnością, nie przed pewnym błędem. Przed pewnym błędem chroni tylko reguła
 twarda albo człowiek.
-CZAS: ~3 min
 -->
 
 ---
@@ -314,12 +303,11 @@ Prompt jest kodem. Zmiana promptu jest zmianą zachowania systemu.
 ```
 
 <!--
-CO POWIEDZIEĆ: test na źródło decyzji jest ważniejszy niż test na stawkę. Prompt, który
+CO POWIEDZIEĆ: Test na źródło decyzji jest ważniejszy niż test na stawkę. Prompt, który
 przypadkiem trafia dobrze, to nie to samo co reguła, która trafia zawsze.
-NA CO UWAŻAĆ: bez testu na źródło zmiana promptu może po cichu przenieść rozstrzygnięcia
-z warstwy deterministycznej do modelu przy identycznych wynikach - dowiesz się o tym
-z faktury.
-CZAS: ~2 min
+NA CO UWAŻAĆ: Bez testu na źródło zmiana promptu może po cichu przenieść rozstrzygnięcia
+z warstwy deterministycznej do modelu przy identycznych wynikach - jedynym sygnałem
+będzie faktura.
 -->
 
 ---
@@ -333,11 +321,10 @@ Moduł 2: instrukcja w `CLAUDE.md`. Moduł 5: hook zamiast reguły.
 Moduł 7: liczba w kodzie zamiast zdania w prompcie. Moduł 8: to samo z danymi wejściowymi.
 
 <!--
-CO POWIEDZIEĆ: ta oś wraca czwarty raz i zawsze kończy się tak samo - to, co ma działać
-jutro bez ciebie, musi być artefaktem w repozytorium, a nie prośbą skierowaną do modelu.
-NA CO UWAŻAĆ: to jest dokładnie ta pułapka z labu 7.2. Jeżeli w projekcie warstw pojawi
+CO POWIEDZIEĆ: Ta oś wraca czwarty raz i zawsze kończy się tak samo - to, co ma działać
+bez autora, musi być artefaktem w repozytorium, a nie prośbą skierowaną do modelu.
+NA CO UWAŻAĆ: To jest dokładnie ta pułapka z labu 7.2. Jeżeli w projekcie warstw pojawi
 się „w prompcie każemy modelowi odpowiedzieć NIE_WIEM", brakuje całej warstwy.
-CZAS: ~2 min
 -->
 
 ---
@@ -346,21 +333,20 @@ CZAS: ~2 min
 
 # Laby 7.1 i 7.2
 
-**Lab 7.1 - pomiar (~25 min), tag `lab-7-1-start`.** Nie zmieniasz kodu, mierzysz:
+**Lab 7.1 - pomiar, tag `lab-7-1-start`.** Kod zostaje bez zmian, jest tylko pomiar:
 to samo pytanie w sesji rozdętej i po `/clear`, potem statystyki prompt cache
 i atrybucja z `/usage`. Produkt: `notatki/pomiar-kosztu.md`.
 Wymagane `claude --version` **2.1.251 lub nowsze** - inaczej nie ma statystyk cache.
 
-**Lab 7.2 - klasyfikator VAT (~35 min), tag `lab-7-2-start`.** Trzy warstwy,
+**Lab 7.2 - klasyfikator VAT, tag `lab-7-2-start`.** Trzy warstwy,
 golden set na minimum 20 przypadków, `make gate` **offline, bez klucza API**.
 Produkt: `app/klasyfikacja_vat.py`, `tests/golden/vat.jsonl`, `tests/test_golden_vat.py`.
 
 Niezacommitowana praca z labu 6.2 zablokuje `git checkout`: `git stash push -u -m "moje-6-2"`.
 
 <!--
-CO POWIEDZIEĆ: pierwszy lab to liczby na własnym terminalu, drugi to pierwszy w kursie
+CO POWIEDZIEĆ: Pierwszy lab to liczby na własnym terminalu, drugi to pierwszy w kursie
 fragment, w którym model jest częścią produktu, a nie narzędziem programisty.
 NA CO UWAŻAĆ: `git switch -c` nie odblokowuje skoku na tag - niczego nie commituje.
 Od tego jest `git stash push -u`, także dla plików nieśledzonych.
-CZAS: ~2 min
 -->

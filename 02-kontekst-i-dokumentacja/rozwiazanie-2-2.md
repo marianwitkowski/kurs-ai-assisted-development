@@ -27,18 +27,18 @@ Bez `CLAUDE.md` model typowo:
 To nie jest głupota modelu. **W kodzie nie ma odpowiedzi na to pytanie.** Zaokrąglanie
 per pozycja wygląda jak zbędna komplikacja, a nikt nigdzie nie napisał, że jest celowe.
 
-> **Dlaczego nie pytamy o `Decimal`.** Pierwsza wersja tego kroku pytała o typ liczbowy
+> **Dlaczego pytanie nie dotyczy `Decimal`.** Pierwsza wersja tego kroku pytała o typ liczbowy
 > w nowej funkcji w `app/vat.py`. To był **zepsuty pomiar**: prompt sam wskazywał plik,
 > w którym `Decimal` stoi kilkanaście razy, więc model odczytywał konwencję z kodu
 > w kilka sekund i pomiar „przed" wychodził identyczny jak „po".
 >
 > Dobry pomiar wymaga pytania, na które **kod nie odpowiada**.
 >
-> To nie znaczy, że konwencji nie wpisujemy do `CLAUDE.md` - wpisujemy, i krok 3 tego wymaga.
-> Ale wpisujemy je po to, żeby zachowanie było **powtarzalne**, a nie żeby model w ogóle
+> To nie znaczy, że konwencje nie trafiają do `CLAUDE.md` - trafiają, i krok 3 tego wymaga.
+> Ale trafiają tam po to, żeby zachowanie było **powtarzalne**, a nie żeby model w ogóle
 > trafił. Różnica: bez pliku model trafia, **gdy zajrzy do właściwego pliku**;
 > z plikiem trafia **zawsze**. Tej różnicy nie da się zmierzyć jednym pytaniem -
-> i dlatego do pomiaru bierzemy coś innego.
+> i dlatego do pomiaru służy co innego.
 
 ## Krok 2 - co wyrzucić z wyniku `/init`
 
@@ -53,7 +53,7 @@ per pozycja wygląda jak zbędna komplikacja, a nikt nigdzie nie napisał, że j
 **Wszystko to model odczyta z repo w kilka sekund.** W pliku ładowanym do każdej sesji
 to jest czysty koszt. Do usunięcia.
 
-Zostaw z wyniku `/init` tylko komendy uruchomieniowe - i to po sprawdzeniu, że są prawdziwe.
+Z wyniku `/init` zostają tylko komendy uruchomieniowe - i to po sprawdzeniu, że są prawdziwe.
 
 ---
 
@@ -79,8 +79,8 @@ na zbędną komplikację, jest celowa i kosztowna w usunięciu.
 > wyniki.
 ```
 
-Zwróć uwagę, czego tu **nie ma**: nie ma wyliczenia reguł. Bo dziś ich nie znasz.
-Poznasz je jutro, w labie 4.2, i wtedy ten akapit będzie można rozwinąć.
+Istotne jest to, czego tu **nie ma**: nie ma wyliczenia reguł. Na tym etapie nie są znane.
+Ujawnia je lab 4.2 i wtedy ten akapit będzie można rozwinąć.
 
 To jest wzorzec, który warto zabrać do pracy: **plik kontekstowy ma mówić prawdę o stanie
 wiedzy zespołu, a nie sprawiać wrażenie kompletnego.** „Tu są nieudokumentowane reguły,
@@ -106,7 +106,7 @@ Z załadowanym plikiem model powinien sam z siebie: użyć `Decimal`, nazwać po
 zaokrąglić przez `vat.zaokraglij()`, wspomnieć o teście i o `make test`.
 
 **Jeśli nie - wina jest po stronie pliku, nie modelu.** Najczęstsza przyczyna:
-instrukcja niesprawdzalna. Porównaj:
+instrukcja niesprawdzalna. Porównanie:
 
 | Nie działa | Działa |
 |---|---|
@@ -114,8 +114,8 @@ instrukcja niesprawdzalna. Porównaj:
 | „Trzymaj się konwencji projektu" | „Nazwy domenowe po polsku, bez znaków diakrytycznych" |
 | „Pamiętaj o testach" | „Zmiana w `app/` bez testu wymaga wyraźnej zgody" |
 
-Reguła: jeśli **ty** nie umiesz jednoznacznie stwierdzić, czy instrukcja została spełniona,
-model też nie.
+Reguła: jeśli **człowiek** nie umie jednoznacznie stwierdzić, czy instrukcja została
+spełniona, model też nie umie.
 
 ---
 
@@ -129,7 +129,7 @@ Trzy części, żadna z nich nie jest opisem „co robi każdy moduł".
 grep -n "^from app" app/*.py
 ```
 
-Jeżeli diagram nie zgadza się z wynikiem - masz halucynację w dokumentacji.
+Jeżeli diagram nie zgadza się z wynikiem - w dokumentacji jest halucynacja.
 To jest najczęstszy błąd w tym kroku: model rysuje diagram „jak to zwykle wygląda",
 zamiast odczytać go z kodu.
 
@@ -145,7 +145,7 @@ zamiast odczytać go z kodu.
 | `main` | FastAPI, bez logiki biznesowej |
 
 Zdanie „`rozliczenia` nie dotyka bazy" jest ważniejsze niż cały diagram: mówi, że tę funkcję
-da się testować bez SQLite. Wykorzystasz to jutro w labie 4.2.
+da się testować bez SQLite. Lab 4.2 to wykorzystuje.
 
 **3. Miejsca, w których kolejność zmienia kwotę.** Siedem linii z numerami.
 To jest dokładnie ten rodzaj wiedzy, której nie da się odczytać z jednego pliku,
@@ -153,7 +153,7 @@ bo rozkłada się na `rozliczenia.py` i `vat.py`.
 
 ---
 
-## Diff, który powinieneś uzyskać
+## Oczekiwany diff
 
 ```bash
 git diff --stat lab-2-2-start lab-3-1-start
@@ -172,18 +172,18 @@ od pierwszej sekundy sesji.
 
 ## Najczęstsze potknięcia
 
-**Wpisanie klucza z `app/konfiguracja.py`.** Jeśli opisując konfigurację przepisałeś
-wartość `KLUCZ_API_KSEF` - właśnie powieliłeś sekret do drugiego pliku w repo
+**Wpisanie klucza z `app/konfiguracja.py`.** Przepisanie wartości `KLUCZ_API_KSEF`
+przy opisie konfiguracji powiela sekret do drugiego pliku w repo
 i do kontekstu każdej sesji. Wzorcowy `docs/architektura.md` wspomina o problemie
 (`app/db.py` skleja zapytania, kursy są wpisane ręcznie), ale **nie cytuje żadnej wartości**.
 
-**„Plik na 150 linii jest lepszy, bo kompletniejszy."** Zmierz. Jeżeli odpowiedź w kroku 4
+**„Plik na 150 linii jest lepszy, bo kompletniejszy."** Do zmierzenia. Jeżeli odpowiedź w kroku 4
 jest taka sama jak przy 55 liniach, to nadmiar nic nie kupił - a kosztuje w każdej sesji
 do końca projektu.
 
 **Wpisanie do `CLAUDE.md` reguły, która musi zadziałać zawsze.** „Nigdy nie commituj
 bez uruchomienia testów" to prośba. Model ją przeczyta i zwykle się zastosuje - ale nie zawsze.
-Jutro w labie 5.1 ta sama reguła stanie się hookiem `Stop` i przestanie być prośbą.
+W labie 5.1 ta sama reguła stanie się hookiem `Stop` i przestanie być prośbą.
 
-**Diagram, którego nie sprawdziłeś.** Dokumentacja architektury, która kłamie, jest gorsza
+**Diagram bez weryfikacji.** Dokumentacja architektury, która kłamie, jest gorsza
 niż jej brak: człowiek jej ufa, a model bierze ją za podstawę decyzji.

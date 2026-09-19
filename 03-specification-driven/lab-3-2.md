@@ -1,6 +1,6 @@
 # Lab 3.2 - Implementacja według specyfikacji
 
-**Czas: ~40 min** · **Tag startowy: `lab-3-2-start`** · **Produkt: `app/odsetki.py`, `tests/test_odsetki.py`**
+**Tag startowy: `lab-3-2-start`** · **Produkt: `app/odsetki.py`, `tests/test_odsetki.py`**
 
 ---
 
@@ -12,14 +12,14 @@ git checkout lab-3-2-start
 cat specyfikacje/noty-odsetkowe.md
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** - także pliki
+> **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-3-1"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -30,11 +30,11 @@ cat specyfikacje/noty-odsetkowe.md
 > i poda komendę ratunkową; prościej wyprzedzić go przez `git branch moje-3-2`
 > **przed** skokiem.
 
-> Możesz też pracować dalej na własnej - wtedy liczby w twoich testach będą inne niż wzorcowe
-> i tak ma być.
+> Praca na własnej specyfikacji jest też możliwa - wtedy liczby w testach będą inne
+> niż wzorcowe i tak ma być.
 
-Tag `lab-3-2-start` zawiera **wzorcową specyfikację**. Przeczytaj ją, zanim zaczniesz -
-to jest teraz twój kontrakt.
+Tag `lab-3-2-start` zawiera **wzorcową specyfikację**. Trzeba ją przeczytać przed startem -
+to jest kontrakt tego labu.
 
 ---
 
@@ -45,7 +45,7 @@ Przejść pełną ścieżkę wymaganie → kod → testy → review, pilnując *
 
 ---
 
-## Krok 1 - testy przed implementacją (12 min)
+## Krok 1 - testy przed implementacją
 
 To nie jest ortodoksja TDD. To jest ochrona przed konkretnym mechanizmem: agent, który
 najpierw napisze kod, a potem testy patrząc na ten kod, wyprodukuje testy przechodzące zawsze.
@@ -65,11 +65,11 @@ Zasady:
 ```
 
 > **Dlaczego `tests/__init__.py`.** `make test` woła gołe `pytest`, a to nie dokłada
-> katalogu bieżącego do `sys.path`. Bez tego pliku dostaniesz
-> `ModuleNotFoundError: No module named 'app'` - komunikat, który wygląda,
-> jakbyś zepsuł aplikację, a nie jakby brakowało modułu, którego jeszcze nie napisałeś.
+> katalogu bieżącego do `sys.path`. Bez tego pliku pojawia się
+> `ModuleNotFoundError: No module named 'app'` - komunikat, który wygląda na zepsutą
+> aplikację, a nie na brak modułu, który jeszcze nie powstał.
 
-Uruchom:
+Uruchomienie:
 
 ```bash
 make test
@@ -82,17 +82,18 @@ ImportError: cannot import name 'odsetki' from 'app'
 !!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!
 ```
 
-To jest poprawny stan - modułu jeszcze nie ma. Zwróć uwagę, że pytest **nie uruchamia**
+To jest poprawny stan - modułu jeszcze nie ma. Pytest **nie uruchamia**
 żadnego testu: jeden błąd importu zatrzymuje całą kolekcję.
 
-> Jeśli widzisz `No module named 'app'` - brakuje `tests/__init__.py`.
+> `No module named 'app'` oznacza brak `tests/__init__.py`.
 >
-> Jeśli testy przeszły, to znaczy, że agent mimo wszystko napisał implementację.
-> `git status` i usuń ją. Ten krok ma sens tylko wtedy, gdy testy istnieją **przed** kodem.
+> Testy, które przeszły, oznaczają, że agent mimo wszystko napisał implementację.
+> `git status` i usunięcie jej. Ten krok ma sens tylko wtedy, gdy testy istnieją
+> **przed** kodem.
 
 ---
 
-## Krok 2 - implementacja (12 min)
+## Krok 2 - implementacja
 
 ```
 Teraz napisz app/odsetki.py tak, żeby testy z tests/test_odsetki.py przeszły.
@@ -117,7 +118,7 @@ make lint
 
 ---
 
-## Krok 3 - review diffa (8 min)
+## Krok 3 - review diffa
 
 **To jest najważniejszy krok tego labu.**
 
@@ -126,20 +127,20 @@ git diff
 git status
 ```
 
-Sprawdź po kolei:
+Do sprawdzenia po kolei:
 
 - [ ] Czy zmieniły się **tylko** pliki wymienione w zakresie?
 - [ ] Czy agent nie „poprawił po drodze" czegoś w istniejących modułach?
 - [ ] Czy nie doszła zależność do `requirements.txt`?
 - [ ] Czy któryś test został zmieniony **po** napisaniu implementacji?
-      Sprawdź: `git diff tests/` po kroku 2 powinno być puste, jeśli commitowałeś po kroku 1.
+      `git diff tests/` po kroku 2 powinno być puste, o ile krok 1 zakończył się commitem.
 - [ ] Czy rok bazowy to stałe 365, także dla roku przestępnego (A9)?
 - [ ] Czy zaokrąglenie jest **tylko na końcu**, a nie po każdym odcinku (R6)?
 
 Ostatnie dwa punkty są miejscami, w których model najczęściej „poprawia" specyfikację
 na to, co uważa za rozsądniejsze.
 
-Sprawdź też, czy odsetki liczą się od właściwego dnia:
+Do sprawdzenia też dzień, od którego liczą się odsetki:
 
 ```bash
 .venv/bin/python -c "
@@ -154,7 +155,7 @@ Ma wyjść kwota za **jeden** dzień (`3.97`), nie zero i nie za dwa dni.
 
 ---
 
-## Krok 4 - adapter i endpoint (6 min)
+## Krok 4 - adapter i endpoint
 
 Dopiero teraz dotykamy istniejącego kodu. Punkt 7 specyfikacji, kroki 3-4.
 
@@ -172,7 +173,7 @@ nie może się z tego powodu wywalić. Rozstrzygnij to i powiedz mi, jak.
 ```
 
 To ostatnie zdanie jest celowe: specyfikacja **nie rozstrzyga** tego przypadku.
-Zobacz, czy agent to zauważy, czy po cichu wybierze.
+Istotne jest, czy agent to zauważy, czy po cichu wybierze.
 
 Weryfikacja:
 
@@ -205,15 +206,15 @@ git commit -m "Noty odsetkowe wedlug specyfikacji"
 - [ ] Testy powstały **przed** implementacją i nie były zmieniane, żeby przeszły.
 - [ ] Liczby w testach są dosłownie ze specyfikacji.
 - [ ] Diff nie wychodzi poza zakres z sekcji 2 specyfikacji.
-- [ ] Umiesz wskazać w kodzie każdą regułę R1-R10.
-- [ ] Wiesz, jak rozstrzygnięto przypadek faktury walutowej w raporcie zbiorczym
-      - i wiesz, że specyfikacja tego nie rozstrzygała.
+- [ ] Każda reguła R1-R10 daje się wskazać w kodzie.
+- [ ] Rozstrzygnięcie przypadku faktury walutowej w raporcie zbiorczym jest znane
+      - razem z tym, że specyfikacja tego nie rozstrzygała.
 
 ## Pułapki
 
 **Test zmieniony, żeby przeszedł.** Najczęściej dotyczy A9 (rok przestępny): 1 453,97 zł
 wygląda na błąd, bo to więcej niż 14,5% od 10 000 zł. **Nie jest błędem** - reguła R5 mówi,
-że rok bazowy to zawsze 365. Jeśli agent „poprawił" ten test na 1 450,00 - cofnij.
+że rok bazowy to zawsze 365. Test „poprawiony" przez agenta na 1 450,00 idzie do cofnięcia.
 
 **Zaokrąglanie po każdym odcinku.** W A4 dwa odcinki: 59,589041 + 38,136986 = 97,726027 → 97,73.
 Przy zaokrąglaniu po każdym odcinku: 59,59 + 38,14 = 97,73. Tu wychodzi tyle samo -
@@ -222,13 +223,13 @@ w tym akurat przypadku wynik się zgadza.
 
 **Zakres rozszerzony „przy okazji".** Klasyka: agent zauważa `datetime.utcnow()`
 w `app/raporty.py` i poprawia to od razu. Poprawka jest słuszna - i jest poza zakresem.
-Migracją zajmiesz się jutro, w labie 6.1. Dziś wycofaj.
+Migracja jest tematem labu 6.1. Tutaj poprawka idzie do wycofania.
 
 **Podstawa z `brutto` zamiast `do_zaplaty`.** Reguła R3 mówi wprost: `Rozliczenie.do_zaplaty`,
 czyli po odliczeniu zaliczki. Faktury z zaliczką są w bazie (co dziesiąta), więc błąd
 przejdzie niezauważony na fakturach bez zaliczki.
 
-**Pominięcie kroku 3.** Jeśli nie czytasz diffa, cały ten workflow jest teatrem.
+**Pominięcie kroku 3.** Bez czytania diffa cały ten workflow jest teatrem.
 Specyfikacja i testy służą temu, żeby review było **szybkie**, a nie żeby było niepotrzebne.
 
 ---

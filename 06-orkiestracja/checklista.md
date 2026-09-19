@@ -1,5 +1,7 @@
 # Checklista samooceny - moduł 6
 
+Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
+
 - [ ] Wiem, że trzej agenci to trzykrotny koszt i **jedno scalenie**, którego wcześniej
       nie było. → *6.1*
 - [ ] Stosuję regułę: jeśli nie umiem wskazać, gdzie będzie konflikt, podział jest zły. → *6.1*
@@ -23,11 +25,11 @@
 - [ ] Wiem, co robić po przerwaniu, i że „spróbuj jeszcze raz" nie jest odpowiedzią. → *6.6*
 - [ ] Umiem uczciwie policzyć, czy równoległość się opłaciła. → *lab 6.1 krok 5*
 
-## Jeśli zostało ci pięć minut
+## Przy wolnych pięciu minutach
 
-Weź zadanie ze swojego backlogu, które wygląda na równoległe. Wypisz, których plików
-dotknie każdy fragment. Jeśli po tym ćwiczeniu nadal uważasz, że da się je zrównoleglić -
-masz kandydata na poniedziałek. Jeśli nie - zaoszczędziłeś sobie wieczoru.
+Wziąć z własnego backlogu zadanie, które wygląda na równoległe. Wypisać, których plików
+dotknie każdy fragment. Gdy po tym ćwiczeniu zrównoleglenie nadal wygląda na wykonalne -
+jest kandydat na poniedziałek. Gdy nie - zaoszczędzony wieczór.
 
 ---
 

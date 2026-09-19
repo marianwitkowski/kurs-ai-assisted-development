@@ -1,5 +1,7 @@
 # Checklista samooceny - moduł 2
 
+Lista do uczciwego przejścia. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
+
 - [ ] Wiem, że rozrost kontekstu kosztuje **dwa razy**: pieniędzmi i jakością odpowiedzi. → *2.1*
 - [ ] Umiem odczytać `/context` i wiem, że sekcja **Memory files** to jedyny dowód,
       że mój plik kontekstowy działa. → *2.1, lab 2.1 krok 1*
@@ -21,10 +23,10 @@
 - [ ] Wiem, że serwer MCP dostarcza modelowi tekst, który działa na niego jak instrukcja. → *2.6*
 - [ ] Mój `CLAUDE.md` nie zawiera ani jednego sekretu, danych osobowych ani treści klienta. → *2.4*
 
-## Jeśli zostało ci pięć minut
+## Na pięć wolnych minut
 
-Otwórz swój `~/.claude/CLAUDE.md` (jeśli masz) i sprawdź, czy któraś z reguł osobistych
-nie stoi w sprzeczności z tym, co przed chwilą wpisałeś do projektowego.
+Otworzyć `~/.claude/CLAUDE.md`, jeśli istnieje, i sprawdzić, czy któraś z reguł osobistych
+nie stoi w sprzeczności z regułami dopisanymi przed chwilą do pliku projektowego.
 Sprzeczne instrukcje są gorsze niż ich brak.
 
 ---

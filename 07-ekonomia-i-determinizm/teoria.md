@@ -1,11 +1,11 @@
 # Moduł 7 - Ekonomia i determinizm
 
-> Czego się tu nauczysz: obniżać koszt pracy z agentem w kolejności od darmowych wygranych
-> do kompromisów - i budować produkt, w którym model jest częścią systemu, a nie jego sercem.
+> Zakres modułu: obniżanie kosztu pracy z agentem w kolejności od darmowych wygranych
+> do kompromisów - i budowa produktu, w którym model jest częścią systemu, a nie jego sercem.
 
 ---
 
-## 7.1. Kolejność, w której obniża się koszty
+## Lekcja 7.1 - Kolejność, w której obniża się koszty
 
 Najczęstszy błąd: pierwszym ruchem jest zmiana modelu na tańszy. To jest **ostatni** ruch,
 bo jako jedyny kosztuje jakość.
@@ -18,7 +18,7 @@ graph TD
   D --> E["5. Tańszy model<br/>kosztuje jakość"]
 ```
 
-| Dźwignia | Koszt wdrożenia | Co tracisz |
+| Dźwignia | Koszt wdrożenia | Strata |
 |---|---|---|
 | `/clear` między zadaniami | zero | nic |
 | celowane czytanie zamiast hurtowego | zero | nic |
@@ -32,7 +32,7 @@ Przeskakiwanie między modelami w jednej sesji oznacza budowanie cache'u od nowa
 
 ---
 
-## 7.2. Routing modeli do roli
+## Lekcja 7.2 - Routing modeli do roli
 
 Model dobiera się do **roli w procesie**, nie do „trudności zadania".
 
@@ -46,18 +46,18 @@ Model dobiera się do **roli w procesie**, nie do „trudności zadania".
 
 W praktyce: `/model` i `/effort` w sesji, `model:` we frontmatterze subagenta,
 `CLAUDE_CODE_SUBAGENT_MODEL` jako domyślny model subagentów - frontmatter `model:` ma nad
-tą zmienną pierwszeństwo, a żeby objęła naprawdę wszystkie, także wbudowane Explore i Plan,
-dołóż `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`.
+tą zmienną pierwszeństwo. Objęcie naprawdę wszystkich, także wbudowanych Explore i Plan,
+wymaga dołożenia `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`.
 
-### Zanim zbudujesz kaskadę modeli
+### Przed budową kaskady modeli
 
-Kuszący pomysł: tani model robi pierwsze podejście, drogi poprawia. Zanim to zbudujesz,
-**zmierz prostszy wariant**: mocniejszy model na niższym efforcie.
+Kuszący pomysł: tani model robi pierwsze podejście, drogi poprawia. Przed budową trzeba
+**zmierzyć prostszy wariant**: mocniejszy model na niższym efforcie.
 
 Nowsze modele na niskim efforcie często wypadają lepiej niż starsze na wysokim - a kaskada
 kosztuje osobno: dwa modele to dwa cache'e i dwa razy więcej kodu do utrzymania.
 
-I mierz **koszt na ukończone zadanie**, nie na zapytanie. Tańsze zapytanie, które wymaga
+Mierzy się **koszt na ukończone zadanie**, nie na zapytanie. Tańsze zapytanie, które wymaga
 trzech kolejnych tur, nie jest tańsze.
 
 ### Alternatywne endpointy
@@ -70,7 +70,7 @@ Ostatni punkt zwykle rozstrzyga decyzję i należy do modułu 8, nie do tego.
 
 ---
 
-## 7.3. Prompt caching
+## Lekcja 7.3 - Prompt caching
 
 Caching działa na **prefiksie**. Zmiana jednego bajtu gdziekolwiek w prefiksie unieważnia
 wszystko po niej.
@@ -109,9 +109,8 @@ messages=[{"role": "user", "content": f"Opis pozycji: {opis}"}],   # zmienna cz�
 
 ### Weryfikacja
 
-**`usage.cache_read_input_tokens`.** Jeśli przy powtarzanych żądaniach jest zero -
-masz cichy invalidator. Nie ma innego sposobu, żeby to zauważyć: wszystko działa,
-tylko drożej.
+**`usage.cache_read_input_tokens`.** Zero przy powtarzanych żądaniach oznacza cichy
+invalidator. Nie ma innego sposobu, żeby to zauważyć: wszystko działa, tylko drożej.
 
 W Claude Code to samo widać w `/usage`, w linii statystyk prompt cache:
 
@@ -124,7 +123,7 @@ Prompt cache (main): 14 requests · 91% of input tokens from cache · 2 misses
 To jest różnica, która zmienia sposób pracy: na subskrypcji przerwa na kawę nie kosztuje,
 na kluczu API domyślnie kosztuje przeliczenie całego kontekstu.
 
-**To domyślka, nie limit platformy.** Godzinę na kluczu API włączasz jawnie:
+**To domyślka, nie limit platformy.** Godzinę na kluczu API włącza się jawnie:
 ustawieniem `promptCacheTtl: "1h"` (v2.1.242+) albo `ENABLE_PROMPT_CACHING_1H=1`.
 W API bezpośrednio: `cache_control: {"type": "ephemeral", "ttl": "1h"}`.
 Sprawdzenie, który TTL faktycznie poszedł: `claude -p "hello" --output-format json`
@@ -136,16 +135,16 @@ zależnie od modelu (krótszy po cichu się nie zacache'uje).
 
 ---
 
-## 7.4. Kontrola rozrostu kontekstu
+## Lekcja 7.4 - Kontrola rozrostu kontekstu
 
 Trzy mechanizmy, w kolejności od najtańszego.
 
 **`/clear` między zadaniami.** Kosztuje zero i działa natychmiast. Jedna sesja = jedno zadanie.
-`/rename` przed wyczyszczeniem, jeśli chcesz potem wrócić przez `/resume`.
+`/rename` przed wyczyszczeniem, gdy sesja ma być jeszcze dostępna przez `/resume`.
 
-**Ograniczanie czytania.** Zmierzyłeś to w labie 2.1: „przeczytaj katalog" kontra
+**Ograniczanie czytania.** Pomiar z labu 2.1: „przeczytaj katalog" kontra
 „znajdź, gdzie liczony jest X" to różnica dwudziestokrotna przy tej samej odpowiedzi.
-Mów agentowi, **co ma ustalić**, nie **jak ma czytać**.
+Agentowi podaje się, **co ma ustalić**, nie **jak ma czytać**.
 
 **Kompakcja.** `/compact` streszcza starszą historię. Można nią sterować:
 
@@ -164,7 +163,7 @@ Przy kompaktowaniu zachowaj wyniki testów i wprowadzone zmiany w kodzie.
 Instrukcja podana tylko w rozmowie - przepada.
 
 **`/compact` kontra `/clear`:** kompakcja czyta całą historię, żeby ją streścić,
-więc sama jest dużym żądaniem. Gdy nie potrzebujesz ciągłości, `/clear` nie kosztuje nic.
+więc sama jest dużym żądaniem. Gdy ciągłość nie jest potrzebna, `/clear` nie kosztuje nic.
 
 ### Skondensowane wyniki narzędzi
 
@@ -181,7 +180,7 @@ w kontekście - same błędy:
 }
 ```
 
-**`updatedInput` podmienia CAŁE wejście narzędzia**, nie scala się z nim - w jq buduj je
+**`updatedInput` podmienia CAŁE wejście narzędzia**, nie scala się z nim - w jq buduje się je
 przez `(.tool_input + {command: $filtered})`, żeby nie zgubić pozostałych pól.
 
 To jest najbardziej niedoceniana dźwignia z całego modułu: przenosi filtrowanie
@@ -192,7 +191,7 @@ Inne miejsca, w których to samo działa: subagent zwracający streszczenie zami
 
 ---
 
-## 7.5. Batch API
+## Lekcja 7.5 - Batch API
 
 **Połowa ceny**, asynchronicznie. Zwykle do godziny, maksymalnie 24 h.
 
@@ -213,7 +212,7 @@ for wynik in klient.messages.batches.results(paczka.id):
     ...
 ```
 
-> **Wyniki wracają w dowolnej kolejności.** Kluczuj po `custom_id`, nigdy po pozycji na liście.
+> **Wyniki wracają w dowolnej kolejności.** Kluczowanie po `custom_id`, nigdy po pozycji na liście.
 > To jest błąd, który przechodzi testy na paczce trzyelementowej i psuje dane na tysiącu.
 
 Batch API działa na kluczu API, nie na subskrypcji Pro/Max. Gotowy skrypt jest
@@ -221,7 +220,7 @@ w `skrypty/batch_klasyfikacja.py` - do uruchomienia u siebie w firmie.
 
 ---
 
-## 7.6. Pomiar
+## Lekcja 7.6 - Pomiar
 
 Bez pomiaru rozmowa o kosztach jest rozmową o wrażeniach.
 
@@ -229,14 +228,15 @@ Bez pomiaru rozmowa o kosztach jest rozmową o wrażeniach.
 
 `/usage` pokazuje:
 
-- **paski limitu planu** - to jest twój realny budżet,
-- **atrybucję zużycia** - ile zjadły skille, subagenci, pluginy, poszczególne serwery MCP,
+- **paski limitu planu** - to jest realny budżet,
+- **atrybucję zużycia** - ile zużycia przypada na skille, subagentów, pluginy,
+  poszczególne serwery MCP,
 - **flagi zachowań** - gdy coś odpowiada za ponad 10% zużycia (długi kontekst, chybienia cache),
 - przełącznik `d`/`w` - ostatnie 24 h albo 7 dni.
 
 Blok `Session` pokazuje też kwotę w dolarach, ale **na subskrypcji ta liczba nie ma
-związku z rachunkiem** - jest liczona lokalnie po cenniku katalogowym. Dla ciebie
-istotne są paski i atrybucja.
+związku z rachunkiem** - jest liczona lokalnie po cenniku katalogowym. Istotne są
+paski i atrybucja.
 
 `/context` pokazuje, co **teraz** zajmuje okno. `/insights` generuje raport HTML
 o sposobie pracy z ostatnich sesji.
@@ -265,10 +265,10 @@ we wdrożeniach korporacyjnych.
 
 ---
 
-## 7.7. Determinizm w produkcie
+## Lekcja 7.7 - Determinizm w produkcie
 
 Do tej pory model był narzędziem programisty. Teraz jest **częścią systemu**,
-który działa bez ciebie. Obowiązują inne zasady.
+który działa bez autora. Obowiązują inne zasady.
 
 ### Zasada: decyzje w kodzie, nie w modelu
 
@@ -322,11 +322,11 @@ musi mieć `additionalProperties: false` i `required`.
 
 Schemat gwarantuje **kształt**, nie **sens**. Zawsze zostaje warstwa, której schemat nie obejmie:
 
-- stawka składniowo poprawna, ale nieobsługiwana przez twój system,
+- stawka składniowo poprawna, ale nieobsługiwana przez system,
 - data w przyszłości tam, gdzie powinna być przeszła,
 - kwota mieszcząca się w typie, ale absurdalna.
 
-Te sprawdzenia należą do kodu. **Nie polegaj na tym, że schemat je złapie.**
+Te sprawdzenia należą do kodu. **Schemat ich nie złapie.**
 
 ### Golden set jako test regresyjny promptu
 
@@ -345,8 +345,8 @@ Trzy rzeczy, które robią golden set użytecznym:
    trafia dobrze, to nie to samo co reguła, która trafia zawsze.
 2. **Działa offline.** Odpowiedzi modelu są w golden secie, testy chodzą na mocku.
    CI nie płaci za tokeny i nie zależy od sieci.
-3. **Zmiana wyniku jest świadoma.** Gdy test się wywali po zmianie promptu,
-   aktualizujesz golden set **razem z uzasadnieniem w commicie**. To jest różnica
+3. **Zmiana wyniku jest świadoma.** Gdy test po zmianie promptu kończy się błędem,
+   golden set aktualizuje się **razem z uzasadnieniem w commicie**. To jest różnica
    między zmianą a dryfem.
 
 ---
@@ -360,8 +360,8 @@ Trzy rzeczy, które robią golden set użytecznym:
 4. `usage.cache_read_input_tokens` równe zero przy powtórzeniach = cichy invalidator.
 5. TTL cache'u: godzina na subskrypcji, pięć minut na kluczu API.
 6. Hook `PreToolUse` może odfiltrować wyjście komendy, zanim wejdzie do kontekstu.
-7. Batch API: połowa ceny, wyniki **w dowolnej kolejności**, kluczuj po `custom_id`.
-8. Na Pro/Max mierz paskami limitu i atrybucją, nie kwotą z bloku `Session`.
+7. Batch API: połowa ceny, wyniki **w dowolnej kolejności**, kluczowanie po `custom_id`.
+8. Na Pro/Max pomiar idzie paskami limitu i atrybucją, nie kwotą z bloku `Session`.
 9. W produkcie: reguła w kodzie → model ze schematem → **decyzja progowa w kodzie**.
 10. Schemat gwarantuje kształt, nie sens. Golden set jest testem regresyjnym promptu.
 

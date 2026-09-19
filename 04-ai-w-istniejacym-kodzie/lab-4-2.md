@@ -1,6 +1,6 @@
 # Lab 4.2 - Odtworzenie intencji i testy zabezpieczające
 
-**Czas: ~35 min** · **Tag startowy: `lab-4-2-start`** · **Produkt: `tests/test_charakterystyka_rozliczen.py`**
+**Tag startowy: `lab-4-2-start`** · **Produkt: `tests/test_charakterystyka_rozliczen.py`**
 
 ---
 
@@ -12,14 +12,14 @@ git checkout lab-4-2-start
 make test          # ma przejść: testy odsetek z labu 3.2
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** -
+> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-4-1"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -35,11 +35,11 @@ make test          # ma przejść: testy odsetek z labu 3.2
 ## Cel
 
 Wydobyć z `oblicz_fakture()` reguły, których nikt nie zapisał, **odróżnić regułę od błędu**,
-i utrwalić jedno i drugie testem. To jest najważniejszy lab pierwszego dnia.
+i utrwalić jedno i drugie testem. To jest najważniejszy lab pierwszych czterech modułów.
 
 ---
 
-## Krok 1 - zachowanie, nie kod (8 min)
+## Krok 1 - zachowanie, nie kod
 
 ```
 Przeczytaj oblicz_fakture() w app/rozliczenia.py i funkcje, które woła.
@@ -53,13 +53,13 @@ Zasady:
 - Przy każdej regule podaj plik i numer linii, z której ją odczytałeś.
 ```
 
-Powinno wyjść kilkanaście reguł. Jeśli dostałeś opis w stylu „funkcja waliduje dane wejściowe,
-następnie oblicza sumę netto…" - to jest przepisany kod. Powtórz prompt, podkreślając
-formę „JEŻELI… TO…".
+Powinno wyjść kilkanaście reguł. Opis w stylu „funkcja waliduje dane wejściowe,
+następnie oblicza sumę netto…" to przepisany kod. Wtedy prompt trzeba powtórzyć,
+podkreślając formę „JEŻELI… TO…".
 
 ---
 
-## Krok 2 - zaskoczenia (5 min)
+## Krok 2 - zaskoczenia
 
 ```
 Które z tych zachowań zaskoczyłyby programistę, który zna domenę fakturowania,
@@ -67,11 +67,11 @@ ale nie zna tego kodu? Wypisz je od najbardziej zaskakującego, z numerami linii
 ```
 
 To wydobywa dokładnie te miejsca, gdzie siedzi nieudokumentowana decyzja.
-Spodziewaj się czterech-pięciu. Zapisz je - w kroku 3 będziesz je klasyfikował.
+Zwykle wychodzi cztery-pięć. Trzeba je zapisać - w kroku 3 podlegają klasyfikacji.
 
 ---
 
-## Krok 3 - reguła czy błąd (7 min)
+## Krok 3 - reguła czy błąd
 
 ```
 Dla każdego zaskakującego zachowania powiedz, czy to:
@@ -83,10 +83,10 @@ Przy (a) i (b) podaj, JAKI DOWÓD w repozytorium to potwierdza.
 Jeżeli dowodu nie ma - klasyfikacja to (c).
 ```
 
-**Ostatnie zdanie jest całym promptem.** Bez niego dostaniesz stanowcze „to jest celowa reguła"
-bez cienia dowodu - dokładnie tak, jak w labie 2.1.
+**Ostatnie zdanie jest całym promptem.** Bez niego odpowiedź brzmi stanowczo „to jest celowa
+reguła", bez cienia dowodu - dokładnie tak, jak w labie 2.1.
 
-Zwróć uwagę na jedno miejsce: `app/rabaty.py:52-55`.
+Jedno miejsce wymaga szczególnej uwagi: `app/rabaty.py:52-55`.
 
 ```python
 def rabat_pozycji(pozycja: PozycjaFaktury, stawka: Decimal) -> Decimal:
@@ -95,7 +95,7 @@ def rabat_pozycji(pozycja: PozycjaFaktury, stawka: Decimal) -> Decimal:
     return pozycja.wartosc_netto * stawka
 ```
 
-Ten jeden `if` obsługuje **dwa różne przypadki**. Zapytaj wprost:
+Ten jeden `if` obsługuje **dwa różne przypadki**. Pytanie wprost:
 
 ```
 Ten warunek sprawdza tylko, czy pole cena_promocyjna jest ustawione.
@@ -105,7 +105,7 @@ Sprawdź to w app/rozliczenia.py i powiedz, czy dostaje rabat progowy.
 
 ---
 
-## Krok 4 - testy charakterystyki (12 min)
+## Krok 4 - testy charakterystyki
 
 ```
 Napisz tests/test_charakterystyka_rozliczen.py.
@@ -127,8 +127,8 @@ fakturę walutową, korektę, zaliczkę, stałego klienta, termin wypadający w 
 ### Uwaga o oknach promocji
 
 `rabaty.promocja_aktywna()` czyta bieżącą datę z zegara (`app/rabaty.py:29`).
-Jeżeli w teście dasz wąskie okno promocji, test przestanie przechodzić po upływie daty.
-Użyj okien szerokich:
+Wąskie okno promocji w teście oznacza, że test przestanie przechodzić po upływie daty.
+Okna muszą być szerokie:
 
 ```python
 PROMOCJA_AKTYWNA = (date(2020, 1, 1), date(2030, 12, 31))
@@ -136,7 +136,7 @@ PROMOCJA_WYGASLA = (date(2024, 1, 1), date(2024, 6, 30))
 ```
 
 To jest obejście, nie rozwiązanie. Prawdziwym rozwiązaniem jest wstrzyknięcie daty -
-i to jest zmiana zachowania, więc nie robimy jej dzisiaj.
+a to jest zmiana zachowania, więc poza zakresem tego labu.
 
 ### Weryfikacja
 
@@ -146,7 +146,7 @@ make test
 
 **Wszystkie testy muszą przejść na niezmienionym kodzie.** To jest definicja testu
 charakterystyki. Jeśli któryś nie przechodzi - to nie kod jest zły, tylko test opisuje
-twoje wyobrażenie, a nie rzeczywistość.
+wyobrażenie, a nie rzeczywistość.
 
 ```bash
 git diff app/          # MUSI być puste
@@ -155,10 +155,10 @@ git add tests/ && git commit -m "Testy charakterystyki dla oblicz_fakture()"
 
 ---
 
-## Krok 5 - jeden test, który jest wart całego labu (3 min)
+## Krok 5 - jeden test, który jest wart całego labu
 
-Sprawdź, czy masz **parę** testów: pozycja z promocją wygasłą i ta sama pozycja bez pola
-`cena_promocyjna`. Jeśli nie - dopisz:
+W zestawie musi być **para** testów: pozycja z promocją wygasłą i ta sama pozycja bez pola
+`cena_promocyjna`. Przy braku pary - dopisać:
 
 ```python
 def test_pozycja_z_wygasla_promocja_placi_cene_pelna_i_tez_nie_dostaje_rabatu():
@@ -181,9 +181,9 @@ Pojedynczy test niczego nie pokazuje. Para pokazuje wszystko.
 - [ ] `git diff app/` jest puste.
 - [ ] Testy porównują wejście z wyjściem, nie zaglądają do funkcji prywatnych.
 - [ ] Liczby są utrwalone, a nie przeliczane w teście tą samą formułą co w kodzie.
-- [ ] Masz **parę** testów pokazujących różnicę 54 zł.
+- [ ] W zestawie jest **para** testów pokazujących różnicę 54 zł.
 - [ ] Miejsca wyglądające na błąd są utrwalone i opatrzone komentarzem.
-- [ ] Umiesz powiedzieć, które zachowania są regułą, które błędem, a których
+- [ ] Wiadomo, które zachowania są regułą, które błędem, a których
       nie da się rozstrzygnąć bez rozmowy z biznesem.
 
 ## Pułapki
@@ -195,18 +195,18 @@ assert w.vat == w.netto * Decimal("0.23")     # ŹLE - zawsze zielony
 assert w.vat == Decimal("142.60")             # DOBRZE
 ```
 
-**„Poprawienie" kodu przy okazji pisania testów.** Jeśli `git diff app/` nie jest puste -
-cofnij. Testy charakterystyki piszemy **na kodzie, którego nie ruszamy.**
+**„Poprawienie" kodu przy okazji pisania testów.** Niepuste `git diff app/` oznacza zmiany
+do cofnięcia. Testy charakterystyki powstają **na kodzie, który zostaje nietknięty.**
 
-**Test napisany z własnych obliczeń.** 7 500 × 3% = 225, to łatwo policzyć w głowie.
+**Test napisany z własnych obliczeń.** 7 500 × 3% = 225, to łatwo policzyć w pamięci.
 Ale przy `netto=9075.00` z dwóch pozycji, z których jedna ma wygasłą promocję, ręczne
-liczenie prowadzi do testu, który opisuje twoje wyobrażenie. Uruchom funkcję i przepisz wynik.
+liczenie prowadzi do testu, który opisuje wyobrażenie. Wynik bierze się z uruchomienia funkcji.
 
-**Wąskie okno promocji.** Test z `promocja_do=date(2026, 12, 31)` zacznie się wywalać
+**Wąskie okno promocji.** Test z `promocja_do=date(2026, 12, 31)` zacznie kończyć się błędem
 1 stycznia 2027 i nikt nie będzie wiedział dlaczego.
 
 **Testowanie funkcji prywatnych.** Test charakterystyki ma opisywać **kontrakt**, a nie
-wnętrze. Jutro zrefaktoryzujesz wnętrze i testy mają przetrwać.
+wnętrze. W labie 4.3 wnętrze podlega refaktoryzacji, a testy mają to przetrwać.
 
 ---
 

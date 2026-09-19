@@ -1,23 +1,23 @@
 # Moduł 3 - Specification-Driven Development
 
-> Czego się tu nauczysz: pisać specyfikację, której agent nie musi uzupełniać zgadywaniem,
-> i prowadzić pracę tak, żeby każdy etap dało się odrzucić osobno.
+> Zakres modułu: pisanie specyfikacji, której agent nie musi uzupełniać zgadywaniem,
+> i prowadzenie pracy tak, żeby każdy etap dało się odrzucić osobno.
 
 ---
 
-## 3.1. Dlaczego agent wymaga precyzyjnej specyfikacji
+## Lekcja 3.1 - Dlaczego agent wymaga precyzyjnej specyfikacji
 
-Kiedy przekazujesz zadanie człowiekowi, zostawiasz luki celowo. „Dodaj noty odsetkowe
+Zadanie przekazane człowiekowi zawiera luki celowo. „Dodaj noty odsetkowe
 za przeterminowane faktury" wystarczy, bo kolega:
 
 - zna kontekst biznesowy i wie, których klientów to dotyczy,
 - **przyjdzie zapytać**, gdy coś będzie niejasne,
 - zawaha się, jeśli poczuje, że robi coś ryzykownego,
-- ma swoją opinię i powie ci, że pomysł jest zły.
+- ma swoją opinię i powie wprost, że pomysł jest zły.
 
 Agent nie robi żadnej z tych czterech rzeczy. Dostaje lukę i **wypełnia ją najbardziej
 prawdopodobną treścią** - czyli tym, co najczęściej występowało w kodzie, na którym się uczył.
-Nie tym, co jest prawdą w twoim projekcie.
+Nie tym, co jest prawdą w konkretnym projekcie.
 
 To nie jest wada do naprawienia lepszym modelem. To jest właściwość: model zawsze produkuje
 najbardziej prawdopodobną kontynuację. Jeśli specyfikacja nie rozstrzyga, rozstrzygnie
@@ -29,7 +29,7 @@ Prośba: *„Dodaj naliczanie odsetek za przeterminowane faktury."*
 
 Czego agent nie wie, a i tak rozstrzygnie:
 
-| Luka | Co najpewniej założy | Co może być prawdą u ciebie |
+| Luka | Co najpewniej założy | Co może być prawdą w projekcie |
 |---|---|---|
 | Stopa odsetek | ustawowa, jedna, wpisana na sztywno | różna dla różnych umów, zmienna w czasie |
 | Od kiedy liczyć | od dnia po terminie | od terminu, od doręczenia, od wezwania |
@@ -44,16 +44,17 @@ Osiem rozstrzygnięć, o które nikt nie zapytał. Kod powstanie, testy (napisan
 założenia) przejdą, review nie zauważy - bo review sprawdza, czy kod robi to, co mówi,
 a nie czy „to" jest właściwe.
 
-**Błędne założenie jest groźniejsze od halucynacji.** Halucynacja się wywala. Założenie działa.
+**Błędne założenie jest groźniejsze od halucynacji.** Halucynacja kończy się błędem.
+Założenie działa.
 
 ---
 
-## 3.2. Tryb planowania
+## Lekcja 3.2 - Tryb planowania
 
 Tryb planowania rozdziela dwie czynności, które inaczej zlewają się w jedną: **ustalenie,
 co zrobić** i **zrobienie tego**. W trybie planowania agent czyta pliki, uruchamia komendy
-eksploracyjne i pisze plan - ale **nie edytuje kodu**. Edycje są zablokowane, dopóki
-nie zatwierdzisz planu.
+eksploracyjne i pisze plan - ale **nie edytuje kodu**. Edycje są zablokowane
+do zatwierdzenia planu.
 
 ### Jak wejść i wyjść
 
@@ -65,10 +66,10 @@ nie zatwierdzisz planu.
 | `"permissions": {"defaultMode": "plan"}` w `.claude/settings.json` | domyślnie dla całego projektu |
 
 > **Uwaga na start:** na planach Pro, Max i Team sesja startuje domyślnie w trybie **auto**,
-> w którym działania ocenia klasyfikator, a nie ty. `Shift+Tab` przechodzi przez kolejne tryby
-> - **naciskaj, aż pasek statusu pokaże `⏸ plan mode on`.**
+> w którym działania ocenia klasyfikator, a nie człowiek. `Shift+Tab` przechodzi przez kolejne
+> tryby - **naciskać, aż pasek statusu pokaże `⏸ plan mode on`.**
 >
-> Nie licz naciśnięć. Kolejność w cyklu zależy od wersji i od tego, które tryby opcjonalne
+> Liczenie naciśnięć zawodzi. Kolejność w cyklu zależy od wersji i od tego, które tryby opcjonalne
 > są dostępne (`don't ask`, `bypass permissions` wchodzą po `plan`). Pasek statusu jest
 > jedynym pewnym źródłem: `⏸ manual mode on` · `⏵⏵ accept edits on` · `⏸ plan mode on`
 > · `⏵⏵ auto mode on`.
@@ -77,15 +78,15 @@ Wyjście bez zatwierdzania: `Shift+Tab` jeszcze raz.
 
 ### Zatwierdzanie planu
 
-Gdy plan jest gotowy, dostajesz kilka opcji, zależnie od planu i konfiguracji:
+Gotowy plan daje kilka opcji, zależnie od planu i konfiguracji:
 
 - **Tak, w trybie auto** - agent zaczyna pracować, działania ocenia klasyfikator,
 - **Tak, z auto-akceptacją edycji** - edycje plików idą bez pytania, reszta działań pyta,
-- **Tak, zatwierdzam edycje ręcznie** - każda edycja wymaga twojej zgody,
-- **Nie, planujemy dalej** - zostajesz w trybie planowania i mówisz, co poprawić.
+- **Tak, zatwierdzam edycje ręcznie** - każda edycja wymaga osobnej zgody,
+- **Nie, planujemy dalej** - sesja zostaje w trybie planowania, z informacją, co poprawić.
 
-`Ctrl+G` otwiera proponowany plan w edytorze, żebyś mógł go **poprawić ręcznie**
-przed akceptacją. To jest niedoceniana opcja: szybciej jest skreślić trzy linie w edytorze
+`Ctrl+G` otwiera proponowany plan w edytorze do **ręcznej poprawki** przed akceptacją.
+To jest niedoceniana opcja: szybciej jest skreślić trzy linie w edytorze
 niż tłumaczyć agentowi, dlaczego są złe.
 
 ### Czego żądać od planu
@@ -98,16 +99,16 @@ które i tak by się wydarzyły. Plan wart zatwierdzenia zawiera cztery elementy
 3. **Jakie są ryzyka** - co może się zepsuć poza obszarem zmiany.
 4. **Jak zostanie zweryfikowane** - jakie testy, jakie przypadki brzegowe.
 
-Punkt drugi jest najważniejszy. **Założenia wypisane to założenia, które możesz odrzucić.**
+Punkt drugi jest najważniejszy. **Założenia wypisane to założenia, które da się odrzucić.**
 Założenia milczące trafiają prosto do kodu.
 
 ---
 
-## 3.3. Jak pytać, żeby model nie dopowiadał
+## Lekcja 3.3 - Jak pytać, żeby model nie dopowiadał
 
 Cztery techniki, od najprostszej do najskuteczniejszej.
 
-### 1. Każ wypisać pytania zamiast odpowiedzi
+### 1. Pytania zamiast odpowiedzi
 
 ```
 Zanim cokolwiek zaproponujesz: wypisz listę pytań, na które musisz znać odpowiedź,
@@ -117,7 +118,7 @@ Zanim cokolwiek zaproponujesz: wypisz listę pytań, na które musisz znać odpo
 Najtańsza technika i zwykle najskuteczniejsza. Zamienia osiem milczących rozstrzygnięć
 w osiem pytań na ekranie.
 
-### 2. Każ oddzielić fakty od założeń
+### 2. Oddzielenie faktów od założeń
 
 ```
 Podziel swoją odpowiedź na dwie sekcje:
@@ -128,7 +129,7 @@ Jeżeli sekcja ZAŁOŻONE jest pusta, to znaczy, że czegoś nie zauważyłeś.
 
 Ostatnie zdanie jest istotne: bez niego model chętnie deklaruje, że niczego nie założył.
 
-### 3. Podaj wprost zakres i granice
+### 3. Zakres i granice wprost
 
 ```
 Zakres: tylko app/odsetki.py i testy do niego.
@@ -137,10 +138,10 @@ Jeżeli zadanie wymaga zmiany poza zakresem - zatrzymaj się i powiedz,
 czego potrzebujesz. Nie rozszerzaj zakresu samodzielnie.
 ```
 
-Agent domyślnie „naprawia po drodze". Bez granic dostajesz diff, w którym zmiana docelowa
+Agent domyślnie „naprawia po drodze". Bez granic powstaje diff, w którym zmiana docelowa
 tonie wśród pięciu poprawek, o które nikt nie prosił.
 
-### 4. Podaj kryteria akceptacji jako przykłady liczbowe
+### 4. Kryteria akceptacji jako przykłady liczbowe
 
 ```
 Faktura 10 000 zł brutto, termin 2026-01-10, zapłacona 2026-02-10:
@@ -154,17 +155,17 @@ wprost w testy.
 
 ### Czego unikać
 
-| Nie pisz | Bo | Napisz |
+| Sformułowanie do unikania | Dlaczego zawodzi | Zamiast tego |
 |---|---|---|
 | „w razie potrzeby dodaj…" | model zawsze uzna, że potrzeba | wprost, czy ma dodać |
 | „zrób to porządnie" | nieweryfikowalne | konkretne kryterium |
-| „obsłuż przypadki brzegowe" | model wymyśli swoje | wymień, które |
-| „jak w reszcie projektu" | w projekcie są trzy różne style | wskaż plik wzorcowy |
-| „na razie uproszczona wersja" | nie wiadomo, co uproszczone | wypisz, czego **nie** robimy |
+| „obsłuż przypadki brzegowe" | model wymyśli swoje | wymienić, które |
+| „jak w reszcie projektu" | w projekcie są trzy różne style | wskazać plik wzorcowy |
+| „na razie uproszczona wersja" | nie wiadomo, co uproszczone | wypisać, czego **nie** robimy |
 
 ---
 
-## 3.4. Workflow: wymaganie → specyfikacja → plan → implementacja → testy → review
+## Lekcja 3.4 - Workflow: wymaganie → specyfikacja → plan → implementacja → testy → review
 
 ```mermaid
 graph LR
@@ -179,17 +180,17 @@ graph LR
 ```
 
 Sens tego podziału jest jeden: **każdy etap można odrzucić osobno, a im wcześniej,
-tym taniej.** Odrzucenie specyfikacji kosztuje pięć minut. Odrzucenie gotowej
-implementacji kosztuje godzinę twojego czytania i całą pracę agenta.
+tym taniej.** Odrzucenie specyfikacji kosztuje jedno przeczytanie. Odrzucenie gotowej
+implementacji kosztuje przegląd całego diffa i całą pracę agenta.
 
-| Etap | Produkt | Czego szukasz przy odbiorze |
+| Etap | Produkt | Czego szukać przy odbiorze |
 |---|---|---|
-| Wymaganie | zdanie po polsku, w języku biznesu | czy rozumiesz, po co to jest |
+| Wymaganie | zdanie po polsku, w języku biznesu | czy cel jest zrozumiały |
 | Specyfikacja | plik `.md` w repo | czy nie ma dziur; czy założenia są wypisane |
 | Plan | lista kroków + ryzyka | czy kolejność ma sens; czy da się przerwać w połowie |
 | Implementacja | diff | czy mieści się w zakresie |
 | Testy | testy, które **przeszły** | czy testują wymaganie, czy implementację |
-| Review | decyzja | czy rozumiesz każdą linię, którą zatwierdzasz |
+| Review | decyzja | czy każda zatwierdzana linia jest zrozumiała |
 
 ### Specyfikacja zostaje w repo
 
@@ -214,7 +215,7 @@ i są liczbami. Wtedy test sprawdza wymaganie, a nie kod.
 
 ---
 
-## 3.5. Przekładanie wymagania biznesowego na zadania
+## Lekcja 3.5 - Przekładanie wymagania biznesowego na zadania
 
 Wymaganie biznesowe brzmi: *„Chcemy naliczać odsetki za przeterminowane faktury,
 bo klienci płacą po terminie."*
@@ -228,14 +229,14 @@ Trzy pytania, które trzeba zadać **człowiekowi**, nie modelowi:
    Automat wysyłający wezwania? Od tego zależy, czy potrzebna jest kwota, czy pismo.
 2. **Co się dzieje, gdy wynik jest zły?** Zaniżone odsetki to strata. Zawyżone to spór
    z klientem i ryzyko prawne. Asymetria kosztu błędu decyduje o tym, ile wysiłku
-   wkładasz w przypadki brzegowe.
+   wymagają przypadki brzegowe.
 3. **Czego świadomie nie robimy w tej iteracji?** To jest pytanie, które ratuje najwięcej czasu.
 
-Dopiero mając odpowiedzi, siadasz do agenta.
+Dopiero z odpowiedziami zaczyna się praca z agentem.
 
 > **Zasada:** agent jest narzędziem do **zapisania** decyzji, nie do ich **podjęcia**.
-> Jeśli nie umiesz odpowiedzieć na pytanie, na które odpowiada twój kod,
-> to model też nie umie - po prostu nie powie ci tego.
+> Pytanie, na które nie umie odpowiedzieć autor kodu, jest poza zasięgiem modelu -
+> z tą różnicą, że model tego nie powie.
 
 ---
 
@@ -245,8 +246,8 @@ Dopiero mając odpowiedzi, siadasz do agenta.
 2. Błędne założenie jest groźniejsze od halucynacji, bo przechodzi przez testy i review.
 3. Tryb planowania rozdziela „co zrobić" od „zrobić". Plan bez wypisanych założeń i ryzyk
    nie jest planem.
-4. Cztery techniki przeciw dopowiadaniu: wypisz pytania, oddziel ustalone od założonego,
-   podaj granice zakresu, podaj kryteria jako liczby.
+4. Cztery techniki przeciw dopowiadaniu: wypisanie pytań, oddzielenie ustalonego
+   od założonego, granice zakresu, kryteria podane jako liczby.
 5. Specyfikacja jest artefaktem w repo: kontekstem dla agenta, dokumentacją decyzji
    i przedmiotem review.
 6. Kryteria akceptacji powstają **przed** implementacją. Inaczej testy sprawdzają kod,

@@ -1,11 +1,11 @@
 # Moduł 6 - Orkiestracja wieloagentowa
 
-> Czego się tu nauczysz: dzielić pracę między równolegle działających agentów tak,
-> żeby scalenie było tanie - i wiedzieć, kiedy przerwać agenta, który kręci się w kółko.
+> Zakres modułu: podział pracy między równolegle działających agentów tak, żeby scalenie
+> było tanie, i rozpoznanie momentu, w którym agenta kręcącego się w kółko trzeba przerwać.
 
 ---
 
-## 6.1. Kiedy równoległość ma sens, a kiedy jest kosztem
+## Lekcja 6.1 - Kiedy równoległość ma sens, a kiedy jest kosztem
 
 Uruchomienie trzech agentów nie daje trzykrotnego przyspieszenia. Daje trzykrotny koszt
 tokenów i **jedno scalenie**, którego wcześniej nie było.
@@ -14,7 +14,7 @@ Równoległość opłaca się wtedy, gdy:
 
 - zadania są **niezależne** - wynik jednego nie jest wejściem drugiego,
 - każde wymaga **czytania** dużej ilości kodu (to jest ta część, która trwa),
-- **konflikty da się przewidzieć** - wiesz z góry, gdzie się zetkną.
+- **konflikty da się przewidzieć** - wiadomo z góry, gdzie zadania się zetkną.
 
 Nie opłaca się, gdy:
 
@@ -22,16 +22,16 @@ Nie opłaca się, gdy:
 - jedno zadanie zależy od decyzji podjętej w drugim,
 - całość jest krótsza niż narzut na przygotowanie środowisk.
 
-> Reguła: **jeżeli nie potrafisz z góry powiedzieć, gdzie będzie konflikt,
-> podział jest zły.** Wróć do kartki, zanim odpalisz agentów.
+> Reguła: **jeżeli nie da się z góry wskazać miejsca konfliktu, podział jest zły.**
+> Przed uruchomieniem agentów podział wraca na kartkę.
 
 ---
 
-## 6.2. Orkiestrator i wykonawcy
+## Lekcja 6.2 - Orkiestrator i wykonawcy
 
 ```mermaid
 graph TD
-  O[Orkiestrator<br/>ty albo sesja główna] --> A[Wykonawca A<br/>własny kontekst]
+  O[Orkiestrator<br/>człowiek albo sesja główna] --> A[Wykonawca A<br/>własny kontekst]
   O --> B[Wykonawca B<br/>własny kontekst]
   O --> C[Wykonawca C<br/>własny kontekst]
   A -->|streszczenie| O
@@ -55,17 +55,17 @@ i nie mogą się dogadać w trakcie. Wszystko, czego potrzebują, musi być w zl
 | Kontekst | osobny per subagent | osobny per sesja |
 | Pliki | ten sam katalog (o ile nie ma izolacji) | osobne katalogi |
 | Konflikty przy pisaniu | **realne** | nie ma - są dopiero przy scalaniu |
-| Kto orkiestruje | sesja główna | ty |
-| Widzisz przebieg | streszczenie na końcu | cały, w osobnym terminalu |
+| Kto orkiestruje | sesja główna | człowiek |
+| Widoczność przebiegu | streszczenie na końcu | cały, w osobnym terminalu |
 
 Trzecia forma to połączenie: subagent z `isolation: worktree` dostaje własny katalog,
 a mimo to jest orkiestrowany przez sesję główną.
 
 ---
 
-## 6.3. Subagenci: kontekst i wynik
+## Lekcja 6.3 - Subagenci: kontekst i wynik
 
-Subagent startuje z **pustym, izolowanym oknem kontekstu**. Nie widzi twojej rozmowy.
+Subagent startuje z **pustym, izolowanym oknem kontekstu**. Nie widzi rozmowy w sesji głównej.
 Do sesji głównej wraca **streszczenie, nie transkrypt** - gadatliwe wyjście
 (logi, wyniki grepa, treść plików) zostaje w jego kontekście.
 
@@ -115,12 +115,12 @@ Wymuszenie jednego modelu dla wszystkich subagentów:
 - **20 subagentów** jednocześnie (`CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`).
 - **3 poziomy** zagnieżdżenia (`CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`).
 
-Praktycznie nigdy nie zbliżysz się do dwudziestu. Trzy-cztery to sensowny sufit
+Praktyka nigdy nie zbliża się do dwudziestu. Trzy-cztery to sensowny sufit
 dla człowieka, który ma potem przeczytać wyniki.
 
-### Format wyniku - narzuć go
+### Format wyniku - do narzucenia
 
-Subagent zwraca to, co uzna za stosowne, chyba że mu powiesz. Narzucenie formatu
+Bez narzuconego formatu subagent zwraca to, co uzna za stosowne. Narzucenie formatu
 zamienia trzy niepodobne raporty w trzy porównywalne:
 
 ```
@@ -132,8 +132,8 @@ BRAMKA: zielona | czerwona (+ pierwsze 5 linii błędu)
 RYZYKA: <co może się zepsuć, czego nie sprawdziłem>
 ```
 
-Plus **limit długości**. Bez niego dostajesz streszczenie, które jest transkryptem
-w przebraniu - i cały zysk kontekstowy znika.
+Do tego **limit długości**. Bez niego streszczenie jest transkryptem w przebraniu,
+a cały zysk kontekstowy znika.
 
 Sekcja `POMINIĘTE` jest najważniejsza. To jest miejsce, w którym subagent ma prawo
 powiedzieć „tego nie ruszyłem, bo wymaga decyzji" - i jedyne, które chroni przed
@@ -141,7 +141,7 @@ cichym rozstrzygnięciem.
 
 ---
 
-## 6.4. Git worktree
+## Lekcja 6.4 - Git worktree
 
 Worktree to **osobny katalog roboczy z własnym branchem**, dzielący historię i remote
 z głównym checkoutem. Dwie sesje w dwóch worktree nie widzą nawzajem swoich plików.
@@ -249,7 +249,7 @@ przeglądu (`cleanupPeriodDays`). W trakcie pracy agenta Claude Code trzyma na w
 
 ---
 
-## 6.5. Dzielenie zadania na niezależne fragmenty
+## Lekcja 6.5 - Dzielenie zadania na niezależne fragmenty
 
 Cztery osie podziału, od najbezpieczniejszej:
 
@@ -263,21 +263,21 @@ Cztery osie podziału, od najbezpieczniejszej:
 Ostatni wiersz to najczęstszy błąd: recenzent nie może pracować równolegle z autorem,
 bo recenzuje kod, który jeszcze się zmienia.
 
-### Zaplanuj konflikt, zamiast go unikać
+### Konflikt do zaplanowania, nie do uniknięcia
 
 Przy realnym podziale konflikt i tak wystąpi. Lepiej **wiedzieć gdzie**, niż udawać,
 że go nie będzie:
 
-- wypisz z góry pliki, których dotknie każde zadanie,
-- część wspólną **zaznacz w zleceniu obu wykonawców**,
-- scalaj w ustalonej kolejności, zaczynając od zadania o najmniejszym zasięgu.
+- wypisać z góry pliki, których dotknie każde zadanie,
+- część wspólną **zaznaczyć w zleceniu obu wykonawców**,
+- scalać w ustalonej kolejności, zaczynając od zadania o najmniejszym zasięgu.
 
-Konflikt w jednej linii, o którym wiedziałeś, kosztuje minutę. Konflikt w dwustu liniach,
-o którym nie wiedziałeś, kosztuje wieczór.
+Konflikt w jednej linii, przewidziany, rozwiązuje się od ręki. Konflikt w dwustu liniach,
+nieprzewidziany, potrafi kosztować więcej niż cała zrównoleglona praca.
 
 ---
 
-## 6.6. Budżety i przerywanie
+## Lekcja 6.6 - Budżety i przerywanie
 
 Agent kręcący się w kółko to nie awaria - to normalny stan, gdy zadanie jest źle postawione
 albo napotkał przeszkodę, której nie umie nazwać.
@@ -290,7 +290,7 @@ albo napotkał przeszkodę, której nie umie nazwać.
 | „Spróbuję innego podejścia" po raz trzeci | brakuje mu informacji, której nie ma w repo |
 | Czytanie kolejnych plików bez zmian w kodzie | szuka czegoś, czego nie ma |
 | Rosnące, coraz bardziej ogólne komunikaty | stracił kontakt z zadaniem |
-| Modyfikacja testu, żeby przeszedł | zadanie jest niewykonalne tak, jak je postawiłeś |
+| Modyfikacja testu, żeby przeszedł | zadanie jest niewykonalne tak, jak je postawiono |
 
 **Ostatni jest najgroźniejszy**, bo wygląda na sukces.
 
@@ -301,29 +301,29 @@ albo napotkał przeszkodę, której nie umie nazwać.
 | `maxTurns` | frontmatter subagenta |
 | `--max-budget-usd` | flaga CLI, **tylko w trybie `-p`** (print mode) |
 | `timeout` | pole hooka |
-| `Esc` | ty, natychmiast |
+| `Esc` | ręcznie, natychmiast |
 
-`maxTurns` na subagencie jest najważniejszy, bo subagenta **nie widzisz w trakcie**.
-Sesję główną przerwiesz `Esc`. Subagent bez limitu tur może zużyć budżet
+`maxTurns` na subagencie jest najważniejszy, bo subagenta **nie widać w trakcie**.
+Sesję główną przerywa `Esc`. Subagent bez limitu tur może zużyć budżet
 i wrócić ze streszczeniem, którego nie da się użyć.
 
 ### Co robić po przerwaniu
 
 Nie „spróbuj jeszcze raz". To samo zlecenie da ten sam wynik.
 
-1. Przeczytaj, na czym utknął.
-2. Zdecyduj: brakuje informacji, czy zadanie jest źle postawione?
-3. Brakuje informacji → dopisz ją do zlecenia albo do `CLAUDE.md`.
-4. Źle postawione → podziel na mniejsze albo rozstrzygnij sam to, czego agent nie może.
+1. Przeczytać, na czym agent utknął.
+2. Rozstrzygnąć: brakuje informacji czy zadanie jest źle postawione.
+3. Brakuje informacji → dopisać ją do zlecenia albo do `CLAUDE.md`.
+4. Źle postawione → podzielić na mniejsze albo rozstrzygnąć ręcznie to, czego agent nie może.
 
 ---
 
 ## Do zapamiętania
 
 1. Trzech agentów to trzykrotny koszt i jedno scalenie. Musi się opłacić.
-2. Jeśli nie umiesz wskazać, gdzie będzie konflikt - podział jest zły.
+2. Brak wskazania z góry, gdzie będzie konflikt - podział jest zły.
 3. Subagent ma **własny, pusty kontekst** i zwraca **streszczenie**. To jest jego sens.
-4. Narzuć format wyniku i limit długości, z obowiązkową sekcją „pominięte".
+4. Zlecenie narzuca format wyniku i limit długości, z obowiązkową sekcją „pominięte".
 5. Worktree to świeży checkout: nie ma `.venv`, `.env` ani baz. `.worktreeinclude`
    kopiuje pliki spoza gita.
 6. `${CLAUDE_PROJECT_DIR}` zostaje w katalogu startu; ścieżka worktree jest w polu `cwd`.

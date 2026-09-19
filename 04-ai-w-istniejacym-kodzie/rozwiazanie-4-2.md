@@ -71,7 +71,7 @@ niż wystawiona dzień po.
 
 ## Reguła czy błąd - para testów, która rozstrzyga
 
-To jest sedno całego labu. Trzy testy, ta sama pozycja, trzy różne wyniki:
+To jest istota całego labu. Trzy testy, ta sama pozycja, trzy różne wyniki:
 
 | Test | Cena Licencji | Rabat pozycji | Netto faktury |
 |---|---|---|---|
@@ -120,7 +120,7 @@ Test **utrwala błąd** i jednocześnie **mówi, że to błąd**. To nie jest sp
 to jest cała idea testu charakterystyki:
 
 > Test charakterystyki nie mówi „tak ma być".
-> Mówi „tak jest dzisiaj i jeśli to zmieniasz, rób to świadomie".
+> Mówi „tak jest w tej wersji, a zmiana wymaga świadomej decyzji".
 
 Gdyby ten test nie istniał, ktoś poprawiłby `rabaty.py` przy najbliższej okazji
 i zmieniłby kwoty na fakturach, nie zauważając. Gdyby istniał bez komentarza -
@@ -135,8 +135,8 @@ PROMOCJA_AKTYWNA = (date(2020, 1, 1), date(2030, 12, 31))
 PROMOCJA_WYGASLA = (date(2024, 1, 1), date(2024, 6, 30))
 ```
 
-`rabaty.promocja_aktywna()` czyta `datetime.utcnow()`, więc test z wąskim oknem zacznie się
-wywalać po upływie daty. Szerokie okno odsuwa problem do 2031 roku.
+`rabaty.promocja_aktywna()` czyta `datetime.utcnow()`, więc test z wąskim oknem zacznie
+kończyć się błędem po upływie daty. Szerokie okno odsuwa problem do 2031 roku.
 
 To jest **obejście** i tak jest opisane w komentarzu w pliku testów. Prawdziwe rozwiązanie -
 wstrzyknięcie daty jako parametru - jest zmianą sygnatury, czyli zmianą zachowania.
@@ -150,7 +150,7 @@ Bez komentarza za trzy lata ktoś zobaczy datę 2030 i uzna ją za przypadkową.
 ## Czego te testy nie robią
 
 - **Nie testują funkcji prywatnych.** Tylko wejście i wyjście `oblicz_fakture()`.
-  Dzięki temu jutro przetrwają refaktoryzację wnętrza.
+  Dzięki temu przetrwają refaktoryzację wnętrza w labie 4.3.
 - **Nie liczą niczego samodzielnie.** Każda liczba została odczytana z uruchomionej funkcji.
 - **Nie oceniają.** Poza komentarzami, które wprost mówią „to wygląda na błąd,
   do potwierdzenia u biznesu".
@@ -173,10 +173,10 @@ niczego nie pokazuje. Dopiero obok testu „ta sama bez pola promocyjnego daje 9
 widać, że coś jest nie tak. Wzorcowy plik ma tę parę w sąsiadujących funkcjach,
 z komentarzem odsyłającym jeden do drugiego.
 
-**„Poprawienie" kodu przy okazji.** `git diff app/` musi być puste. Jeśli agent naprawił
-`rabaty.py`, żeby test „przechodził poprawnie" - masz test sprawdzający kod, który sam
-przed chwilą napisał.
+**„Poprawienie" kodu przy okazji.** `git diff app/` musi być puste. Naprawa `rabaty.py`
+przez agenta, żeby test „przechodził poprawnie", daje test sprawdzający kod, który agent
+sam przed chwilą napisał.
 
 **Wartości przeliczone ręcznie.** `netto=9075.00` powstaje z dwóch pozycji, z których jedna
-ma wygasłą promocję, a druga dostaje 3% rabatu. Policzenie tego w głowie jest wykonalne
-i prowadzi do testu opisującego wyobrażenie. Uruchom funkcję, przepisz wynik.
+ma wygasłą promocję, a druga dostaje 3% rabatu. Policzenie tego w pamięci jest wykonalne
+i prowadzi do testu opisującego wyobrażenie. Wynik bierze się z uruchomienia funkcji.

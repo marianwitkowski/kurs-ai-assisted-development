@@ -1,6 +1,6 @@
 # Rozwiązanie wzorcowe - lab 1.1
 
-> Przeczytaj dopiero po labie. Tu nie ma kodu do skopiowania - jest to, co powinieneś był zobaczyć.
+> Do czytania dopiero po labie. Tu nie ma kodu do skopiowania - jest to, co powinno było się pokazać w labie.
 
 ---
 
@@ -29,10 +29,10 @@ ją wyłapać, bo w większym pliku prowadzi do szukania nie tam, gdzie trzeba.
 Sonnet na `medium` częściej dopowiada kontekst (rabat indywidualny, limit). Oba trafiają.
 
 **Wniosek do notatki:** na pytania o fakt, który da się zgrepować, **dopłata za mocniejszy model
-nie kupuje nic**. Różnica ceny Haiku → Opus to pięciokrotność wejścia i pięciokrotność wyjścia
+nic nie daje**. Różnica ceny Haiku → Opus to pięciokrotność wejścia i pięciokrotność wyjścia
 za tę samą odpowiedź.
 
-Jeżeli twoja odpowiedź nie zawierała numerów linii - to nie wina modelu. Nie poprosiłeś.
+Jeżeli odpowiedź nie zawierała numerów linii - to nie wina modelu. Nie było o nie prośby.
 
 ---
 
@@ -41,11 +41,11 @@ Jeżeli twoja odpowiedź nie zawierała numerów linii - to nie wina modelu. Nie
 **Funkcja `oblicz_odsetki` nie istnieje - i nie powstanie.** `grep -rn "oblicz_odsetki" app/`
 nie zwraca nic w **żadnym** stanie repozytorium, łącznie z końcowym.
 
-Po południu, w labie 3.2, napiszesz funkcjonalność odsetkową - ale pod innymi nazwami:
+W labie 3.2 powstaje funkcjonalność odsetkowa - ale pod innymi nazwami:
 `odsetki_za_opoznienie()` i `nota_odsetkowa()` w `app/odsetki.py`. Nazwa `oblicz_odsetki`
-jest przynętą i nie pojawia się w repozytorium ani razu. Zapamiętaj to, bo w labie 3.2
-komenda weryfikacyjna woła `odsetki.odsetki_za_opoznienie(...)` - gdybyś nazwał funkcję
-tak, jak podpowiedział ci model rano, dostałbyś `AttributeError`.
+jest przynętą i nie pojawia się w repozytorium ani razu. To ma znaczenie w labie 3.2:
+komenda weryfikacyjna woła `odsetki.odsetki_za_opoznienie(...)`, więc funkcja nazwana
+tak, jak podpowiedział model w tym labie, kończy się `AttributeError`.
 
 ### Trzy warianty, trzy różne mechanizmy
 
@@ -55,25 +55,26 @@ tak, jak podpowiedział ci model rano, dostałbyś `AttributeError`.
 | **B** - normalnie | model **grepuje repo** i odpowiada poprawnie: „nie ma takiej funkcji" |
 | **C** - z wymuszeniem cytatu | „nie ma takiej funkcji" - powtarzalnie |
 
-**Wariant B jest dziś zwykle poprawny i to jest dobra wiadomość.** Agent z dostępem do plików
+**Wariant B jest w tej wersji zwykle poprawny i to jest dobra wiadomość.** Agent z dostępem do plików
 ma odruch sprawdzania. Gdyby lab został zaprojektowany wokół kontrastu B↔C, w 2026 nie
 pokazywałby już niczego.
 
-**Pointa siedzi w A.** Zwróć uwagę na **ton** odpowiedzi A: nie ma w niej ani jednego sygnału
+**Istota labu leży w wariancie A.** W **tonie** odpowiedzi A nie ma ani jednego sygnału
 niepewności, bo model nie ma takiego sygnału do wystawienia. Brzmi dokładnie tak samo jak
 odpowiedź sprawdzona.
 
 ### Dlaczego to nie jest sztuczny scenariusz
 
-Wariant A dostajesz **za każdym razem**, gdy model nie ma dostępu do plików:
+Wariant A pojawia się **za każdym razem**, gdy model nie ma dostępu do plików:
 
-- w oknie czatu, do którego wkleiłeś fragment kodu,
+- w oknie czatu z wklejonym fragmentem kodu,
 - w asystencie IDE bez kontekstu repozytorium,
-- gdy pytasz o bibliotekę, a nie o swój kod - tam grep nie pomoże,
+- przy pytaniu o bibliotekę, a nie o kod projektu - tam grep nie pomoże,
 - **i wtedy, gdy agent po prostu uzna, że sprawdzać nie musi.**
 
-Ostatni punkt jest najważniejszy: w wariancie B to była **decyzja modelu, nie twoja gwarancja**.
-Przy pytaniu sformułowanym odrobinę inaczej jutro może zdecydować inaczej.
+Ostatni punkt jest najważniejszy: w wariancie B to była **decyzja modelu, nie gwarancja
+po stronie użytkownika**. Przy pytaniu sformułowanym odrobinę inaczej model przy kolejnym
+uruchomieniu może zdecydować inaczej.
 
 **Dlaczego wariant C działa.** „Wyjaśnij, jak działa X" zakłada istnienie X - model odpowiada
 na pytanie, które dostał. „Znajdź X i zacytuj z numerem linii" zleca **czynność weryfikowalną**
@@ -82,7 +83,7 @@ czy odpowiedź ma się o co zaczepić.
 
 **Reguła na resztę kursu:**
 
-> Twierdzenie o twoim kodzie bez cytatu z pliku i numeru linii jest hipotezą, nie odpowiedzią.
+> Twierdzenie o kodzie projektu bez cytatu z pliku i numeru linii jest hipotezą, nie odpowiedzią.
 
 ---
 
@@ -100,7 +101,7 @@ czy odpowiedź ma się o co zaczepić.
 | 106 | `vat_pozycji = vat.vat_pozycji(netto_pozycji, kod_stawki)` - VAT od netto **po rabacie** |
 | 107 | brutto = netto + VAT |
 
-**Czy kolejność ma znaczenie?** To jest trudniejsze pytanie, niż wygląda - i dobry model
+**Znaczenie kolejności.** To jest trudniejsze pytanie, niż wygląda - i dobry model
 powinien to zauważyć.
 
 1. **Na arytmetyce dokładnej, dla jednej stawki: NIE.** Procenty są przemienne:
@@ -138,15 +139,15 @@ Próg w złotówkach, rabat w euro. Liczba rozstrzygająca:
 
 Ta sama liczba na dokumencie, inny rabat.
 
-**Wniosek do notatki:** dopłata za mocniejszy model kupuje tu konkretną rzecz - zauważenie
+**Wniosek do notatki:** dopłata za mocniejszy model daje tu konkretną rzecz - zauważenie
 zależności rozłożonej na dwa pliki. Samo przeliczanie kursem w `rozliczenia.py` jest widoczne
 z jednego miejsca (pięć linii niżej jest użycie) i **nie liczy się** jako to znalezisko.
 
 > **Dla prowadzącego:** jeżeli model wskaże `app/rozliczenia.py:143`
-> (`brutto * kurs > PROG_DUZEJ_FAKTURY`) - to obserwacja tej samej klasy, uznaj ją.
+> (`brutto * kurs > PROG_DUZEJ_FAKTURY`) - to obserwacja tej samej klasy i należy ją uznać.
 
-**Uwaga o weryfikacji:** jeśli Opus powiedział coś, czego nie umiesz sprawdzić - to nie jest
-powód, żeby w to uwierzyć. To jest powód, żeby poprosić o linię.
+**Uwaga o weryfikacji:** twierdzenie Opusa, którego nie da się sprawdzić, nie jest powodem,
+żeby w nie uwierzyć. Jest powodem, żeby poprosić o numer linii.
 
 ---
 
@@ -154,10 +155,10 @@ powód, żeby w to uwierzyć. To jest powód, żeby poprosić o linię.
 
 Typowo po trzech krokach z czytaniem plików `/context` pokazuje kilkanaście procent okna.
 Po `/clear` zostaje sam prompt systemowy, definicje narzędzi i pliki kontekstowe projektu
-(w stanie startowym nie ma jeszcze `CLAUDE.md` - dodasz go w module 2).
+(w stanie startowym nie ma jeszcze `CLAUDE.md` - powstaje w module 2).
 
 Ważniejsze od liczby jest to, **co** zajmuje miejsce. `/context` rozbija to na kategorie.
-Wrócimy do tego w labie 2.1 z pomiarem, a w labie 7.1 z pieniędzmi.
+Temat wraca w labie 2.1 z pomiarem, a w labie 7.1 z kosztami.
 
 ---
 
@@ -182,7 +183,7 @@ Wrócimy do tego w labie 2.1 z pomiarem, a w labie 7.1 z pieniędzmi.
 - przed /clear: 14%
 - po /clear: 4%
 
-## Moja reguła doboru na jutro
+## Moja reguła doboru
 Haiku/low do pytań, które sam zgrepowałbym w 10 sekund. Opus/high, gdy odpowiedź zależy
 od dwóch miejsc w kodzie naraz. Zawsze żądam pliku i linii.
 ```
@@ -192,12 +193,12 @@ od dwóch miejsc w kodzie naraz. Zawsze żądam pliku i linii.
 ## Najczęstsze potknięcia
 
 **Przełączenie modelu bez `/clear` i wniosek, że „drugi model był lepszy".** Drugi model widział
-też odpowiedź pierwszego. W tym labie jest to celowe (porównujesz w tych samych warunkach),
-ale przy realnym porównaniu trzeba czyścić kontekst między próbami.
+też odpowiedź pierwszego. W tym labie jest to celowe (porównanie odbywa się w tych samych
+warunkach), ale przy realnym porównaniu trzeba czyścić kontekst między próbami.
 
 **Uznanie rzeczowego tonu za dowód.** W kroku 2 wariant A i wariant C brzmią tak samo
 pewnie - jeden jest zmyślony, drugi sprawdzony. Różni je nie ton, tylko to,
 czy odpowiedź ma punkt zaczepienia w pliku.
 
-**Pominięcie kroku 4.** `/context` jest narzędziem, po które będziesz sięgał przez cały drugi
-dzień. Jeśli widzisz je pierwszy raz w module 7, jest za późno.
+**Pominięcie kroku 4.** `/context` jest narzędziem używanym przez cały drugi kurs.
+Pierwszy kontakt z nim dopiero w module 7 jest za późny.

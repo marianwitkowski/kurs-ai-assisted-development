@@ -1,6 +1,6 @@
 # Lab 3.1 - Specyfikacja przed kodem
 
-**Czas: ~40 min** · **Tag startowy: `lab-3-1-start`** · **Produkt: `specyfikacje/noty-odsetkowe.md`**
+**Tag startowy: `lab-3-1-start`** · **Produkt: `specyfikacje/noty-odsetkowe.md`**
 
 ---
 
@@ -11,14 +11,14 @@ cd repo-cwiczeniowe
 git checkout lab-3-1-start
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** - także pliki
+> **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-2-2"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -30,31 +30,31 @@ git checkout lab-3-1-start
 > **przed** skokiem.
 
 
-W tym labie **nie piszesz ani linii kodu produkcyjnego.** Jeśli w połowie przyłapiesz się
-na tym, że agent edytuje pliki - wyszedłeś z trybu planowania.
+W tym labie **nie powstaje ani linia kodu produkcyjnego.** Agent edytujący pliki w połowie
+oznacza wyjście z trybu planowania.
 
 ---
 
 ## Wymaganie biznesowe
 
-Dostajesz je dokładnie w tej formie, w jakiej trafiłoby do ciebie w pracy:
+Wymaganie przychodzi dokładnie w tej formie, w jakiej trafia do zespołu w pracy:
 
 > **Od kierownika działu rozliczeń:**
 > Klienci płacą po terminie i nic ich to nie kosztuje. Chcemy im naliczać odsetki
 > za opóźnienie i pokazywać to na zestawieniu. Zrobicie to na następny sprint?
 
-To wszystko. Tyle dostajesz.
+To wszystko. Nic więcej nie przychodzi.
 
 ---
 
 ## Cel
 
-Wyprodukować specyfikację, po której implementacja jest mechaniczna - i zobaczyć,
-ile rozstrzygnięć agent podjąłby za ciebie, gdybyś kazał mu od razu pisać kod.
+Wyprodukować specyfikację, po której implementacja jest mechaniczna - i ustalić,
+ile rozstrzygnięć agent podjąłby sam, dostając polecenie pisania kodu od razu.
 
 ---
 
-## Krok 1 - pomiar „bez specyfikacji" (7 min)
+## Krok 1 - pomiar „bez specyfikacji"
 
 Świeża sesja, **normalny tryb** (nie planowania):
 
@@ -62,7 +62,7 @@ ile rozstrzygnięć agent podjąłby za ciebie, gdybyś kazał mu od razu pisać
 claude
 ```
 
-Wklej wymaganie tak, jak je dostałeś:
+Wymaganie do wklejenia w oryginalnej formie:
 
 ```
 Klienci płacą po terminie i nic ich to nie kosztuje. Chcemy im naliczać odsetki
@@ -70,8 +70,8 @@ za opóźnienie i pokazywać to na zestawieniu. Nie pisz kodu - powiedz mi tylko
 jak to zaimplementujesz. Krótko.
 ```
 
-**Zapisz odpowiedź.** Potem zrób z niej listę: **ile decyzji podjął, nie pytając?**
-Sprawdź konkretnie:
+**Odpowiedź zostaje zapisana.** Potem powstaje z niej lista: **ile decyzji model podjął,
+nie pytając.** Do sprawdzenia konkretnie:
 
 - jaką stopę odsetek przyjął i skąd ją wziął,
 - od którego dnia liczy,
@@ -81,7 +81,7 @@ Sprawdź konkretnie:
 - czy uwzględnił korekty (w repo jest `app/korekty.py`),
 - czy uwzględnił faktury walutowe.
 
-Policz je. **Ta liczba jest wynikiem kroku 1.**
+Policzyć je. **Ta liczba jest wynikiem kroku 1.**
 
 ```
 /clear
@@ -89,16 +89,16 @@ Policz je. **Ta liczba jest wynikiem kroku 1.**
 
 ---
 
-## Krok 2 - lista pytań zamiast odpowiedzi (8 min)
+## Krok 2 - lista pytań zamiast odpowiedzi
 
-Wejdź w tryb planowania:
+Wejście w tryb planowania:
 
 ```
 Shift+Tab   (aż pasek statusu pokaże: ⏸ plan mode on)
 ```
 
 > Na planie Pro/Max sesja startuje w trybie **auto**. Pierwsze `Shift+Tab` przenosi
-> do Manual, kolejne do accept edits, następne do plan. Patrz na pasek statusu.
+> do Manual, kolejne do accept edits, następne do plan. Rozstrzyga pasek statusu.
 
 ```
 Wymaganie od biznesu: "Klienci płacą po terminie i nic ich to nie kosztuje.
@@ -110,13 +110,13 @@ Przy każdym pytaniu podaj, którego miejsca w kodzie dotyczy (plik + linia).
 Nie odpowiadaj na te pytania. Nie proponuj rozwiązania.
 ```
 
-**Porównaj z krokiem 1.** Ile z tych pytań model wcześniej rozstrzygnął po cichu?
+**Porównanie z krokiem 1.** Liczy się, ile z tych pytań model wcześniej rozstrzygnął po cichu.
 
 ---
 
-## Krok 3 - odpowiedzi biznesu (5 min)
+## Krok 3 - odpowiedzi biznesu
 
-Rolę biznesu gra ta kartka. Oto ustalenia z kierownika działu rozliczeń:
+Rolę biznesu gra ta kartka. Ustalenia z kierownikiem działu rozliczeń:
 
 | Pytanie | Decyzja biznesu |
 |---|---|
@@ -131,13 +131,13 @@ Rolę biznesu gra ta kartka. Oto ustalenia z kierownika działu rozliczeń:
 | Gdzie to widać | Nowy endpoint `GET /raporty/odsetki` oraz funkcja do użycia w `app/powiadomienia.py` |
 | Czego **nie** robimy | Nie wysyłamy, nie zapisujemy do bazy, nie generujemy PDF-ów, nie zmieniamy `oblicz_fakture()` |
 
-Zwróć uwagę na dwa ostatnie wiersze. **„Poza zakresem" i „czego nie robimy" to najcenniejsze
-części każdej specyfikacji.** Bez nich agent zrobi wszystko, co mu przyjdzie do głowy,
-i będzie miał rację, bo nikt nie powiedział, że nie.
+Dwa ostatnie wiersze są tu najważniejsze. **„Poza zakresem" i „czego nie robimy"
+to najcenniejsze części każdej specyfikacji.** Bez nich agent zrobi wszystko, co mu przyjdzie
+do głowy, i będzie miał rację, bo nikt nie powiedział, że nie.
 
 ---
 
-## Krok 4 - specyfikacja (15 min)
+## Krok 4 - specyfikacja
 
 Nadal w trybie planowania:
 
@@ -161,22 +161,21 @@ Zasady:
 - Nie pisz kodu.
 ```
 
-**Przeczytaj wynik krytycznie.** Konkretnie sprawdź:
+**Wynik wymaga krytycznego czytania.** Do sprawdzenia konkretnie:
 
-- Czy kryteria akceptacji to **liczby**, czy opisy w rodzaju „powinno policzyć poprawnie"?
-- Czy ryzyka wskazują **konkretne miejsca w kodzie**? Podpowiedź: co się stanie,
-  gdy `app/raporty.py` przeliczy fakturę walutową?
-- Czy sekcja „Otwarte pytania" **nie jest pusta**? Jeśli jest - model coś ukrył
-  w regułach. Znajdź to.
+- Czy kryteria akceptacji to **liczby**, czy opisy w rodzaju „powinno policzyć poprawnie".
+- Czy ryzyka wskazują **konkretne miejsca w kodzie**. Podpowiedź: zachowanie
+  `app/raporty.py` przy fakturze walutowej.
+- Czy sekcja „Otwarte pytania" **nie jest pusta**. Pusta oznacza, że model coś ukrył
+  w regułach - to trzeba znaleźć.
 
-Jeżeli coś nie gra, popraw promptem albo `Ctrl+G` i ręcznie w edytorze.
+Braki poprawia kolejny prompt albo `Ctrl+G` i ręczna edycja.
 
 ---
 
-## Krok 5 - zatwierdzenie i commit (5 min)
+## Krok 5 - zatwierdzenie i commit
 
-Zatwierdź plan (opcja z ręcznym zatwierdzaniem edycji - chcesz zobaczyć, co zapisuje),
-żeby agent zapisał plik.
+Zatwierdzić plan opcją z ręcznym zatwierdzaniem edycji - zapis pliku ma być widoczny.
 
 ```bash
 git add specyfikacje/
@@ -187,7 +186,7 @@ git commit -m "Specyfikacja not odsetkowych"
 
 ## Kryteria zaliczenia
 
-- [ ] Wiesz, ile rozstrzygnięć agent podjął za ciebie w kroku 1. Masz tę liczbę zapisaną.
+- [ ] Liczba rozstrzygnięć podjętych przez agenta w kroku 1 jest ustalona i zapisana.
 - [ ] Specyfikacja ma co najmniej 6 kryteriów akceptacji wyrażonych **liczbami**.
 - [ ] Sekcja „Zakres" wprost wymienia, czego **nie** robimy.
 - [ ] Ryzyka wskazują pliki i linie, nie ogólniki.
@@ -196,8 +195,8 @@ git commit -m "Specyfikacja not odsetkowych"
 
 ## Pułapki
 
-**Wyjście z trybu planowania w połowie.** Jeśli agent zaczął edytować `app/`, zatwierdziłeś plan
-za wcześnie. `git checkout -- app/` i wróć do planowania.
+**Wyjście z trybu planowania w połowie.** Agent edytujący `app/` oznacza plan zatwierdzony
+za wcześnie. Ratunek: `git checkout -- app/` i powrót do planowania.
 
 **Przyjęcie specyfikacji, bo „wygląda profesjonalnie".** Długość i formatowanie nie są kryterium.
 Kryterium jest: *czy dwie osoby, czytając to osobno, zaimplementują to samo?*

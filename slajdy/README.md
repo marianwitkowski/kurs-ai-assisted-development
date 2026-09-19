@@ -23,7 +23,7 @@ make pptx
 ```
 
 `make pdf` dokłada notatki prelegenta do pliku (`--pdf-notes`), więc nadaje się
-do wydruku i do wysłania komuś, kto ma poprowadzić moduł zamiast Ciebie.
+do wydruku i do przekazania komuś, kto ma poprowadzić moduł na zastępstwo.
 
 Wyniki budowania są w `.gitignore` - do repozytorium trafiają tylko źródła.
 
@@ -35,22 +35,23 @@ Każdy slajd ma komentarz HTML, który Marp pokazuje w trybie prezentera:
 CO POWIEDZIEĆ: teza slajdu własnymi słowami.
 NA CO UWAŻAĆ: typowy błąd sali.
 PYTANIE Z SALI: pytanie, które pada, i odpowiedź.
-CZAS: ~N min
 ```
 
-Suma `CZAS` w każdym decku to **33-34 minuty**. Plan dnia daje na teorię modułu
-**35 minut pierwszego dnia i 28 minut drugiego** (`README.md`, sekcja „Ile to realnie trwa").
+`CO POWIEDZIEĆ` jest na każdym slajdzie, reszta tam, gdzie było co napisać.
 
-Czyli: dzień 1 domyka się bez zapasu, a **dzień 2 jest o 5-6 minut za krótki na deck
-w całości**. To nie jest błąd do naprawienia w slajdach, tylko konsekwencja tego,
-że laby zajmują 69% czasu netto. Wejdź na salę wiedząc, co tniesz:
+**Nigdzie nie ma minut.** Kurs nie zakłada tempa - ani doby szkoleniowej, ani budżetu
+na slajd. Ten sam deck bywa przejściem przez moduł na sali i materiałem, który ktoś
+czyta sam w trzech podejściach.
 
-- tnij slajdy z najmniejszym `CZAS` - zwykle te z pojedynczą tabelą,
-- **nie tnij slajdów z klasą `lab`** - one zapowiadają ćwiczenie i bez nich
+Przy wymuszonym skracaniu obowiązuje kolejność cięć:
+
+- **slajdy z klasą `lab` zostają** - zapowiadają ćwiczenie i bez nich
   uczestnik nie wie, po co je robi,
-- nie tnij slajdu z tezą modułu - w siedmiu deckach to klasa `haslo`, w module 8
+- slajd z tezą modułu zostaje - w siedmiu deckach to klasa `haslo`, w module 8
   teza siedzi na slajdzie zamykającym („Zasada bez mechanizmu jest życzeniem").
-  To jedno zdanie zostaje w głowie po tygodniu.
+  To jedno zdanie zostaje w głowie po tygodniu,
+- do cięcia nadają się slajdy z pojedynczą tabelą, która powtarza to,
+  co uczestnik ma w podręczniku.
 
 ## Motyw
 
@@ -66,6 +67,6 @@ Zestaw klas i przykłady użycia: `motyw.css` oraz dowolny gotowy deck.
 
 ## Zmiana treści
 
-Slajd nie może twierdzić niczego, czego nie ma w materiałach modułu. Gdy poprawiasz
-`teoria.md`, sprawdź, czy deck tego samego modułu nie powtarza starej liczby albo
-starej nazwy flagi.
+Slajd nie może twierdzić niczego, czego nie ma w materiałach modułu. Poprawka
+w `teoria.md` wymaga sprawdzenia, czy deck tego samego modułu nie powtarza starej
+liczby albo starej nazwy flagi.

@@ -15,8 +15,8 @@ gdy to powstanie. Bez rozwiązania technicznego.
 **Świadomie nie robimy w tej iteracji:**
 - …
 
-> Zakres negatywny jest ważniejszy od pozytywnego. To, co masz zrobić, wynika z wymagania.
-> To, czego masz **nie** robić, nie wynika z niczego - musi być napisane.
+> Zakres negatywny jest ważniejszy od pozytywnego. To, co jest do zrobienia, wynika
+> z wymagania. To, czego robić **nie** należy, nie wynika z niczego - musi być napisane.
 
 ## 3. Reguły
 

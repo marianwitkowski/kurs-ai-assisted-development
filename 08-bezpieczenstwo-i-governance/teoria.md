@@ -1,12 +1,12 @@
 # Moduł 8 - Bezpieczeństwo i governance
 
-> Czego się tu nauczysz: rozpoznawać luki, których analiza statyczna nie złapie,
-> bronić aplikacji, w której model czyta dane od użytkownika, i zapisać zasady zespołowe
+> Zakres modułu: rozpoznawanie luk, których analiza statyczna nie wykrywa, obrona
+> aplikacji, w której model czyta dane od użytkownika, i zapis zasad zespołowych
 > tak, żeby dało się je wyegzekwować.
 
 ---
 
-## 8.1. Security-first: co się zmienia, a co nie
+## Lekcja 8.1 - Security-first: co się zmienia, a co nie
 
 **Nie zmienia się nic w katalogu podatności.** SQL Injection, XSS, brak autoryzacji,
 brak walidacji - to są te same błędy, co dwadzieścia lat temu. Model nie wymyślił nowych.
@@ -18,7 +18,7 @@ płycej. Trzy konsekwencje:
 |---|---|---|
 | Ile kodu przechodzi przez review | tyle, ile ktoś napisał | więcej, niż ktoś przeczytał |
 | Jak dobrze autor zna swój kod | napisał każdą linię | przeczytał diff |
-| Skąd bierze się wzorzec | z projektu albo z głowy | z rozkładu w danych treningowych |
+| Skąd bierze się wzorzec | z projektu albo z wiedzy autora | z rozkładu w danych treningowych |
 
 Ostatni wiersz jest najmniej oczywisty. Model produkuje kod **typowy**, a typowy kod
 w internecie bywa niebezpieczny: sklejanie zapytań, brak walidacji, `except: pass`.
@@ -27,18 +27,18 @@ w internecie bywa niebezpieczny: sklejanie zapytań, brak walidacji, `except: pa
 
 | Robi dobrze | Robi źle |
 |---|---|
-| walidację, gdy poprosisz wprost | walidację, gdy nie poprosisz |
+| walidację przy wyraźnej prośbie | walidację bez wyraźnej prośby |
 | zapytania parametryzowane w prostych przypadkach | sklejanie przy warunkach budowanych dynamicznie |
 | obsługę błędów tam, gdzie jest wzorzec obok | autoryzację per zasób |
-| znane podatności, gdy pytasz o nie wprost | rozpoznanie, że coś **jest** granicą zaufania |
+| znane podatności przy pytaniu wprost | rozpoznanie, że coś **jest** granicą zaufania |
 
-**Wniosek praktyczny:** pytaj wprost. „Sprawdź ten diff pod kątem bezpieczeństwa"
+**Wniosek praktyczny:** pytać wprost. „Sprawdź ten diff pod kątem bezpieczeństwa"
 działa dużo gorzej niż lista siedmiu konkretnych punktów - i dlatego w module 5
 powstał skill z checklistą.
 
 ---
 
-## 8.2. Luka, której nie złapie żadne narzędzie
+## Lekcja 8.2 - Luka, której nie złapie żadne narzędzie
 
 ```python
 def szczegoly_faktury(faktura_id: int, authorization: str | None = Header(default=None)) -> dict:
@@ -81,7 +81,7 @@ pozwala policzyć, ile faktur ma konkurencja.
 
 ---
 
-## 8.3. Prompt injection
+## Lekcja 8.3 - Prompt injection
 
 Gdy aplikacja buduje prompt z danych, które przyszły z zewnątrz, **te dane są kodem
 wykonywanym przez model**.
@@ -138,7 +138,7 @@ trafienia jest jedna pozycja do ręcznego sprawdzenia** - akceptowalna cena za t
 
 ### Granice tej obrony
 
-Heurystyka wykrywa to, co przewidziałeś. Realną gwarancją są:
+Heurystyka wykrywa to, co zostało przewidziane. Realną gwarancją są:
 
 - **zamknięty schemat** - ogranicza zbiór możliwych wyjść,
 - **decyzja w kodzie** - model proponuje, kod rozstrzyga,
@@ -157,12 +157,12 @@ bo schemat jej nie dopuszcza.
 | **Serwer MCP** | opis narzędzia, nazwa zasobu, zwrócone dane |
 | Strona pobrana przez agenta | dowolna treść |
 
-Ostatnie trzy dotyczą **agenta w twoim repozytorium**, nie produktu. Agent, który czyta
+Ostatnie trzy dotyczą **agenta w repozytorium**, nie produktu. Agent, który czyta
 treść zgłoszenia z systemu ticketowego, czyta tekst napisany przez kogoś z zewnątrz.
 
 ---
 
-## 8.4. Sekrety
+## Lekcja 8.4 - Sekrety
 
 ### Trzy miejsca, w których sekret przecieka przy pracy z agentem
 
@@ -185,7 +185,7 @@ Obrona, w kolejności skuteczności:
 **To jest najważniejsza rzecz w całej sekcji.**
 
 Usunięcie sekretu z pliku **nie usuwa go z repozytorium**. Zostaje w historii, w każdym
-klonie, w każdym fork'u, w każdym worktree i w kopiach, o których nie wiesz.
+klonie, w każdym fork'u, w każdym worktree i w kopiach, o których nikt nie wie.
 
 ```bash
 git log -p --all -- app/konfiguracja.py | grep -c "ksef_live_"
@@ -200,7 +200,7 @@ Czasem warto, zwykle nie - ale **zawsze dopiero po** unieważnieniu.
 
 ---
 
-## 8.5. Nowa rola dewelopera i code review
+## Lekcja 8.5 - Nowa rola dewelopera i code review
 
 ### Co się nie zmienia
 
@@ -237,7 +237,7 @@ sposób uruchamiania lintera, jaki istnieje.
 
 ---
 
-## 8.6. Kiedy AI można używać, a kiedy nie
+## Lekcja 8.6 - Kiedy AI można używać, a kiedy nie
 
 | Zastosowanie | Status |
 |---|---|
@@ -275,7 +275,7 @@ i jej podatności.
 
 ---
 
-## 8.7. RODO i AI Act - pytania, nie odpowiedzi
+## Lekcja 8.7 - RODO i AI Act - pytania, nie odpowiedzi
 
 Tej sekcji nie rozstrzyga zespół. Rozstrzyga ją dział prawny albo inspektor ochrony danych.
 Zadaniem zespołu jest **zadać właściwe pytania** i dostarczyć fakty techniczne.
@@ -306,12 +306,12 @@ Pytania do prawników: w jakiej roli występujemy (dostawca czy podmiot stosują
 do jakiej klasy ryzyka należy nasz system, czy użytkownik wchodzi w interakcję
 z systemem AI, od kiedy stosuje się przepisy, które nas dotyczą.
 
-**Harmonogram stosowania AI Act jest etapowy i zmienia się.** Nie ucz się dat -
-naucz się, kogo zapytać i co mu podać.
+**Harmonogram stosowania AI Act jest etapowy i zmienia się.** Dat nie warto się uczyć -
+istotne jest, kogo zapytać i co mu podać.
 
 ---
 
-## 8.8. Zasady zespołowe, które da się wyegzekwować
+## Lekcja 8.8 - Zasady zespołowe, które da się wyegzekwować
 
 Zasada bez mechanizmu jest życzeniem. Przy każdej zasadzie w polityce zespołu warto
 dopisać kolumnę „czym to egzekwujemy":
@@ -357,11 +357,12 @@ dla każdego poza autorem, a raz wypchnięte zostają w historii na zawsze.
 5. Obrona miękka (zdanie w prompcie) to instrukcja, nie zabezpieczenie.
    Twarda jest w kodzie: limit, wykrycie wzorców, zamknięty schemat, ścieżka do człowieka.
 6. Podejrzanego tekstu nie sanityzujemy - kierujemy go do człowieka.
-7. Usunięcie sekretu z pliku nie usuwa go z repozytorium. **Unieważnij sekret.**
+7. Usunięcie sekretu z pliku nie usuwa go z repozytorium. **Sekret trzeba unieważnić.**
 8. Review nie sprawdza, czy „to" jest właściwe - dlatego specyfikacja jest osobnym
    artefaktem przechodzącym przez review.
 9. Pisanie kodu obsługującego dane osobowe jest w porządku. Wklejanie tych danych
    do promptu nie jest.
-10. Przy każdej zasadzie dopisz, czym ją egzekwujesz. Jeśli niczym - nazwij to procesem.
+10. Przy każdej zasadzie dopisać mechanizm egzekwowania. Gdy mechanizmu nie ma -
+    nazwać to procesem.
 
 Następny krok: [lab 8.1](lab-8-1.md), potem [lab 8.2](lab-8-2.md). · [Ściąga](sciaga.md)

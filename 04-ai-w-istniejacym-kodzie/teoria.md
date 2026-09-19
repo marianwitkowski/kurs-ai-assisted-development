@@ -1,21 +1,23 @@
 # Moduł 4 - AI w istniejącym kodzie
 
-> Czego się tu nauczysz: wyciągać z legacy to, czego nikt nie zapisał, odróżniać regułę
-> biznesową od błędu - i nie dać agentowi „uprościć" ani jednego, ani drugiego.
+> Zakres modułu: wyciąganie z legacy tego, czego nikt nie zapisał, odróżnianie reguły
+> biznesowej od błędu - i niedopuszczenie do „uproszczenia" przez agenta ani jednego,
+> ani drugiego.
 
 ---
 
-## 4.1. Dlaczego legacy jest trudniejsze niż nowy kod
+## Lekcja 4.1 - Dlaczego legacy jest trudniejsze niż nowy kod
 
-Pisząc nowy kod, agent ma jedno ograniczenie: twoją specyfikację. W istniejącym kodzie
+Przy nowym kodzie agent ma jedno ograniczenie: specyfikację. W istniejącym kodzie
 ma drugie, znacznie twardsze: **wszystko, co już działa i na czym ktoś polega.**
 
 Trzy rzeczy, które robią różnicę:
 
 **Kod niesie decyzje, których nie widać.** Dziwny warunek w środku funkcji to albo pomyłka
-sprzed trzech lat, albo wynik spotkania z działem prawnym. Z samego kodu nie odróżnisz.
+sprzed trzech lat, albo wynik spotkania z działem prawnym. Z samego kodu nie da się tego
+rozstrzygnąć.
 
-**Nie ma sieci bezpieczeństwa.** Nowy kod piszesz razem z testami. Legacy zwykle nie ma testów
+**Nie ma sieci bezpieczeństwa.** Nowy kod powstaje razem z testami. Legacy zwykle nie ma testów
 dokładnie w tych miejscach, gdzie są najważniejsze - bo gdyby ktoś je napisał,
 musiałby najpierw zrozumieć logikę.
 
@@ -28,7 +30,7 @@ jest sensowna w oderwaniu i każda może kosztować pieniądze.
 
 ---
 
-## 4.2. Rozpoznawanie: wzorce, antywzorce, code smells
+## Lekcja 4.2 - Rozpoznawanie: wzorce, antywzorce, code smells
 
 Agent dobrze znajduje rzeczy **mierzalne**. Warto go do tego użyć i nie oczekiwać więcej.
 
@@ -41,7 +43,7 @@ Agent dobrze znajduje rzeczy **mierzalne**. Warto go do tego użyć i nie oczeki
 | martwy kod | czy naprawdę martwy, czy wołany dynamicznie |
 | brakującą obsługę błędów | czy brak jest celowy |
 
-Praktyczny wniosek: **każ agentowi zrobić inwentaryzację, ocenę zostaw sobie.**
+Praktyczny wniosek: **inwentaryzacja dla agenta, ocena po stronie człowieka.**
 
 ```
 Zrób inwentaryzację problemów w app/. Dla każdego podaj: plik, linię, rodzaj problemu
@@ -49,31 +51,31 @@ i jednozdaniowy opis. Nie proponuj poprawek. Nie oceniaj ważności.
 Posortuj po pliku.
 ```
 
-Lista faktów jest użyteczna. Lista rekomendacji od agenta, który nie zna twojego biznesu,
-jest wyrobem rekomendacjopodobnym.
+Lista faktów jest użyteczna. Rekomendacje od agenta, który nie zna domeny biznesowej,
+nie są - bo ocena ryzyka wymaga wiedzy, której w kodzie nie ma.
 
-### Uszeregowanie ryzyka - to robisz ty
+### Uszeregowanie ryzyka - po stronie człowieka
 
 Trzy pytania na każdy znaleziony problem:
 
-1. **Co się stanie, jeśli tego nie ruszę?** (nic / rośnie dług / awaria / strata pieniędzy)
-2. **Co się stanie, jeśli ruszę i się pomylę?** (nic / test złapie / produkcja)
-3. **Czy mam czym sprawdzić, że nie zepsułem?** (testy / ręcznie / nijak)
+1. **Co się stanie bez zmiany?** (nic / rośnie dług / awaria / strata pieniędzy)
+2. **Co się stanie przy zmianie z pomyłką?** (nic / test złapie / produkcja)
+3. **Czym sprawdzić, że nic się nie zepsuło?** (testy / ręcznie / nijak)
 
 Problem z odpowiedzią „nijak" na trzecie pytanie **nie nadaje się do naprawy** - nadaje się
 do napisania testu. To jest cała kolejność pracy w legacy.
 
 ---
 
-## 4.3. Odtwarzanie intencji ze starego kodu
+## Lekcja 4.3 - Odtwarzanie intencji ze starego kodu
 
 Najważniejsza umiejętność tego modułu. Chodzi o odpowiedź na pytanie
 **„co ten kod miał robić"**, gdy dostępne jest tylko „co robi".
 
 ### Technika: opis zachowania zamiast opisu kodu
 
-Nie pytaj „co robi ta funkcja" - dostaniesz przepisany kod prozą, bezużyteczny.
-Pytaj o **zachowanie obserwowalne z zewnątrz**:
+Pytanie „co robi ta funkcja" zwraca przepisany kod prozą, bezużyteczny.
+Pytać należy o **zachowanie obserwowalne z zewnątrz**:
 
 ```
 Przeczytaj oblicz_fakture() w app/rozliczenia.py. Opisz jej zachowanie jako listę
@@ -106,7 +108,7 @@ Uzasadnij każdą klasyfikację. Jeżeli zaznaczasz (a) albo (b) - powiedz,
 jaki dowód w repozytorium to potwierdza.
 ```
 
-Ostatnie zdanie jest kluczowe. Bez niego dostaniesz stanowcze „to jest celowa reguła"
+Ostatnie zdanie jest kluczowe. Bez niego odpowiedź brzmi stanowczo „to jest celowa reguła",
 bez cienia dowodu - tak jak w labie 2.1.
 
 **Odpowiedź (c) jest wartościowa.** Lista rzeczy, o które trzeba zapytać człowieka,
@@ -114,9 +116,9 @@ jest realnym produktem pracy z legacy.
 
 ---
 
-## 4.4. Reguła czy błąd - rozróżnienie, na którym wszystko stoi
+## Lekcja 4.4 - Reguła czy błąd - rozróżnienie, na którym wszystko stoi
 
-To jest sedno modułu. Ten sam kawałek kodu może być jednym albo drugim,
+To jest istota modułu. Ten sam kawałek kodu może być jednym albo drugim,
 a konsekwencje pomyłki są odwrotne.
 
 |  | Reguła biznesowa | Błąd |
@@ -137,14 +139,14 @@ niewygodny - i to dobrze, bo wtedy ktoś go w końcu zakwestionuje świadomie,
 zamiast „poprawić" przy okazji.
 
 > Test charakterystyki nie mówi „tak ma być".
-> Mówi „tak jest dzisiaj i jeśli to zmieniasz, rób to świadomie".
+> Mówi „tak jest w tej wersji, a zmiana wymaga świadomej decyzji".
 
 ---
 
-## 4.5. Testy zabezpieczające (characterization tests)
+## Lekcja 4.5 - Testy zabezpieczające (characterization tests)
 
 Test charakterystyki to test, który **utrwala obecne zachowanie** - niezależnie od tego,
-czy jest poprawne. Piszesz go po to, żeby refaktoryzacja niczego nie zmieniła.
+czy jest poprawne. Powstaje po to, żeby refaktoryzacja niczego nie zmieniła.
 
 ### Kolejność, od której nie ma odstępstw
 
@@ -157,9 +159,9 @@ graph LR
   E --> F[Dopiero teraz:<br/>zmiana zachowania]
 ```
 
-Krok C jest tym, który wszyscy pomijają. **Test charakterystyki musi przejść na kodzie,
-którego jeszcze nie ruszyłeś.** Jeśli od razu nie przechodzi, to nie jest test
-charakterystyki - to jest test twojego wyobrażenia o tym kodzie.
+Krok C jest tym, który wszyscy pomijają. **Test charakterystyki musi przejść na kodzie
+jeszcze niezmienionym.** Jeśli od razu nie przechodzi, to nie jest test
+charakterystyki - to jest test wyobrażenia o tym kodzie.
 
 ### Jak to zlecić agentowi
 
@@ -206,11 +208,11 @@ w zaokrąglaniu, test go powtórzy i będzie zielony.
 
 ---
 
-## 4.6. Jak nie dopuścić do „uproszczenia"
+## Lekcja 4.6 - Jak nie dopuścić do „uproszczenia"
 
 Cztery poziomy obrony, od najsłabszego do najmocniejszego.
 
-**1. Powiedz wprost w prompcie.**
+**1. Polecenie wprost w prompcie.**
 
 ```
 Nie zmieniaj żadnego zachowania. Jeżeli uważasz, że coś jest błędem,
@@ -218,16 +220,16 @@ NAPISZ MI O TYM, ale nie poprawiaj. To jest refaktoryzacja czysto strukturalna:
 te same wejścia mają dawać te same wyjścia co do grosza.
 ```
 
-**2. Zapisz w `CLAUDE.md`.** Ostrzeżenie o funkcji, której nie wolno upraszczać,
-działa w każdej sesji, także wtedy, gdy zapomnisz wpisać je do promptu.
+**2. Zapis w `CLAUDE.md`.** Ostrzeżenie o funkcji, której nie wolno upraszczać,
+działa w każdej sesji, także wtedy, gdy zabraknie go w prompcie.
 
 **3. Testy charakterystyki.** Tu obrona przestaje zależeć od tego, czy model posłuchał.
-„Uproszczenie" zmieniające wynik **wywala test**.
+„Uproszczenie" zmieniające wynik **nie przechodzi testu**.
 
 **4. Hook, który uruchamia testy.** Moduł 5. Model nie może zakończyć pracy,
 dopóki bramka jest czerwona - niezależnie od tego, co uważa.
 
-Zwróć uwagę na progresję: pierwsze dwa poziomy to **prośby**, dwa ostatnie to **fakty**.
+Progresja jest tu istotna: pierwsze dwa poziomy to **prośby**, dwa ostatnie to **fakty**.
 Prośby działają w większości przypadków. Fakty działają zawsze.
 
 ### Sygnały ostrzegawcze w wypowiedzi agenta
@@ -241,14 +243,14 @@ Każde z nich oznacza zmianę zachowania zgłoszoną jako porządki.
 
 ---
 
-## 4.7. Planowanie migracji
+## Lekcja 4.7 - Planowanie migracji
 
 Migracja biblioteki, frameworka albo standardu języka to zadanie, w którym agent jest
 wyjątkowo przydatny - **pod warunkiem że nie planuje jej sam**.
 
 ### Co zlecić agentowi
 
-| Zleć | Nie zlecaj |
+| Do zlecenia | Nie do zlecenia |
 |---|---|
 | inwentaryzację wystąpień (gdzie, ile, w jakim kontekście) | decyzji, czy migrować |
 | klasyfikację: mechaniczne vs. wymagające decyzji | wyboru wersji docelowej |
@@ -276,9 +278,9 @@ w pełni mechaniczna - zmienia się typ, strefa, precyzja albo zachowanie przy b
 
 1. W legacy domyślna odpowiedź na „czy to można uprościć?" brzmi „nie wiem,
    dopóki nie mam testu".
-2. Agent dobrze **inwentaryzuje**, słabo **ocenia ważność**. Rozdziel te dwie czynności.
-3. Pytaj o zachowanie („JEŻELI… TO…"), nie o kod. Pytaj o zaskoczenia.
-4. Reguła biznesowa w legacy wygląda dokładnie jak błąd. Nie rozstrzygaj po wyglądzie.
+2. Agent dobrze **inwentaryzuje**, słabo **ocenia ważność**. Te dwie czynności trzeba rozdzielić.
+3. Pytać o zachowanie („JEŻELI… TO…"), nie o kod. Pytać o zaskoczenia.
+4. Reguła biznesowa w legacy wygląda dokładnie jak błąd. Wygląd nie rozstrzyga.
 5. Test charakterystyki musi przejść **przed** refaktoryzacją. Inaczej to nie jest
    test charakterystyki.
 6. Test, który liczy to samo, co kod, jest zawsze zielony i nic nie chroni.

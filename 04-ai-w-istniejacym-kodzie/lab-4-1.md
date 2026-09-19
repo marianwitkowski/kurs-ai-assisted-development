@@ -1,6 +1,6 @@
 # Lab 4.1 - Mapa ryzyka i plan migracji
 
-**Czas: ~25 min** · **Tag startowy: `lab-4-1-start`** · **Produkt: `docs/mapa-ryzyka.md`**
+**Tag startowy: `lab-4-1-start`** · **Produkt: `docs/mapa-ryzyka.md`**
 
 ---
 
@@ -11,14 +11,14 @@ cd repo-cwiczeniowe
 git checkout lab-4-1-start
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** -
+> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-3-2"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -34,13 +34,13 @@ git checkout lab-4-1-start
 
 ## Cel
 
-Oddzielić dwie czynności, które zwykle się zlewają: **inwentaryzację** (robi agent, dobrze)
-i **ocenę ryzyka** (robisz ty, bo agent nie zna twojego biznesu). Efektem ma być lista,
-z której da się wybrać, co robić jutro.
+Oddzielić dwie czynności, które zwykle się zlewają: **inwentaryzację** (agent robi ją dobrze)
+i **ocenę ryzyka** (po stronie człowieka, bo agent nie zna domeny biznesowej). Efektem ma być
+lista, z której da się wybrać, co zrobić w następnej kolejności.
 
 ---
 
-## Krok 1 - inwentaryzacja bez ocen (8 min)
+## Krok 1 - inwentaryzacja bez ocen
 
 ```
 Zrób inwentaryzację problemów w katalogu app/. Dla każdego podaj:
@@ -54,7 +54,7 @@ Zasady:
 Posortuj po pliku.
 ```
 
-Sprawdź wyrywkowo trzy pozycje:
+Wyrywkowo sprawdzić trzy pozycje:
 
 ```bash
 sed -n '113,120p' app/db.py
@@ -66,9 +66,9 @@ Halucynacja w numerze linii oznacza, że model nie czytał, tylko pamiętał.
 
 ---
 
-## Krok 2 - dwa pytania, których agent sam nie zada (5 min)
+## Krok 2 - dwa pytania, których agent sam nie zada
 
-Inwentaryzacja jest płaska. Teraz szukamy rzeczy, które widać dopiero z kilku miejsc naraz:
+Inwentaryzacja jest płaska. Teraz w grę wchodzą rzeczy widoczne dopiero z kilku miejsc naraz:
 
 ```
 Dwa pytania:
@@ -85,18 +85,18 @@ w tym labie i nie wyjdzie z inwentaryzacji plik po pliku.
 
 ---
 
-## Krok 3 - ocena ryzyka (7 min)
+## Krok 3 - ocena ryzyka
 
-Teraz twoja część. Dla każdej pozycji z listy odpowiedz na trzy pytania:
+Teraz część po stronie człowieka. Na każdą pozycję z listy trzy pytania:
 
 | Pytanie | Możliwe odpowiedzi |
 |---|---|
-| Co się stanie, jeśli tego nie ruszymy? | nic / rośnie dług / awaria / **strata pieniędzy** |
-| Co się stanie, jeśli ruszymy i się pomylimy? | nic / test złapie / **produkcja** |
-| Czym sprawdzimy, że nie zepsuliśmy? | testy / ręcznie / **nijak** |
+| Co się stanie bez zmiany? | nic / rośnie dług / awaria / **strata pieniędzy** |
+| Co się stanie przy zmianie z pomyłką? | nic / test złapie / **produkcja** |
+| Czym sprawdzić, że nic się nie zepsuło? | testy / ręcznie / **nijak** |
 
-Zapisz `docs/mapa-ryzyka.md` z tabelą. Możesz kazać agentowi sformatować tabelę,
-ale **oceny wpisujesz sam** - to jest cała wartość tego kroku.
+Zapisać `docs/mapa-ryzyka.md` z tabelą. Formatowanie tabeli można zlecić agentowi,
+ale **oceny wpisuje człowiek** - to jest cała wartość tego kroku.
 
 Reguła porządkująca:
 
@@ -105,7 +105,7 @@ Reguła porządkująca:
 
 ---
 
-## Krok 4 - plan migracji `datetime.utcnow()` (5 min)
+## Krok 4 - plan migracji `datetime.utcnow()`
 
 ```
 W repozytorium są wywołania datetime.utcnow(). Znajdź WSZYSTKIE - policz je
@@ -114,7 +114,7 @@ czy zamiana na datetime.now(UTC) jest równoważna, czy zmienia zachowanie.
 Uzasadnij osobno dla każdego miejsca - nie odpowiadaj zbiorczo.
 ```
 
-Dopisz wynik do `docs/mapa-ryzyka.md` jako sekcję „Plan migracji".
+Wynik dopisać do `docs/mapa-ryzyka.md` jako sekcję „Plan migracji".
 
 **Dwie rzeczy do sprawdzenia w odpowiedzi.**
 
@@ -133,10 +133,10 @@ git add docs/ && git commit -m "Mapa ryzyka i plan migracji"
 
 ## Kryteria zaliczenia
 
-- [ ] Sprawdziłeś wyrywkowo numery linii z inwentaryzacji.
-- [ ] Znalazłeś zależność przeliczenia faktury od zegara systemowego.
-- [ ] Każda pozycja ma twoją ocenę, nie ocenę agenta.
-- [ ] Wiesz, które pozycje trzeba najpierw obudować testami.
+- [ ] Numery linii z inwentaryzacji sprawdzone wyrywkowo.
+- [ ] Zależność przeliczenia faktury od zegara systemowego znaleziona.
+- [ ] Każda pozycja ma ocenę uczestnika, nie ocenę agenta.
+- [ ] Wiadomo, które pozycje trzeba najpierw obudować testami.
 - [ ] Plan migracji rozróżnia zamiany mechaniczne od wymagających decyzji.
 
 ## Pułapki
@@ -150,7 +150,7 @@ na dwa moduły. Zależność przeliczenia od zegara jest właśnie taka: `app/ro
 wygląda na czystą funkcję, a `app/rabaty.py:29` czyta `datetime.utcnow()`.
 
 **Uznanie migracji `utcnow()` za mechaniczną.** `datetime.utcnow()` zwraca obiekt **bez strefy**,
-`datetime.now(UTC)` - **ze strefą**. Tam, gdzie od razu bierzemy `.date()`, różnicy nie ma.
+`datetime.now(UTC)` - **ze strefą**. Tam, gdzie od razu wchodzi `.date()`, różnicy nie ma.
 Gdzie indziej jest.
 
 ---

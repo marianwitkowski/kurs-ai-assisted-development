@@ -25,8 +25,8 @@ color: cyan
 | `description` | dwa zdania: kiedy używać i **kiedy nie**. Model czyta to, decydując, czy sięgnąć po agenta sam |
 | `tools` | bez `WebFetch`, bez `Task` - przekształcenie mechaniczne ich nie potrzebuje |
 | `model: sonnet` | zadanie nie wymaga rozumowania, wymaga konsekwencji |
-| `isolation: worktree` | agent pracuje we własnym katalogu; twój checkout jest nietknięty |
-| `maxTurns: 25` | **jedyny mechanizm**, który zatrzyma pętlę - subagenta nie widzisz w trakcie |
+| `isolation: worktree` | agent pracuje we własnym katalogu; główny checkout zostaje nietknięty |
+| `maxTurns: 25` | **jedyny mechanizm**, który zatrzyma pętlę - subagenta nie widać w trakcie |
 
 ### Zdanie, które robi najwięcej
 
@@ -82,7 +82,7 @@ a nie „testy przechodzą". Pole wymusza uruchomienie.
 
 ## Co naprawdę wraca do sesji głównej
 
-| | Widzisz? |
+| | Widoczne |
 |---|---|
 | Które pliki agent przeczytał | **nie** - zostało w jego kontekście |
 | Wynik jego pracy | **tak** - streszczenie + diff |
@@ -98,12 +98,12 @@ czy agent przeczytał trzy pliki, czy trzydzieści. **To jest cała wartość su
 
 | | Subagent | Sesja główna |
 |---|---|---|
-| Zadanie | ocenisz po wyniku | musisz widzieć drogę |
+| Zadanie | oceniane po wyniku | trzeba widzieć drogę |
 | Przykład | migracja API, inwentaryzacja, masowy rename | decyzja architektoniczna, debug nieznanego błędu |
-| Kontekst | oszczędzasz | płacisz |
+| Kontekst | oszczędność | koszt |
 | Kontrola w trakcie | brak | `Esc` |
 
-**Kryterium jest jedno: czy ocenisz wynik bez oglądania drogi?**
+**Kryterium jest jedno: czy wynik da się ocenić bez oglądania drogi.**
 
 Migracja `utcnow()` → tak, wystarczy diff i zielona bramka.
 „Dlaczego ten raport pokazuje złe kwoty" → nie, cała wartość jest w drodze,
@@ -113,7 +113,7 @@ a błędna hipoteza postawiona w trzeciej turze zniknie ze streszczenia.
 
 ## Najczęstsze potknięcia
 
-**Brak `maxTurns`.** Subagenta nie widzisz. Limit tur jest jedynym mechanizmem,
+**Brak `maxTurns`.** Subagenta nie widać. Limit tur jest jedynym mechanizmem,
 który przerwie pętlę, zanim zje budżet.
 
 **`description` mówiące tylko, co agent robi.** Połowa wartości opisu to zdanie

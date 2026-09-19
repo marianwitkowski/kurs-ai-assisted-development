@@ -24,7 +24,7 @@ Przegląd: @README.md
 Maks. **4 poziomy**. Parser pomija bloki i spany kodu: `` `@README` `` to zwykły tekst.
 **Import nie oszczędza kontekstu** - ładuje się przy starcie tak samo.
 
-`AGENTS.md` w repo? Nie duplikuj:
+`AGENTS.md` w repo - bez duplikowania treści:
 
 ```markdown
 @AGENTS.md

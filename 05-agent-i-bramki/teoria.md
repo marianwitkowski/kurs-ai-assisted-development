@@ -1,26 +1,26 @@
 # Moduł 5 - Praca z agentem i deterministyczne bramki
 
-> Czego się tu nauczysz: prowadzić agenta małymi krokami, które da się cofnąć,
-> i zamienić prośby z `CLAUDE.md` na mechanizmy, których model nie może zignorować.
+> Zakres modułu: prowadzenie agenta małymi krokami, które da się cofnąć,
+> i zamiana próśb z `CLAUDE.md` na mechanizmy, których model nie może zignorować.
 
 ---
 
-## 5.1. Małe kroki i kontrola zmian
+## Lekcja 5.1 - Małe kroki i kontrola zmian
 
 ### Dlaczego mały krok
 
 Wąskim gardłem pracy z agentem nie jest generowanie kodu, tylko **weryfikacja**.
-Koszt weryfikacji rośnie szybciej niż liniowo z wielkością diffa: przy 40 zmienionych liniach
-czytasz je; przy 400 przeglądasz; przy 4000 akceptujesz i masz nadzieję.
+Koszt weryfikacji rośnie szybciej niż liniowo z wielkością diffa: 40 zmienionych linii
+da się przeczytać, 400 - przejrzeć wyrywkowo, 4000 przechodzi na nadzieję.
 
 | Krok | Diff | Weryfikacja | Koszt pomyłki |
 |---|---|---|---|
-| jedna funkcja + test | ~50 linii | czytasz całość | minuty |
-| jeden moduł | ~300 linii | czytasz wyrywkowo | godzina |
-| „zrób tę funkcjonalność" | 1500+ linii | nie weryfikujesz | dni, często na produkcji |
+| jedna funkcja + test | ~50 linii | lektura całości | minuty |
+| jeden moduł | ~300 linii | przegląd wyrywkowy | godzina |
+| „zrób tę funkcjonalność" | 1500+ linii | brak weryfikacji | dni, często na produkcji |
 
 Reguła praktyczna: **krok kończy się w momencie, w którym repo jest w stanie nadającym się
-do commita.** Jeśli nie umiesz napisać sensownego komunikatu commita, krok był za duży
+do commita.** Krok, dla którego nie da się napisać sensownego komunikatu commita, był za duży
 albo obejmował dwie różne rzeczy.
 
 ### Cztery narzędzia kontroli
@@ -29,7 +29,7 @@ albo obejmował dwie różne rzeczy.
 |---|---|---|
 | `git diff` | po każdym kroku | jedyny wiarygodny opis tego, co się stało |
 | `git commit` | na końcu kroku | punkt, do którego można wrócić |
-| review | przed commitem | twoja odpowiedzialność, nie agenta |
+| review | przed commitem | odpowiedzialność autora, nie agenta |
 | `/rewind`, `Esc Esc` | gdy poszło źle | cofnięcie rozmowy **i** kodu |
 
 **`git diff` bije opis agenta.** Podsumowanie „dodałem funkcję i testy" bywa prawdziwe
@@ -39,18 +39,18 @@ i niekompletne jednocześnie. Diff nie ma takiej możliwości.
 
 | Sytuacja | Narzędzie |
 |---|---|
-| Model idzie w złą stronę, właśnie to widzisz | `Esc` |
-| Chcesz wrócić do wcześniejszego punktu rozmowy i kodu | `Esc Esc` albo `/rewind` |
+| Model idzie w złą stronę, widać to na bieżąco | `Esc` |
+| Powrót do wcześniejszego punktu rozmowy i kodu | `Esc Esc` albo `/rewind` |
 | Zmiany są w plikach, nie w commicie | `git checkout -- <plik>` |
 | Zmiany są w ostatnim commicie | `git reset --soft HEAD~1` |
-| Nie wiesz, co się stało | `git stash` i spokojnie obejrzyj |
+| Nie wiadomo, co się stało | `git stash` i spokojny przegląd |
 
 `/rewind` cofa **rozmowę i kod jednocześnie** - to jest różnica wobec samego `git checkout`,
 po którym model nadal „pamięta", że napisał coś, czego już nie ma.
 
 ---
 
-## 5.2. Hooki - egzekucja zamiast prośby
+## Lekcja 5.2 - Hooki - egzekucja zamiast prośby
 
 `CLAUDE.md` mówi modelowi, co ma robić. Hook **wykonuje kod** przy zdarzeniu,
 niezależnie od tego, co model uważa.
@@ -142,7 +142,7 @@ modelowi. Przy kodzie 0 stderr idzie wyłącznie do logu debugowania i model go 
 
 **stdout trafia do modelu tylko przy czterech zdarzeniach:** `SessionStart`,
 `UserPromptSubmit`, `UserPromptExpansion`, `PostModelSwitch`. Przy pozostałych idzie
-do logu debugowania - jeśli chcesz coś powiedzieć modelowi, użyj JSON-a z polem
+do logu debugowania - do przekazania czegoś modelowi służy JSON z polem
 `systemMessage` albo stderr przy blokadzie.
 
 ### Wejście na stdin
@@ -195,11 +195,11 @@ stateDiagram-v2
 Hook **nie potrzebuje własnego znacznika** - wejście już niesie tę informację, a uzbrojenie
 wraca samo, bo `stop_hook_active` jest `false` w każdej turze rozpoczętej normalnie.
 
-> To jest szersza lekcja niż sam hook: **przeczytaj schemat wejścia, zanim napiszesz
+> To jest szersza lekcja niż sam hook: **schemat wejścia trzeba przeczytać, zanim powstanie
 > obejście.** Wersja z własnym plikiem-znacznikiem w `scratchpad_dir` też działa, ale jest
-> dwa razy dłuższa, wymaga obsługi nieobecnego pola i trzeba w niej pamiętać o kasowaniu
-> znacznika przy zielonej bramce. Wszystko to robi jedno pole, o którym wiedziałbyś,
-> gdybyś przeczytał sekcję `Stop` w dokumentacji hooków.
+> dwa razy dłuższa, wymaga obsługi nieobecnego pola i wymusza kasowanie
+> znacznika przy zielonej bramce. Wszystko to robi jedno pole, opisane
+> w sekcji `Stop` dokumentacji hooków.
 
 ### Kolejność plików ustawień
 
@@ -207,21 +207,21 @@ Od najwyższego priorytetu:
 
 1. **Managed** - `managed-settings.json` (organizacja)
 2. **Wiersz poleceń** - `claude --settings`
-3. **Project local** - `.claude/settings.local.json` (ty, ten projekt, poza gitem)
+3. **Project local** - `.claude/settings.local.json` (jeden użytkownik, ten projekt, poza gitem)
 4. **Shared project** - `.claude/settings.json` (**zespół, commitowany**)
-5. **User** - `~/.claude/settings.json` (ty, wszystkie projekty)
+5. **User** - `~/.claude/settings.json` (jeden użytkownik, wszystkie projekty)
 
 Listy (np. `permissions.allow`) **łączą się** między plikami, nie nadpisują.
 Weryfikacja: `/hooks` pokazuje załadowane hooki, `/status` - źródła ustawień.
 Pliki są przeładowywane na żywo, bez restartu sesji.
 
 > Uwaga na pułapkę: `permissions.allow` i `additionalDirectories` czekają na **zaufanie
-> folderu**. Reguły `deny` i `ask` działają natychmiast. Dlatego blokady wpisuj jako `deny`,
-> a nie jako brak `allow`.
+> folderu**. Reguły `deny` i `ask` działają natychmiast. Dlatego blokady zapisuje się jako
+> `deny`, a nie jako brak `allow`.
 
 ---
 
-## 5.3. `CLAUDE.md` a hook - kiedy które
+## Lekcja 5.3 - `CLAUDE.md` a hook - kiedy które
 
 | | `CLAUDE.md` / reguła | Hook |
 |---|---|---|
@@ -229,14 +229,14 @@ Pliki są przeładowywane na żywo, bez restartu sesji.
 | Model może zignorować | **tak** | **nie** |
 | Koszt | tokeny w każdej sesji | czas wykonania skryptu |
 | Nadaje się do | konwencji, wyjaśnień, pułapek | formatu, blokad, bramek |
-| Gdy zawiedzie | dostajesz kod niezgodny z konwencją | nic się nie dzieje, bo nie może |
+| Gdy zawiedzie | kod niezgodny z konwencją | nic się nie dzieje, bo nie może |
 
 Test rozstrzygający: **„co się stanie, jeśli model to zignoruje?"**
 
 - „Kod będzie brzydszy, poprawię na review" → `CLAUDE.md`.
 - „Wejdzie nam sekret do repo" / „wypchniemy czerwone testy" → **hook**.
 
-Nie zastępuj `CLAUDE.md` hookami. Hook nie potrafi wyjaśnić, **dlaczego** reguła istnieje -
+Hooki nie zastępują `CLAUDE.md`. Hook nie potrafi wyjaśnić, **dlaczego** reguła istnieje -
 a to jest połowa wartości pliku kontekstowego. Najlepsze reguły mają obie formy:
 wyjaśnienie w `CLAUDE.md` i egzekucję w hooku.
 
@@ -256,7 +256,7 @@ zostawiając czerwone testy.
 
 ---
 
-## 5.4. Skille jako artefakty zespołowe
+## Lekcja 5.4 - Skille jako artefakty zespołowe
 
 Skill to workflow zapisany w repozytorium: ładowany **na żądanie**, wersjonowany,
 przechodzący przez code review jak kod.
@@ -281,7 +281,7 @@ allowed-tools: Bash(git diff *), Read, Grep
 ```
 
 Wszystkie pola są opcjonalne, ale `---` musi być w pierwszej linii pliku.
-Poza powyższymi przydają się: `disable-model-invocation` (tylko ty możesz wywołać),
+Poza powyższymi przydają się: `disable-model-invocation` (wywołanie wyłącznie ręczne),
 `context: fork` (uruchomienie w osobnym kontekście subagenta), `model`, `effort`.
 
 ### Wstrzykiwanie wyniku komendy
@@ -305,9 +305,9 @@ placeholder w miejscu. Model dostaje gotowy diff w kontekście, nie musi po nieg
 | Reguła z `paths:` | gdy model dotknie pasującego pliku | zasady dla wycinka kodu |
 | **Skill** | **na wywołanie** | procedura wieloetapowa, używana od czasu do czasu |
 
-Procedura na dwadzieścia kroków w `CLAUDE.md` kosztuje tokeny w każdej sesji, także wtedy,
-gdy pracujesz nad czymś zupełnie innym. Ten sam tekst jako skill kosztuje zero,
-dopóki go nie wywołasz.
+Procedura na dwadzieścia kroków w `CLAUDE.md` kosztuje tokeny w każdej sesji, także w sesjach
+o zupełnie innym temacie. Ten sam tekst jako skill kosztuje zero
+do momentu wywołania.
 
 ### Co robi skill artefaktem zespołowym
 
@@ -316,7 +316,7 @@ dopóki go nie wywołasz.
   na czacie.
 - **Ma historię** - widać, kiedy i dlaczego dodano punkt.
 - **Da się zmierzyć** - jeśli po wdrożeniu skilla nadal wpadają te same problemy,
-  poprawiasz skill, a nie ludzi.
+  poprawia się skill, a nie ludzi.
 
 To jest ten sam mechanizm, co specyfikacja z modułu 3 i hooki z tego modułu:
 **wiedza w repozytorium bije wiedzę w głowie.**
@@ -332,7 +332,7 @@ To jest ten sam mechanizm, co specyfikacja z modułu 3 i hooki z tego modułu:
    `UserPromptExpansion` i `PostModelSwitch`. Poza nimi - `systemMessage` albo stderr.
 5. `${CLAUDE_PROJECT_DIR}` zostaje w katalogu startu sesji; `cwd` idzie za sesją do worktree.
 6. Hook `Stop` ma gotową ochronę przed pętlą: pole `stop_hook_active` i limit 8 kolejnych
-   blokad. Nie pisz własnego znacznika - przeczytaj schemat wejścia.
+   blokad. Własny znacznik jest zbędny - wystarczy schemat wejścia.
 7. Test rozstrzygający `CLAUDE.md` kontra hook: „co się stanie, jeśli model to zignoruje?"
 8. Nazwa skilla bierze się z **katalogu**. Wstrzyknięcie `` !`komenda` `` działa przed
    wejściem treści do modelu.

@@ -30,8 +30,8 @@ Trzy branche, jeden konflikt, 47 testów zielonych, zero ostrzeżeń.
 Dwa z trzech zadań tworzą **nowe pliki** - te nie mogą się skonfliktować z niczym.
 Nakładanie jest dokładnie jedno i wiadomo o nim przed startem.
 
-To jest wzorzec, który przenosi się do realnej pracy: **jeśli da się tak podzielić,
-żeby większość zadań tworzyła nowe pliki, podziel tak.**
+To jest wzorzec, który przenosi się do realnej pracy: **gdy da się podzielić tak,
+żeby większość zadań tworzyła nowe pliki, tak właśnie należy podzielić.**
 
 ---
 
@@ -116,9 +116,9 @@ Poprawna klasyfikacja **pięciu** wystąpień w czterech plikach:
 | `app/platnosci.py:32` | domyślna data wpłaty | tak |
 | `app/rabaty.py:29` | **decyzja o cenie pozycji na fakturze** | tak, **ale to nie rozwiązuje problemu** |
 
-Zwróć uwagę na dwa pierwsze wiersze: **jeden plik, dwa wystąpienia**. Agent, który
+Dwa pierwsze wiersze: **jeden plik, dwa wystąpienia**. Agent, który
 odpowie „cztery", policzył pliki. `app/raporty.py:80` przyszło z labu 3.2 -
-czyli z pracy, którą wykonaliście wczoraj.
+czyli z pracy uczestnika, nie z kodu startowego.
 
 We wszystkich pięciu wynik trafia od razu do `.date()`, więc różnica między obiektem
 ze strefą a bez strefy nie ma znaczenia. **Zamiana jest równoważna wszędzie.**
@@ -141,30 +141,33 @@ i pominął to, co istotne.
 
 ## Rachunek uczciwy
 
-| | Czas |
-|---|---|
-| Przygotowanie trzech worktree i środowisk | ~7 min |
-| Trzy zadania równolegle | ~25 min |
-| Scalanie + konflikt | ~15 min |
-| Sprzątanie | ~8 min |
-| **Razem** | **~55 min** |
-| To samo sekwencyjnie | ~45 min |
+Praca w tym labie rozkłada się tak:
 
-**Przy tej skali równoległość się nie opłaciła.** Narzut jest stały - worktree, środowiska,
-scalanie, sprzątanie - a zadania są zbyt krótkie, żeby go pokryć.
+| Etap | Udział |
+|---|---|
+| Przygotowanie trzech worktree i środowisk | ~1/8 |
+| Trzy zadania równolegle | ~1/2 |
+| Scalanie + konflikt | ~1/4 |
+| Sprzątanie | ~1/8 |
+
+Cztery pozycje, z których **tylko jedna jest właściwą pracą**. Pozostałe trzy to narzut,
+którego przy wykonaniu sekwencyjnym nie ma prawie wcale.
+
+**Przy tej skali równoległość się nie opłaciła** - wyszła drożej niż to samo zrobione
+po kolei. Narzut jest stały, a zadania są zbyt małe, żeby go pokryć.
 
 Kiedy się opłaca:
 
-- gdy **samo czytanie kodu** w każdym zadaniu trwa kwadrans (wtedy trzy kwadranse
-  zamieniają się w jeden),
+- gdy **samo wczytanie się w kod** każdego zadania jest kosztowne (wtedy narzut rozkłada
+  się na coś, co go pokrywa),
 - gdy zadania są długie i niezależne (migracja w pięciu modułach),
-- gdy i tak potrzebujesz izolacji (eksperyment, którego nie chcesz w głównym checkoucie).
+- gdy izolacja jest i tak potrzebna (eksperyment, który nie ma trafić do głównego checkoutu).
 
 Kiedy się nie opłaca:
 
 - trzy krótkie zadania, jak w tym labie,
 - zadania dotykające tych samych plików,
-- gdy nie umiesz z góry wskazać, gdzie będzie konflikt.
+- gdy nie da się z góry wskazać, gdzie będzie konflikt.
 
 **Wiedza, kiedy tego nie robić, jest tu warta tyle samo co umiejętność zrobienia tego.**
 
@@ -172,7 +175,7 @@ Kiedy się nie opłaca:
 
 ## Najczęstsze potknięcia
 
-**Worktree bez środowiska.** Pierwsze `make test` wywala się na braku `.venv`.
+**Worktree bez środowiska.** Pierwsze `make test` kończy się błędem na braku `.venv`.
 To nie jest awaria - to jest właściwość świeżego checkoutu. Do rozwiązania raz,
 świadomie: instalacja per worktree, `PATH` do wspólnego interpretera albo `.worktreeinclude`.
 

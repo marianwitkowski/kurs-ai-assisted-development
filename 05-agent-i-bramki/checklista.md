@@ -1,5 +1,7 @@
 # Checklista samooceny - moduł 5
 
+Odpowiedzi tylko dla siebie, uczciwie. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
+
 - [ ] Wiem, że wąskim gardłem jest weryfikacja, i umiem dobrać wielkość kroku
       do tego, ile jestem w stanie przeczytać. → *5.1*
 - [ ] Czytam `git diff`, a nie podsumowanie agenta. → *5.1*
@@ -23,11 +25,11 @@
 - [ ] Umiem rozstrzygnąć, czy coś ma być `CLAUDE.md`, regułą, skillem czy hookiem. → *5.4*
 - [ ] Moje hooki i skille są **w repozytorium**, nie w katalogu domowym. → *rozwiązania*
 
-## Jeśli zostało ci pięć minut
+## Przy pięciu wolnych minutach
 
-Wypisz trzy reguły, które w twoim zespole powtarzacie na każdym review.
-Przy każdej odpowiedz: `CLAUDE.md`, skill czy hook? Jeśli którakolwiek wypadła
-na „hook", a nie macie jej zautomatyzowanej - masz zadanie na poniedziałek.
+Do wypisania trzy reguły powtarzane w zespole na każdym review.
+Przy każdej rozstrzygnięcie: `CLAUDE.md`, skill czy hook. Reguła, która wypadła
+na „hook", a nie jest zautomatyzowana, to zadanie na poniedziałek.
 
 ---
 

@@ -1,6 +1,6 @@
 # Checklista samooceny - moduł 1
 
-Odpowiedz sobie uczciwie. Każde „nie" wskazuje sekcję, do której warto wrócić.
+Lista do uczciwego przejścia. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
 
 - [ ] Potrafię wskazać, które z trzech narzędzi (model konwersacyjny / asystent w IDE / agent
       w repo) pasuje do konkretnego zadania z mojej pracy - i uzasadnić to czymś więcej
@@ -16,10 +16,10 @@ Odpowiedz sobie uczciwie. Każde „nie" wskazuje sekcję, do której warto wró
 - [ ] Umiem powiedzieć, co z tego kursu przeniosę do narzędzia, którego używam w firmie,
       a co będę musiał przetłumaczyć. → *1.4*
 
-## Jeśli zostało ci pięć minut
+## Przy pięciu wolnych minutach
 
-Otwórz `app/rozliczenia.py` i policz, ile linii ma `oblicz_fakture`. Zapamiętaj tę liczbę -
-wrócisz do niej w module 4.
+Otworzyć `app/rozliczenia.py` i policzyć, ile linii ma `oblicz_fakture`. Ta liczba wraca
+w module 4.
 
 ---
 

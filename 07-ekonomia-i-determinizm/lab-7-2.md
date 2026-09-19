@@ -1,6 +1,6 @@
 # Lab 7.2 - Determinizm w produkcie: klasyfikator VAT
 
-**Czas: ~35 min** · **Tag startowy: `lab-7-2-start`** · **Produkt: `app/klasyfikacja_vat.py`, `tests/golden/vat.jsonl`, `tests/test_golden_vat.py`**
+**Tag startowy: `lab-7-2-start`** · **Produkt: `app/klasyfikacja_vat.py`, `tests/golden/vat.jsonl`, `tests/test_golden_vat.py`**
 
 ---
 
@@ -12,14 +12,14 @@ git checkout lab-7-2-start
 make gate          # 47 testów zielonych
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** - także pliki
+> **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-7-1"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -53,7 +53,7 @@ u siebie w firmie.
 
 ---
 
-## Krok 1 - trzy warstwy, zanim padnie pierwsza linia kodu (5 min)
+## Krok 1 - trzy warstwy, zanim padnie pierwsza linia kodu
 
 ```
 Zaprojektuj (bez pisania kodu) klasyfikator stawki VAT dla opisu pozycji faktury.
@@ -83,19 +83,20 @@ Krok 1 nie polega więc na doliczaniu brakującej warstwy. Polega na sprawdzeniu
 > **Czy próg pewności jest liczbą porównywaną w kodzie, czy instrukcją w prompcie?**
 
 Jeżeli w projekcie pojawiło się „w prompcie każemy modelowi odpowiedzieć NIE_WIEM, gdy nie jest
-pewny" - to jest warstwa, której nie ma, i **wtedy dopytaj**. Model, który sam decyduje,
-czy jest wystarczająco pewny, jest modelem bez nadzoru.
+pewny" - to jest warstwa, której nie ma, i **wtedy trzeba dopytać**. Model, który sam
+decyduje, czy jest wystarczająco pewny, jest modelem bez nadzoru.
 
-Jeżeli agent wyjątkowo oddał tylko dwie warstwy (model + walidacja) - też dopytaj o trzecią.
+Wyjątkowo agent oddaje tylko dwie warstwy (model + walidacja) - to ten sam brak
+i to samo dopytanie o trzecią.
 
-> **Zawężenie na potrzeby labu.** W kolejnych krokach schodzimy do **trzech** warstw -
-> cache decyzji i kolejka człowieka nie mieszczą się w 35 minutach. Jeżeli agent zaproponował
-> cache, powiedz mu wprost: pole `zrodlo` ma mieć dokładnie trzy wartości -
+> **Zawężenie na potrzeby labu.** W kolejnych krokach zakres schodzi do **trzech** warstw -
+> cache decyzji i kolejka człowieka wykraczają poza zakres tego labu. Przy propozycji cache'u
+> wymaganie idzie do agenta wprost: pole `zrodlo` ma mieć dokładnie trzy wartości -
 > `regula`, `model`, `domyslna`.
 
 ---
 
-## Krok 2 - schemat i kontrakt (7 min)
+## Krok 2 - schemat i kontrakt
 
 ```
 Napisz app/klasyfikacja_vat.py.
@@ -120,7 +121,7 @@ A to są trzy zupełnie różne sytuacje z punktu widzenia księgowości.
 
 ---
 
-## Krok 3 - reguły twarde i decyzja progowa (8 min)
+## Krok 3 - reguły twarde i decyzja progowa
 
 ```
 Dodaj:
@@ -140,14 +141,14 @@ Dwie decyzje warte uzasadnienia:
 
 **Dlaczego `STAWKA_DOMYSLNA = "23"`, a nie „nie wiem".** Zaniżenie VAT-u to zaległość
 podatkowa z odsetkami. Zawyżenie to korekta. Domyślna wartość jest **zawyżona celowo** -
-i to jest decyzja biznesowa, nie techniczna. Zapisz ją w komentarzu.
+i to jest decyzja biznesowa, nie techniczna. Jej miejsce jest w komentarzu.
 
 **Dlaczego walidacja poza schematem.** Schemat gwarantuje **kształt**, nie **sens**.
 Model może zwrócić stawkę składniowo poprawną, ale nieobsługiwaną przez system.
 
 ---
 
-## Krok 4 - golden set (10 min)
+## Krok 4 - golden set
 
 ```
 Utwórz tests/golden/vat.jsonl - minimum 20 przypadków.
@@ -180,9 +181,9 @@ make gate
 
 ---
 
-## Krok 5 - próba złamania (5 min)
+## Krok 5 - próba złamania
 
-Sprawdź, czy twoje warstwy trzymają:
+Sprawdzenie, czy warstwy trzymają:
 
 ```bash
 .venv/bin/python -c "
@@ -200,7 +201,7 @@ print(w.stawka, w.zrodlo, w.pewnosc, w.wymaga_weryfikacji)
 To jest granica tego mechanizmu i trzeba ją znać: **próg pewności chroni przed niepewnością,
 nie przed pewnym błędem.** Przed pewnym błędem chroni tylko reguła twarda albo człowiek.
 
-Zapisz to w komentarzu w kodzie albo w `docs/`. Za pół roku ktoś zapyta.
+Do zapisania w komentarzu w kodzie albo w `docs/`. Za pół roku ktoś o to zapyta.
 
 ```bash
 git add app/klasyfikacja_vat.py tests/
@@ -239,7 +240,7 @@ PYTHONPATH=. python skrypty/pomiar_kosztu.py
 - [ ] Golden set ma ≥20 przypadków i pokrywa wszystkie trzy źródła decyzji.
 - [ ] Testy sprawdzają **źródło decyzji**, nie tylko wynik.
 - [ ] Testy działają offline - `make gate` nie potrzebuje sieci ani klucza.
-- [ ] Umiesz powiedzieć, przed czym próg pewności **nie** chroni.
+- [ ] Ustalone i zapisane, przed czym próg pewności **nie** chroni.
 
 ## Pułapki
 
@@ -253,9 +254,9 @@ i przy pierwszej zmianie progu nikt tego nie zauważy.
 migotać. Odpowiedzi modelu należą do golden setu.
 
 **Brak testu na źródło decyzji.** Bez niego zmiana promptu może przenieść rozstrzygnięcia
-z reguł do modelu przy identycznych wynikach - i dowiesz się o tym z faktury.
+z reguł do modelu przy identycznych wynikach - a jedynym sygnałem będzie faktura.
 
-**Reguły twarde sprawdzane po modelu.** Wtedy płacisz za każdą pozycję, także tę,
+**Reguły twarde sprawdzane po modelu.** Wtedy koszt obejmuje każdą pozycję, także tę,
 którą rozstrzyga jedno słowo kluczowe. W tym repozytorium reguły pokrywają
 4 z 12 unikalnych opisów - jedna trzecia wywołań za darmo.
 

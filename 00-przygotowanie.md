@@ -1,30 +1,30 @@
 # Przygotowanie przed szkoleniem
 
-> **Zrób to najpóźniej na dwa dni przed szkoleniem.** Pierwsza godzina dnia 1 jest
-> na pracę z kodem, nie na instalację. Jeżeli coś nie zadziała, będziesz mieć czas
-> to rozwiązać.
+> **Do wykonania przed modułem 1.** Pierwsza godzina kursu jest
+> na pracę z kodem, nie na instalację. Przygotowanie z wyprzedzeniem zostawia czas
+> na rozwiązanie problemów.
 
-Całość zajmuje **15-20 minut**, z czego większość to czekanie na pobieranie.
+Większość tego to czekanie na pobieranie - można uruchomić i zająć się czymś innym.
 
 ---
 
-## 1. Co musisz mieć
+## 1. Wymagane narzędzia
 
 | Narzędzie | Wersja | Uwagi |
 |---|---|---|
-| **Claude Code** | **2.1.251 lub nowsza** | starsze nie mają statystyk prompt cache, których używamy w labie 7.1 |
-| Aktywna subskrypcja Claude Pro lub Max | - | albo dostęp firmowy; ustal to **przed** szkoleniem |
+| **Claude Code** | **2.1.251 lub nowsza** | starsze nie mają statystyk prompt cache używanych w labie 7.1 |
+| Aktywna subskrypcja Claude Pro lub Max | - | albo dostęp firmowy; do ustalenia **przed** szkoleniem |
 | Python | **3.12** albo **3.11** | **3.13 nie zadziała** - wyjaśnienie niżej |
 | git | dowolna współczesna | |
 | `jq` | dowolna | **wymagane** - hooki z modułu 5 parsują nim JSON |
 | `make` | dowolna | |
 | Edytor | dowolny | VS Code, JetBrains, Vim - bez znaczenia |
-| Terminal | - | będziesz potrzebować **trzech** okien naraz w module 6 |
+| Terminal | - | moduł 6 wymaga **trzech** okien naraz |
 
 ### Instalacja brakujących
 
 > **Dlaczego nie 3.13.** Repozytorium ćwiczeniowe ma **celowo przestarzałe** wersje
-> zależności - to jeden z zasianych problemów, który odkryjesz w module 4.
+> zależności - to jeden z zasianych problemów, odkrywany w module 4.
 > `pydantic==2.6.1` (luty 2024) nie ma gotowego pakietu dla Pythona 3.13, więc `pip`
 > próbuje skompilować go z Rusta i przerywa:
 >
@@ -55,21 +55,21 @@ sudo apt install python3.12 python3.12-venv jq make git
 
 **Claude Code:** https://claude.com/claude-code
 
-> **Windows:** kurs zakłada powłokę POSIX. Pracuj w **WSL2**, nie w PowerShellu.
+> **Windows:** kurs zakłada powłokę POSIX. Praca odbywa się w **WSL2**, nie w PowerShellu.
 > Hooki z modułu 5 są skryptami bashowymi. Komendy w materiałach są w wariancie
 > macOS/Linux; miejsca, w których WSL wymaga uwagi, są zaznaczone.
 
 ---
 
-## 2. Sprawdź, że Claude Code działa
+## 2. Sprawdzenie, że Claude Code działa
 
 ```bash
 claude --version
 ```
 
-Wersja musi być **2.1.251 lub nowsza**. Jeżeli nie - zaktualizuj.
+Wersja musi być **2.1.251 lub nowsza**. Starsza wymaga aktualizacji.
 
-Uruchom w dowolnym katalogu i zamknij:
+Uruchomić w dowolnym katalogu i zamknąć:
 
 ```bash
 claude
@@ -79,16 +79,16 @@ claude
 /status
 ```
 
-Ma pokazać zalogowane konto i model. Jeżeli nie jesteś zalogowany - `/login`.
+Ma pokazać zalogowane konto i model. Przy braku zalogowania - `/login`.
 
-> Jeżeli w twojej firmie Claude Code chodzi przez Bedrock, Vertex albo bramkę firmową,
-> **ustal to przed szkoleniem**. Część ćwiczeń z modułu 7 zachowuje się inaczej
-> na kluczu API niż na subskrypcji - w materiałach jest to opisane, ale lepiej
-> wiedzieć z góry, na czym pracujesz.
+> Claude Code uruchamiany w firmie przez Bedrock, Vertex albo bramkę firmową wymaga
+> **ustalenia przed szkoleniem**. Część ćwiczeń z modułu 7 zachowuje się inaczej
+> na kluczu API niż na subskrypcji - w materiałach jest to opisane, ale rodzaj
+> dostępu warto znać z góry.
 
 ---
 
-## 3. Sklonuj repozytorium ćwiczeniowe
+## 3. Klonowanie repozytorium ćwiczeniowego
 
 Materiały i repozytorium ćwiczeniowe są w **jednym klonie** - repozytorium ćwiczeniowe
 jest podłączone jako submoduł.
@@ -98,14 +98,14 @@ git clone --recurse-submodules https://github.com/marianwitkowski/kurs-ai-assist
 cd kurs-ai-assisted-development
 ```
 
-> **Zapomniałeś `--recurse-submodules`?** Katalog `repo-cwiczeniowe/` będzie **pusty**.
-> To jest najczęstszy błąd przy pierwszym klonowaniu. Ratunek bez klonowania od nowa:
+> **Klonowanie bez `--recurse-submodules`** zostawia katalog `repo-cwiczeniowe/` **pusty**.
+> To najczęstszy błąd przy pierwszym klonowaniu. Naprawa bez klonowania od nowa:
 >
 > ```bash
 > git submodule update --init --recursive
 > ```
 
-Sprawdź, że repozytorium ćwiczeniowe się pobrało wraz z tagami:
+Sprawdzenie, czy repozytorium ćwiczeniowe pobrało się wraz z tagami:
 
 ```bash
 cd repo-cwiczeniowe
@@ -113,12 +113,12 @@ git fetch --tags
 git tag | head -20
 ```
 
-Powinno pokazać **17 tagów** zaczynających się od `lab-`. Jeżeli katalog jest pusty
-albo tagów nie ma - wróć do ratunku powyżej.
+Powinno pokazać **17 tagów** zaczynających się od `lab-`. Pusty katalog albo brak tagów
+oznacza konieczność naprawy opisanej powyżej.
 
 ---
 
-## 4. Przygotuj środowisko Pythona
+## 4. Środowisko Pythona
 
 ```bash
 python3.12 -m venv .venv          # albo python3.11
@@ -130,7 +130,7 @@ python seed.py
 `seed.py` odtwarza bazę `rozliczenia.db` od zera - deterministycznie, więc u wszystkich
 będzie identyczna.
 
-> **Aktywuj środowisko w każdym nowym terminalu, zanim uruchomisz `claude`.**
+> **Środowisko wymaga aktywacji w każdym nowym terminalu, przed uruchomieniem `claude`.**
 >
 > ```bash
 > source .venv/bin/activate
@@ -142,10 +142,14 @@ będzie identyczna.
 
 ---
 
-## 5. Uruchom test środowiska
+## 5. Test środowiska
+
+Skrypt leży w katalogu materiałów i sam wchodzi do `repo-cwiczeniowe/`, więc uruchamia się
+z obu miejsc:
 
 ```bash
-../sprawdz-srodowisko.sh
+./sprawdz-srodowisko.sh          # z katalogu materiałów
+../sprawdz-srodowisko.sh         # albo z repo-cwiczeniowe/
 ```
 
 Skrypt wypisze raport. **Każda linia `BLAD` wymaga reakcji przed szkoleniem.**
@@ -162,7 +166,7 @@ Wszystko gotowe. Do zobaczenia na szkoleniu.
 
 ---
 
-## 6. Sprawdź, że aplikacja wstaje
+## 6. Sprawdzenie, że aplikacja wstaje
 
 ```bash
 .venv/bin/python -m uvicorn app.main:app --port 8000
@@ -175,50 +179,49 @@ curl -s localhost:8000/zdrowie
 curl -s -H "Authorization: Bearer tok-gamma" "localhost:8000/faktury/1/rozliczenie" | head -c 300
 ```
 
-Zatrzymaj serwer (`Ctrl+C`). Do samych ćwiczeń nie jest potrzebny - używamy głównie
-`pytest` i klienta testowego - ale dobrze wiedzieć, że działa.
+Zatrzymanie serwera: `Ctrl+C`. Do samych ćwiczeń nie jest potrzebny - laby używają głównie
+`pytest` i klienta testowego - ale warto wiedzieć, że działa.
 
 ---
 
-## 7. Zarezerwuj sobie warunki pracy
+## 7. Warunki pracy
 
 To nie jest formalność. Kurs zakłada **minimum 60% czasu przy klawiaturze**.
 
-- **Trzy okna terminala** - w module 6 pracujesz w trzech katalogach naraz.
-- **Uprawnienia do instalacji** - jeżeli firmowy laptop blokuje `brew`/`apt`,
-  załatw to teraz, nie w trakcie.
+- **Trzy okna terminala** - moduł 6 to praca w trzech katalogach naraz.
+- **Uprawnienia do instalacji** - blokadę `brew`/`apt` na firmowym laptopie
+  trzeba zdjąć teraz, nie w trakcie.
 - **Dostęp do internetu** bez blokady na `api.anthropic.com`.
-- **Brak konfliktu w kalendarzu.** Moduł, który przegapisz, blokuje kolejny -
+- **Brak konfliktu w kalendarzu.** Pominięty moduł blokuje kolejny -
   laby są sekwencyjne.
 
 ---
 
-## Czego **nie** musisz robić
+## Czego **nie** trzeba robić
 
-- Nie musisz czytać materiałów przed szkoleniem.
-- Nie musisz znać tego repozytorium - poznanie go jest częścią modułu 1.
-- Nie musisz instalować `anthropic` ani mieć klucza API. Skrypty z modułu 7,
-  które go wymagają, uruchamiasz później w firmie.
+- Nie trzeba czytać materiałów przed szkoleniem.
+- Nie trzeba znać tego repozytorium - poznanie go jest częścią modułu 1.
+- Nie trzeba instalować `anthropic` ani mieć klucza API. Skrypty z modułu 7,
+  które go wymagają, uruchamia się później w firmie.
 
-## Czego oczekujemy, że już umiesz
+## Czego kurs wymaga na wejściu
 
 - Pracy z gitem: branch, commit, diff, merge, rozwiązanie konfliktu.
 - Czytania cudzego kodu i uczestnictwa w code review.
 - Uruchomienia testów w swoim projekcie.
 - Uruchomienia Claude Code albo porównywalnego agenta **przynajmniej kilka razy**.
 
-Jeżeli ostatni punkt cię nie dotyczy - powiedz o tym przed szkoleniem. Istnieje
+Niespełniony ostatni punkt wymaga zgłoszenia przed szkoleniem. Istnieje
 osobny termin w wersji „Foundations" i lepiej zacząć od niego.
 
 ---
 
 ## Jeśli coś nie działa
 
-Napisz przed szkoleniem, z wynikiem:
+Zgłoszenie przed szkoleniem, z wynikiem:
 
 ```bash
 ../sprawdz-srodowisko.sh 2>&1 | tail -30
 ```
 
-Rozwiązanie problemu z instalacją zajmuje pięć minut w poniedziałek i godzinę
-na sali, gdzie czeka dwanaście osób.
+Problem z instalacją rozwiązany przed kursem nie zabiera uwagi w trakcie pierwszego labu.

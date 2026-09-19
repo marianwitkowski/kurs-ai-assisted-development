@@ -1,6 +1,6 @@
 # Lab 1.1 - Model-to-Task Mapping na żywym repo
 
-**Czas: ~30 min** · **Tag startowy: `lab-1-1-start`** · **Produkt: `notatki/model-to-task.md`**
+**Tag startowy: `lab-1-1-start`** · **Produkt: `notatki/model-to-task.md`**
 
 ---
 
@@ -12,20 +12,20 @@ git status                      # ma być czysto
 git checkout lab-1-1-start
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** -
+> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-1-1"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
 
 
-Sprawdź, że aplikacja żyje:
+Sprawdzenie, że aplikacja działa:
 
 ```bash
 source .venv/bin/activate
@@ -33,7 +33,7 @@ python seed.py
 python -c "import app.main; print('OK')"
 ```
 
-> Nie masz jeszcze `.venv`? Trzy komendy, w tej kolejności - `pip` bez aktywacji
+> Przy braku `.venv` - trzy komendy, w tej kolejności; `pip` bez aktywacji
 > zainstaluje zależności do interpretera systemowego:
 >
 > ```bash
@@ -42,7 +42,7 @@ python -c "import app.main; print('OK')"
 > pip install -r requirements.txt
 > ```
 
-Uruchom Claude Code w katalogu repozytorium:
+Uruchomić Claude Code w katalogu repozytorium:
 
 ```bash
 claude
@@ -53,22 +53,22 @@ claude
 ## Cel
 
 Sprawdzić **na własnych oczach**, że wybór modelu i poziomu wysiłku zmienia wynik - i że model
-potrafi pewnym tonem opowiedzieć o funkcji, której nie ma. Do tego wyrobić odruch: zanim uwierzysz
-w twierdzenie o kodzie, żądaj cytatu.
+potrafi pewnym tonem opowiedzieć o funkcji, której nie ma. Do tego wyrobić odruch: twierdzenie
+o kodzie wymaga cytatu, zanim zostanie przyjęte.
 
 ---
 
-## Krok 1 - pytanie o fakt (5 min)
+## Krok 1 - pytanie o fakt
 
-> **Zanim zaczniesz - dwie rzeczy o `/effort`, które trzeba wiedzieć.**
+> **Przed startem - dwie rzeczy o `/effort`, które trzeba wiedzieć.**
 >
 > **Nie każdy model go obsługuje.** Poziom wysiłku działa na Opusie, Sonnecie 5 i Fable.
 > **Haiku 4.5 go nie obsługuje** - `/effort low` na Haiku nic nie zmienia.
-> Dlatego w tym kroku zmieniamy jedną rzecz naraz.
+> Dlatego w tym kroku zmienia się jedną rzecz naraz.
 >
 > **Wpisany poziom zapisuje się jako domyślny** i obowiązuje w kolejnych sesjach.
-> Na końcu labu jest krok, który przywraca stan wyjściowy - nie pomijaj go,
-> bo inaczej cały kurs pojedzie na konfiguracji wybranej teraz.
+> Na końcu labu jest krok, który przywraca stan wyjściowy - tego kroku nie należy pomijać,
+> bo inaczej cały kurs idzie na konfiguracji wybranej teraz.
 
 Najpierw sam **model**, przy nieruszonym poziomie wysiłku:
 
@@ -76,15 +76,15 @@ Najpierw sam **model**, przy nieruszonym poziomie wysiłku:
 /model haiku
 ```
 
-Zadaj pytanie:
+Zadać pytanie:
 
 ```
 Ile progów rabatowych ma ten serwis i jakie są ich wartości? Podaj plik i numery linii.
 ```
 
-Zanotuj: czy odpowiedź jest poprawna, ile trwała, czy podała plik i linie.
+**Do notatek:** czy odpowiedź jest poprawna, ile trwała, czy podała plik i linie.
 
-Powtórz **to samo pytanie** po przełączeniu modelu:
+Powtórzyć **to samo pytanie** po przełączeniu modelu:
 
 ```
 /model sonnet
@@ -102,24 +102,24 @@ Teraz sam **poziom wysiłku**, przy nieruszonym modelu - Sonnet effort obsługuj
 /effort high
 ```
 
-> **Uwaga:** nie rób `/clear` między tymi pytaniami - chcesz porównać odpowiedzi
-> w tych samych warunkach. `/clear` przyjdzie w kroku 4.
+> **Uwaga:** między tymi pytaniami nie wolno robić `/clear` - porównanie wymaga
+> tych samych warunków. `/clear` przychodzi w kroku 4.
 
-**Pytania do notatek:** czy droższy **model** dał lepszą odpowiedź na pytanie o prosty fakt?
-Czy wyższy **effort** cokolwiek zmienił? To są dwie różne dźwignie i tu widać,
-że na tym zadaniu żadna nie kupuje nic.
+**Do notatek:** czy droższy **model** dał lepszą odpowiedź na pytanie o prosty fakt
+i czy wyższy **effort** cokolwiek zmienił. To są dwie różne dźwignie i tu widać,
+że na tym zadaniu żadna nic nie daje.
 
 ---
 
-## Krok 2 - przynęta na halucynację (8 min)
+## Krok 2 - przynęta na halucynację
 
-Najpierw ustal fakt sam, poza agentem:
+Najpierw ustalenie faktu poza agentem:
 
 ```bash
 grep -rn "oblicz_odsetki" app/ || echo "brak - zero trafien"
 ```
 
-Teraz **trzy warianty tego samego pytania**. Zadaj je po kolei i zapisz wszystkie odpowiedzi.
+Teraz **trzy warianty tego samego pytania**. Zadać je po kolei i zapisać wszystkie odpowiedzi.
 
 **A - bez narzędzi, z pamięci:**
 
@@ -143,19 +143,19 @@ razem ze ścieżką pliku i numerem linii. Jeżeli takiej funkcji nie ma, napisz
 dokładnie: "nie ma takiej funkcji" i nie dodawaj nic więcej.
 ```
 
-**Do notatek:** zapisz wszystkie trzy. Pierwsza jest materiałem dowodowym na resztę kursu.
+**Do notatek:** wszystkie trzy odpowiedzi. Pierwsza jest materiałem dowodowym na resztę kursu.
 
 > **Czego się spodziewać.** W 2026 wariant B najczęściej **zgrepuje repo i odpowie poprawnie** -
-> i to jest dobra wiadomość o narzędziu, nie porażka labu. Pointa siedzi w kontraście
+> i to jest dobra wiadomość o narzędziu, nie porażka labu. Istota porównania leży w kontraście
 > **A kontra C**, nie B kontra C.
 >
-> Wariant A jest tym, co dostajesz **zawsze**, gdy model nie ma dostępu do plików:
+> Wariant A to **zawsze** ten sam wynik, gdy model nie ma dostępu do plików:
 > w oknie czatu, w asystencie IDE bez kontekstu repozytorium, w każdym narzędziu,
-> któremu wkleiłeś fragment kodu zamiast dać katalog.
+> które dostało wklejony fragment kodu zamiast katalogu.
 
 ---
 
-## Krok 3 - zadanie wymagające rozumowania (10 min)
+## Krok 3 - zadanie wymagające rozumowania
 
 ```
 /model sonnet
@@ -168,43 +168,43 @@ rabat i VAT. Czy ta kolejność ma znaczenie dla końcowej kwoty? Uzasadnij,
 powołując się na konkretne linie.
 ```
 
-Zanotuj odpowiedź. Potem to samo pytanie na mocniejszej konfiguracji:
+Zanotować odpowiedź. Potem to samo pytanie na mocniejszej konfiguracji:
 
 ```
 /model opus
 /effort high
 ```
 
-> Jeżeli twój plan nie daje dostępu do Opusa - użyj `/model sonnet` i `/effort high`.
-> Porównanie nadal ma sens: zmieniasz poziom wysiłku przy tym samym modelu.
+> Przy planie bez dostępu do Opusa - `/model sonnet` i `/effort high`.
+> Porównanie nadal ma sens: zmienia się poziom wysiłku przy tym samym modelu.
 
-**Do notatek:** czym się różnią? Czy słabsza konfiguracja coś pominęła? Czy mocniejsza
-powiedziała coś, czego nie potrafisz zweryfikować?
+**Do notatek:** czym się różnią obie odpowiedzi, czy słabsza konfiguracja coś pominęła,
+czy mocniejsza powiedziała coś nieweryfikowalnego.
 
 ---
 
-## Krok 4 - koszt rozrostu kontekstu (5 min)
+## Krok 4 - koszt rozrostu kontekstu
 
-Sprawdź, co siedzi w kontekście po trzech krokach:
+Zawartość kontekstu po trzech krokach pokazuje `/context`:
 
 ```
 /context
 ```
 
-Zanotuj, ile procent okna jest zajęte i co je zajmuje. Potem:
+**Do notatek:** ile procent okna jest zajęte i co je zajmuje. Potem:
 
 ```
 /clear
 /context
 ```
 
-Zanotuj różnicę.
+Zanotować różnicę.
 
 ---
 
-## Krok 5 - notatka (2 min)
+## Krok 5 - notatka
 
-Zapisz `notatki/model-to-task.md` (katalog `notatki/` jest gitignorowany, to twój brudnopis):
+Zapisać `notatki/model-to-task.md` (katalog `notatki/` jest gitignorowany, to brudnopis uczestnika):
 
 ```markdown
 # Model-to-Task - obserwacje z labu 1.1
@@ -225,15 +225,15 @@ Zapisz `notatki/model-to-task.md` (katalog `notatki/` jest gitignorowany, to tw�
 - przed /clear: ... %
 - po /clear: ... %
 
-## Moja reguła doboru na jutro
+## Moja reguła doboru
 (jedno zdanie: kiedy schodzę na haiku, kiedy wchodzę na opus)
 ```
 
 ---
 
-## Krok 6 - przywróć stan domyślny (1 min)
+## Krok 6 - przywrócenie stanu domyślnego
 
-**Nie pomijaj tego kroku.**
+**Tego kroku nie należy pomijać.**
 
 ```
 /model sonnet
@@ -241,43 +241,43 @@ Zapisz `notatki/model-to-task.md` (katalog `notatki/` jest gitignorowany, to tw�
 ```
 
 `/effort` z wpisanym poziomem **zapisuje go jako domyślny i stosuje w kolejnych sesjach**.
-To samo robi wybór modelu w `/model`. Bez tego kroku przez resztę kursu - piętnaście
-kolejnych labów - jechałbyś na konfiguracji wybranej pięć minut temu do jednego pytania
+To samo robi wybór modelu w `/model`. Bez tego kroku reszta kursu - piętnaście
+kolejnych labów - idzie na konfiguracji wybranej pięć minut temu do jednego pytania
 o progi rabatowe.
 
 W praktyce oznacza to jedno z dwojga, oba złe:
 
-| Zostajesz na | Co się dzieje |
+| Pozostawiona konfiguracja | Co się dzieje |
 |---|---|
 | Opus / `high` | limity planu wyczerpują się około modułu 6-7, czyli w najdroższych labach |
 | Haiku / `low` | laby 4.2 i 4.3 przestają działać - cała pointa zależy tam od jakości rozumowania |
 
-Sprawdź, na czym jesteś: `/status`.
+Aktualną konfigurację pokazuje `/status`.
 
 ---
 
 ## Kryteria zaliczenia
 
-- [ ] Widziałeś odpowiedź poprawną i odpowiedź zmyśloną, podane **tym samym tonem**
+- [ ] Porównana odpowiedź poprawna i odpowiedź zmyślona, podane **tym samym tonem**
       (warianty C i A w kroku 2).
-- [ ] Przywróciłeś domyślny model i poziom wysiłku (krok 6).
-- [ ] Wiesz, jak sformułować pytanie tak, żeby model musiał przyznać, że czegoś nie ma.
-- [ ] Masz własną, zapisaną regułę doboru modelu - nie cudzą tabelę.
-- [ ] Umiesz odczytać `/context` i wiesz, co robi `/clear`.
+- [ ] Przywrócony domyślny model i poziom wysiłku (krok 6).
+- [ ] Znany sposób sformułowania pytania, po którym model musi przyznać, że czegoś nie ma.
+- [ ] Zapisana własna reguła doboru modelu - nie cudza tabela.
+- [ ] Opanowany odczyt `/context` i działanie `/clear`.
 
 ## Pułapki
 
 **„Model w wariancie B odpowiedział poprawnie, więc nie halucynuje."** Halucynacja nie jest
 cechą modelu, tylko cechą **sytuacji**: czy odpowiedź ma się o co zaczepić. W wariancie B
-model miał dostęp do plików i z niego skorzystał - to była jego decyzja, nie twoja gwarancja.
-Wariant A pokazuje, co dostajesz, gdy tego dostępu nie ma.
+model miał dostęp do plików i z niego skorzystał - to była jego decyzja, nie gwarancja
+po stronie użytkownika. Wariant A pokazuje wynik, gdy tego dostępu nie ma.
 
 **„Opus był lepszy, więc zawsze będę używał Opusa."** Na pytaniu o progi rabatowe różnica była
 żadna, a koszt pięciokrotny. Zysk z mocniejszego modelu pojawia się dopiero tam, gdzie zadanie
 wymaga rozumowania.
 
-**Zapominanie o `Esc`.** Jeśli w którymkolwiek kroku model zaczął czytać całe repo zamiast
-odpowiedzieć - przerwij i przeformułuj. Czekanie do końca nic nie daje.
+**Zapominanie o `Esc`.** Jeżeli w którymkolwiek kroku model zaczął czytać całe repo zamiast
+odpowiedzieć - przerwać i przeformułować pytanie. Czekanie do końca nic nie daje.
 
 ---
 

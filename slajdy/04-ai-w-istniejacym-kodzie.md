@@ -10,26 +10,25 @@ footer: 'AI Assisted Development · Moduł 4'
 
 # AI w istniejącym kodzie
 
-## Moduł 4 · dzień 1
+## Moduł 4 · 7 lekcji · 3 laby
 
 Odtwarzanie intencji · reguła czy błąd · testy zabezpieczające · migracje
 
 <!--
-CO POWIEDZIEĆ: Pisząc nowy kod, agent ma jedno ograniczenie: waszą specyfikację.
+CO POWIEDZIEĆ: Przy nowym kodzie agent ma jedno ograniczenie: specyfikację.
 W istniejącym kodzie ma drugie, twardsze. Cel modułu: wyciągnąć z legacy to, czego nikt
 nie zapisał, odróżnić regułę biznesową od błędu i nie dać agentowi „uprościć" żadnego z nich.
-CZAS: ~1 min
 -->
 
 ---
 
 # Legacy ma drugie ograniczenie
 
-Nowy kod ogranicza tylko twoja specyfikacja.
+Nowy kod ogranicza tylko specyfikacja.
 Istniejący dodatkowo: **wszystko, co już działa i na czym ktoś polega.**
 
 - **Kod niesie decyzje, których nie widać.** Dziwny warunek to pomyłka sprzed trzech lat
-  albo wynik spotkania z działem prawnym. Z kodu tego nie odróżnisz.
+  albo wynik spotkania z działem prawnym. Z kodu tego nie da się rozstrzygnąć.
 - **Nie ma sieci bezpieczeństwa.** Testów brakuje dokładnie tam, gdzie są najważniejsze.
 - **Agent jest wytrenowany na tym, jak kod wygląda „ładnie".** Spłaszczy zagnieżdżonego ifa,
   zostawi jedno zaokrąglenie z dwóch.
@@ -37,10 +36,9 @@ Istniejący dodatkowo: **wszystko, co już działa i na czym ktoś polega.**
 <!--
 CO POWIEDZIEĆ: Każda z tych zmian jest sensowna w oderwaniu od kontekstu i każda może
 kosztować pieniądze. Agent nie jest złośliwy, jest wytrenowany na kodzie z podręczników,
-a nie na waszej funkcji fakturującej.
+a nie na funkcji fakturującej z tego repozytorium.
 NA CO UWAŻAĆ: Sala lubi tu zgłaszać „u nas jest tak samo, ale my znamy ten kod".
 Odpowiedź jest nicią przewodnią kursu: artefakt w repozytorium bije wiedzę w głowie.
-CZAS: ~3 min
 -->
 
 ---
@@ -55,14 +53,13 @@ Domyślna odpowiedź w istniejącym kodzie. Zasada całego modułu.
 <!--
 CO POWIEDZIEĆ: To jedno zdanie streszcza cały moduł. Nie „nie ruszaj legacy", tylko
 „najpierw test, potem zmiana". Kolejność, nie zakaz.
-CZAS: ~1 min
 -->
 
 ---
 
 <!-- _class: gesta -->
 
-# Agent inwentaryzuje, ty oceniasz
+# Agent inwentaryzuje, człowiek ocenia
 
 | Dobrze znajduje | Słabo ocenia |
 |---|---|
@@ -73,19 +70,18 @@ CZAS: ~1 min
 | martwy kod | czy naprawdę martwy, czy wołany dynamicznie |
 | brakującą obsługę błędów | czy brak jest celowy |
 
-**Inwentaryzację zlecasz. Ocenę zostawiasz sobie** - agent nie zna ani twojego biznesu,
-ani twojego kalendarza.
+**Inwentaryzacja dla agenta, ocena po stronie człowieka** - agent nie zna ani domeny
+biznesowej, ani kalendarza zespołu.
 
 <!--
-CO POWIEDZIEĆ: Praktyczny wniosek jest jeden: każ agentowi zrobić inwentaryzację,
-ocenę zostaw sobie. W prompcie z labu 4.1 zakazujemy wprost proponowania poprawek
+CO POWIEDZIEĆ: Praktyczny wniosek jest jeden: inwentaryzacja dla agenta, ocena
+po stronie człowieka. W prompcie z labu 4.1 zakazujemy wprost proponowania poprawek
 i oceniania ważności.
 NA CO UWAŻAĆ: Kolumna „priorytet: wysoki/średni/niski" w odpowiedzi oznacza, że model
-ocenił za was, nie znając ani waszego biznesu, ani waszego kalendarza.
+ocenił samodzielnie, nie znając ani domeny biznesowej, ani priorytetów zespołu.
 PYTANIE Z SALI: „Po co sprawdzać numery linii?" Bo halucynacja w numerze linii oznacza,
 że model nie czytał, tylko pamiętał. Wtedy cała lista jest podejrzana. Trzy komendy `sed`
 to najtańsza weryfikacja w całym kursie.
-CZAS: ~3 min
 -->
 
 ---
@@ -94,9 +90,9 @@ CZAS: ~3 min
 
 | Pytanie | Możliwe odpowiedzi |
 |---|---|
-| 1. Co się stanie, jeśli tego **nie ruszę**? | nic / rośnie dług / awaria / **strata pieniędzy** |
-| 2. Co się stanie, jeśli **ruszę i się pomylę**? | nic / test złapie / **produkcja** |
-| 3. **Czym sprawdzę**, że nie zepsułem? | testy / ręcznie / **nijak** |
+| 1. Co się stanie **bez zmiany**? | nic / rośnie dług / awaria / **strata pieniędzy** |
+| 2. Co się stanie **przy zmianie z pomyłką**? | nic / test złapie / **produkcja** |
+| 3. **Czym sprawdzić**, że nic się nie zepsuło? | testy / ręcznie / **nijak** |
 
 > Pozycja z odpowiedzią „nijak" na pytanie 3 **nie nadaje się do naprawy**.
 > Nadaje się do napisania testu.
@@ -109,12 +105,11 @@ to zdanie, które da się sfalsyfikować, a nie „zalecam refaktoryzację, bo f
 za długa" - to drugie jest prawdziwe dla 90% kodu na świecie.
 PYTANIE Z SALI: „Które cztery pozycje?" SQL Injection, brak autoryzacji, funkcja-moloch
 i raport przeterminowanych. Dwie pierwsze wracają w module 8, trzecia to lab 4.2.
-CZAS: ~2 min
 -->
 
 ---
 
-# Pytaj o zachowanie, nie o kod
+# Pytanie o zachowanie, nie o kod
 
 <div class="kolumny">
   <div>
@@ -144,7 +139,6 @@ nikogo nie zaskakuje.
 NA CO UWAŻAĆ: Jeśli w labie 4.2 wyjdzie „funkcja waliduje dane wejściowe, następnie
 oblicza sumę netto", to jest przepisany kod. Powtórzyć prompt, podkreślając formę
 „JEŻELI... TO...".
-CZAS: ~3 min
 -->
 
 ---
@@ -167,11 +161,10 @@ CO POWIEDZIEĆ: Ten sam kawałek kodu może być jednym albo drugim, a konsekwen
 są odwrotne. Czego nie wolno: rozstrzygać po wyglądzie kodu. Co robić: utrwalić oba
 przypadki testem, opisać różnicę w komentarzu, zapytać człowieka o resztę.
 NA CO UWAŻAĆ: Przy klasyfikacji żądamy od agenta dowodu z repozytorium. Bez tego zdania
-dostaniecie stanowcze „to jest celowa reguła" bez cienia dowodu - dokładnie jak w labie 2.1.
+odpowiedź brzmi stanowczo „to jest celowa reguła" bez cienia dowodu - dokładnie jak w labie 2.1.
 PYTANIE Z SALI: „Po co utrwalać testem coś, co uważam za błąd?" Bo test utrwalający błąd
 jest niewygodny i ktoś go w końcu zakwestionuje świadomie, zamiast „poprawić" przy okazji.
 Odpowiedź „nie da się rozstrzygnąć z kodu" też jest wartościowa: to lista pytań do człowieka.
-CZAS: ~3 min
 -->
 
 ---
@@ -194,14 +187,13 @@ Warunek sprawdza, czy **pole jest ustawione** - nie czy promocja obowiązuje.
 Przypadek pierwszy to reguła. Drugi to błąd.
 
 <!--
-CO POWIEDZIEĆ: To jest sedno modułu na jednym slajdzie. Rabat nie łączy się z promocją -
+CO POWIEDZIEĆ: To jest istota modułu na jednym slajdzie. Rabat nie łączy się z promocją -
 to celowa reguła. Ale gdy promocja wygasła, klient płaci pełną cenę i mimo to traci rabat
 progowy, który mu się należy. Nikt tego nie chciał. Jeden warunek, dwa przypadki,
 przeciwne oceny - dlatego nie da się tego rozstrzygnąć, patrząc na kod.
 NA CO UWAŻAĆ: Pojedynczy test niczego nie pokazuje. Dopiero para sąsiadujących testów
 - wygasła promocja obok tej samej pozycji bez pola - pokazuje 54 zł różnicy.
 To jest ten jeden test w labie 4.2, który jest wart całego labu.
-CZAS: ~4 min
 -->
 
 ---
@@ -209,7 +201,7 @@ CZAS: ~4 min
 # Kolejność, od której nie ma odstępstw
 
 <div class="przeplyw">
-  <div class="krok">Zrozum zachowanie<small>JEŻELI... TO...</small></div>
+  <div class="krok">Zrozumienie zachowania<small>JEŻELI... TO...</small></div>
   <div class="strzalka">→</div>
   <div class="krok">Testy na stan TERAZ<small>wartości z uruchomienia</small></div>
   <div class="strzalka">→</div>
@@ -218,22 +210,21 @@ CZAS: ~4 min
   <div class="krok">Refaktor<small>testy zielone bez zmian w testach</small></div>
 </div>
 
-> Jeśli test od razu nie przechodzi, to **nie jest** test charakterystyki. To test twojego
+> Jeśli test od razu nie przechodzi, to **nie jest** test charakterystyki. To test
 > wyobrażenia o tym kodzie.
 
 Zmiana zachowania dopiero po tym wszystkim - i **nigdy** w commicie refaktoryzacji.
 
 <!--
-CO POWIEDZIEĆ: Test charakterystyki nie mówi „tak ma być". Mówi „tak jest dzisiaj i jeśli
-to zmieniasz, rób to świadomie". Dlatego wartości oczekiwane wyliczamy, uruchamiając
+CO POWIEDZIEĆ: Test charakterystyki nie mówi „tak ma być". Mówi „tak jest w tej wersji,
+a zmiana wymaga świadomej decyzji". Dlatego wartości oczekiwane wyliczamy, uruchamiając
 funkcję, a nie z własnych obliczeń.
 NA CO UWAŻAĆ: Trzeci krok wszyscy pomijają. W labie 4.2 kryterium zaliczenia brzmi:
-`git diff app/` musi być puste. Jeśli agent „poprawił" kod, żeby test przeszedł, macie
+`git diff app/` musi być puste. Jeśli agent „poprawił" kod, żeby test przeszedł, jest to
 test sprawdzający kod, który sam przed chwilą napisał.
 PYTANIE Z SALI: „Test liczący `wynik.vat == wynik.netto * Decimal('0.23')` jest OK?"
 Nie. Powtarza logikę produkcyjną, więc powtórzy też błąd w zaokrąglaniu i będzie zielony
 zawsze. Utrwalona liczba nie ma tej wady.
-CZAS: ~3 min
 -->
 
 ---
@@ -252,30 +243,28 @@ Pierwsze dwa poziomy zależą od tego, czy model posłuchał. Dwa ostatnie nie.
 
 <!--
 CO POWIEDZIEĆ: To jest nić przewodnia całego kursu w wersji na legacy. Zasada
-w `CLAUDE.md` z modułu 2 to prośba. Test, który wywala się na zmienionej kwocie,
+w `CLAUDE.md` z modułu 2 to prośba. Test, który kończy się błędem na zmienionej kwocie,
 to fakt. W module 5 dokładamy hook, którego model nie może pominąć.
 NA CO UWAŻAĆ: To nie jest wybór jednego poziomu, tylko dokładanie kolejnych.
 Prompt i `CLAUDE.md` nadal mają sens: prośby działają w większości przypadków.
-CZAS: ~3 min
 -->
 
 ---
 
-# Zdania, po których zaglądasz w diff
+# Zdania, po których trzeba zajrzeć w diff
 
 > „Uprościłem też..." · „Przy okazji poprawiłem..." · „Ten warunek wydawał się zbędny..."
 > · „Ujednoliciłem zaokrąglanie..." · „To wyglądało na pomyłkę, więc..."
 
 Każde z nich oznacza **zmianę zachowania zgłoszoną jako porządki**.
 
-Czytaj, co agent pisze w wiadomościach, nie tylko to, co zostawił w kodzie.
+Czytania wymagają wiadomości agenta, nie tylko to, co zostawił w kodzie.
 
 <!--
 CO POWIEDZIEĆ: Te zdania padają w wiadomościach agenta, a nie w diffie, i łatwo je
 przewinąć. W labie 4.3 każde z nich jest sygnałem do natychmiastowego `git diff`.
 NA CO UWAŻAĆ: Jeśli agent zaproponuje poprawkę znanego błędu osobno i nie zastosuje jej -
 to jest zachowanie wzorcowe. Propozycja idzie do backlogu z wyliczoną różnicą 54 zł.
-CZAS: ~2 min
 -->
 
 ---
@@ -304,7 +293,6 @@ ostrzeżenia, więc tego nie chroni - po refaktoryzacji ostrzeżenie o wygasłej
 potrafi się zdublować przy zielonych testach.
 PYTANIE Z SALI: „Jak porównać wyniki przed i po?" `git stash`, zapis wyników do pliku,
 `git stash pop`, drugi zapis, `diff`. Krok 4 labu 4.3 ma gotową komendę.
-CZAS: ~3 min
 -->
 
 ---
@@ -330,7 +318,6 @@ NA CO UWAŻAĆ: `app/rabaty.py:29` to nie jest przypadek na zamianę wywołania.
 poprawką jest wstrzyknięcie daty jako parametru, czyli zmiana sygnatury, czyli zmiana
 zachowania - osobne wdrożenie. Przez tę jedną linię przeliczenie faktury zależy od zegara
 i nie da się napisać stabilnego testu bez szerokiego okna promocji.
-CZAS: ~2 min
 -->
 
 ---
@@ -339,13 +326,13 @@ CZAS: ~2 min
 
 # Laby: od mapy ryzyka do refaktoryzacji
 
-**4.1 Mapa ryzyka i plan migracji** (~25 min, tag `lab-4-1-start`)
-Inwentaryzacja od agenta, ocena ryzyka od ciebie. Produkt: `docs/mapa-ryzyka.md`.
+**4.1 Mapa ryzyka i plan migracji** (tag `lab-4-1-start`)
+Inwentaryzacja od agenta, ocena ryzyka od uczestnika. Produkt: `docs/mapa-ryzyka.md`.
 
-**4.2 Odtworzenie intencji i testy zabezpieczające** (~35 min, tag `lab-4-2-start`)
+**4.2 Odtworzenie intencji i testy zabezpieczające** (tag `lab-4-2-start`)
 Reguły „JEŻELI... TO...", klasyfikacja z dowodem, para testów z różnicą 54 zł.
 
-**4.3 Refaktoryzacja pod ochroną testów** (~30 min, tag `lab-4-3-start`)
+**4.3 Refaktoryzacja pod ochroną testów** (tag `lab-4-3-start`)
 `oblicz_fakture()` ze 157 linii do 57, zero groszy różnicy na 204 fakturach.
 
 Niezacommitowana praca zablokuje skok na tag: `git stash push -u -m "moje-3-2"`.
@@ -356,5 +343,4 @@ Lab 4.2 jest tym, którego nie tniemy - stoją na nim 4.3 i 5.1.
 NA CO UWAŻAĆ: `git checkout` blokują też pliki nieśledzone, więc `git stash push -u`,
 nie samo `git stash`. `git switch -c` tu nie pomoże - nie commituje, więc nie odblokowuje
 skoku na tag.
-CZAS: ~1 min
 -->

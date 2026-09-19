@@ -1,5 +1,7 @@
 # Checklista samooceny - moduł 4
 
+Samoocena wymaga uczciwych odpowiedzi. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
+
 - [ ] Wiem, dlaczego domyślną odpowiedzią na „czy to można uprościć?" w legacy
       jest „nie wiem, dopóki nie mam testu". → *4.1*
 - [ ] Rozdzielam **inwentaryzację** (agent) od **oceny ryzyka** (ja). → *4.2, lab 4.1*
@@ -21,10 +23,10 @@
 - [ ] Wiem, dlaczego refaktoryzacja i zmiana zachowania nie mogą być w jednym commicie. → *rozwiązanie 4.3*
 - [ ] Wiem, że „mechaniczna" migracja prawie nigdy nie jest w pełni mechaniczna. → *4.7, lab 4.1 krok 4*
 
-## Jeśli zostało ci pięć minut
+## Przy pięciu wolnych minutach
 
-Otwórz plik z własnego projektu, którego wszyscy się boją. Napisz trzy zdania w formie
-„JEŻELI… TO…" o jego zachowaniu - i sprawdź, czy któreś z nich potrafisz potwierdzić
+Otworzyć plik z własnego projektu, którego wszyscy się boją. Napisać trzy zdania w formie
+„JEŻELI… TO…" o jego zachowaniu - i sprawdzić, czy któreś z nich da się potwierdzić
 czymkolwiek poza pamięcią.
 
 ---

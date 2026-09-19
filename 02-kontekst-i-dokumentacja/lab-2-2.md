@@ -1,6 +1,6 @@
 # Lab 2.2 - Pliki kontekstowe dla tego repozytorium
 
-**Czas: ~35 min** · **Tag startowy: `lab-2-2-start`** · **Produkt: `CLAUDE.md`, `docs/architektura.md`**
+**Tag startowy: `lab-2-2-start`** · **Produkt: `CLAUDE.md`, `docs/architektura.md`**
 
 ---
 
@@ -11,14 +11,14 @@ cd repo-cwiczeniowe
 git checkout lab-2-2-start
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** - także pliki
+> **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-2-1"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -39,9 +39,9 @@ przed i po ma dać inny wynik. I nauczyć się rozpoznawać, co do takiego pliku
 
 ---
 
-## Krok 1 - pomiar „przed" (5 min)
+## Krok 1 - pomiar „przed"
 
-Świeża sesja, zapisz odpowiedź dosłownie:
+Świeża sesja; odpowiedź zapisać dosłownie:
 
 ```bash
 claude
@@ -55,13 +55,13 @@ Nie pisz jeszcze kodu - powiedz mi tylko, jak to zrobisz i czego będę potrzebo
 żeby mieć pewność, że niczego nie zepsułem.
 ```
 
-**Zapisz do notatek:**
+**Do notatek:**
 - czy **ostrzegł**, że to zmienia kwoty na fakturach, czy po prostu zaplanował zmianę,
 - czy zauważył, że w repozytorium **nie ma żadnych testów** tej funkcji,
 - czy powiedział, jak w tym projekcie w ogóle uruchamia się testy,
 - czy zapytał, czy wolno mu to ruszać.
 
-Nie każ mu pisać kodu. Chodzi o to, co **założy**, gdy nikt mu nie powiedział.
+Model nie ma na tym etapie pisać kodu. Istotne jest to, co **założy**, gdy nikt mu nie powiedział.
 
 > **Dlaczego akurat to pytanie.** Wcześniejsza wersja tego kroku pytała o typ liczbowy
 > (`float` czy `Decimal`). To był zły pomiar: prompt sam wskazywał `app/vat.py`, gdzie
@@ -77,7 +77,7 @@ Nie każ mu pisać kodu. Chodzi o to, co **założy**, gdy nikt mu nie powiedzia
 
 ---
 
-## Krok 2 - szkic przez `/init` (5 min)
+## Krok 2 - szkic przez `/init`
 
 ```
 /init
@@ -85,7 +85,7 @@ Nie każ mu pisać kodu. Chodzi o to, co **założy**, gdy nikt mu nie powiedzia
 
 Claude Code przeanalizuje repo i zaproponuje startowy `CLAUDE.md`.
 
-**Nie zostawiaj tego pliku w tej postaci.** Przeczytaj go krytycznie i zaznacz sobie
+**Plik nie może zostać w tej postaci.** Wymaga krytycznego przeczytania i oznaczenia
 (mentalnie albo w notatkach), które linie:
 - **model przeczytałby sam z kodu** → do usunięcia,
 - są **prawdziwe i nieoczywiste** → zostają,
@@ -96,9 +96,9 @@ opis „co robi każdy moduł". To jest dokładnie to, przed czym ostrzega teori
 
 ---
 
-## Krok 3 - przepisanie `CLAUDE.md` (12 min)
+## Krok 3 - przepisanie `CLAUDE.md`
 
-Napisz plik **poniżej 60 linii**. Ma zawierać wyłącznie to, czego model nie wyczyta z kodu.
+Napisać plik **poniżej 60 linii**. Ma zawierać wyłącznie to, czego model nie wyczyta z kodu.
 
 Minimum, które musi się znaleźć:
 
@@ -107,12 +107,12 @@ Minimum, które musi się znaleźć:
    długość linii 100.
 3. **Ostrzeżenie o `app/rozliczenia.py`** - że `oblicz_fakture()` zawiera **nieudokumentowane
    reguły biznesowe** i nie wolno jej upraszczać bez testów zabezpieczających.
-   > Napisz to jako ostrzeżenie o **istnieniu** reguł. Które to reguły - dowiesz się jutro
-   > w module 4 i wtedy dopiszesz. Dziś tego nie wiesz i plik ma mówić prawdę.
+   > Ostrzeżenie dotyczy **istnienia** reguł. Ich treść ujawnia moduł 4 i wtedy można ją
+   > dopisać. Na tym etapie nie jest znana, a plik ma mówić prawdę.
 4. **Czego w repo nie ma** - nie ma testów, nie ma migracji schematu, baza jest generowana
    przez `seed.py`.
 
-Możesz poprosić agenta, żeby napisał to za ciebie - ale **zweryfikuj każde zdanie**.
+Plik może napisać agent - ale **każde zdanie wymaga weryfikacji**.
 Sugerowany prompt:
 
 ```
@@ -125,7 +125,7 @@ Napisz CLAUDE.md dla tego repozytorium, maksymalnie 60 linii. Zasady:
 Pokaż mi treść, zanim zapiszesz plik.
 ```
 
-Po zapisaniu sprawdź, że się załadował:
+Po zapisaniu sprawdzić, że plik się załadował:
 
 ```
 /clear
@@ -136,24 +136,24 @@ Plik ma być widoczny w sekcji **Memory files**. Jeśli go tam nie ma - jest w z
 
 ---
 
-## Krok 4 - pomiar „po" (5 min)
+## Krok 4 - pomiar „po"
 
-W sesji z załadowanym `CLAUDE.md` powtórz **dosłownie** prompt z kroku 1.
+W sesji z załadowanym `CLAUDE.md` powtórzyć **dosłownie** prompt z kroku 1.
 
-Porównaj odpowiedzi. Czy teraz sam z siebie:
-- **ostrzega**, że `oblicz_fakture()` zawiera nieudokumentowane reguły biznesowe?
-- odmawia zmiany bez testów zabezpieczających, zamiast zaplanować ją od razu?
-- wie, że testów w tym repozytorium **nie ma**, i mówi to wprost?
-- podaje `make test` jako sposób weryfikacji?
+Obie odpowiedzi do porównania. Kontrola dotyczy tego, czy model teraz sam z siebie:
+- **ostrzega**, że `oblicz_fakture()` zawiera nieudokumentowane reguły biznesowe,
+- odmawia zmiany bez testów zabezpieczających, zamiast zaplanować ją od razu,
+- wie, że testów w tym repozytorium **nie ma**, i mówi to wprost,
+- podaje `make test` jako sposób weryfikacji.
 
-**Jeśli nie - twój plik nie jest wystarczająco konkretny.** Popraw go i zmierz jeszcze raz.
+**Jeśli nie - plik nie jest wystarczająco konkretny.** Wymaga poprawki i ponownego pomiaru.
 To jest cały lab: pisanie pod pomiar, nie pod poczucie kompletności.
 
 ---
 
-## Krok 5 - `docs/architektura.md` (8 min)
+## Krok 5 - `docs/architektura.md`
 
-Teraz opis architektury - dla ludzi **i** dla modelu. Nie powielaj `CLAUDE.md`.
+Teraz opis architektury - dla ludzi **i** dla modelu, bez powielania `CLAUDE.md`.
 
 Ma zawierać:
 - **granice modułów** - kto od kogo zależy (diagram Mermaid),
@@ -172,8 +172,8 @@ Napisz docs/architektura.md. Zawrzyj:
 Nie opisuj, co robi każda funkcja z osobna.
 ```
 
-**Zweryfikuj diagram.** `grep -n "^from app" app/*.py` pokaże prawdziwe zależności.
-Jeśli się nie zgadza - to jest twoja pierwsza złapana halucynacja w dokumentacji.
+**Diagram wymaga weryfikacji.** `grep -n "^from app" app/*.py` pokaże prawdziwe zależności.
+Rozbieżność oznacza pierwszą złapaną halucynację w dokumentacji.
 
 ---
 
@@ -198,18 +198,18 @@ git commit -m "Pliki kontekstowe: CLAUDE.md i opis architektury"
 ## Pułapki
 
 **Wpisanie sekretu.** W `app/konfiguracja.py` jest coś, co nie powinno tam być.
-Jeśli twój `CLAUDE.md` albo `docs/architektura.md` to zacytował - usuń **teraz**.
-Plik kontekstowy trafia do repo i do każdej sesji. Wrócimy do tego w module 8.
+Zacytowanie tego w `CLAUDE.md` albo `docs/architektura.md` wymaga usunięcia **natychmiast**.
+Plik kontekstowy trafia do repo i do każdej sesji. Wraca do tego moduł 8.
 
-**Plik na 200 linii, bo „wszystko ważne".** Zmierz efekt. Jeśli dłuższy plik nie zmienił
-odpowiedzi, nie jest lepszy - jest droższy.
+**Plik na 200 linii, bo „wszystko ważne".** Efekt trzeba zmierzyć. Jeśli dłuższy plik
+nie zmienił odpowiedzi, nie jest lepszy - jest droższy.
 
 **Wpisanie reguły, która musi zadziałać zawsze.** „Nigdy nie commituj bez testów"
-w `CLAUDE.md` to prośba, nie gwarancja. Jutro w module 5 zamienisz to na hook.
+w `CLAUDE.md` to prośba, nie gwarancja. W module 5 ta sama reguła staje się hookiem.
 
-**Zmyślenie reguł biznesowych.** Jeśli napisałeś „rabat nie łączy się z promocją, ponieważ
-cena promocyjna już zawiera obniżkę" - właśnie utrwaliłeś zgadywanie z labu 2.1 jako
-dokumentację projektu. Napisz to, co wiesz: że reguły są, że nie są opisane,
+**Zmyślenie reguł biznesowych.** Zapis „rabat nie łączy się z promocją, ponieważ
+cena promocyjna już zawiera obniżkę" utrwala zgadywanie z labu 2.1 jako
+dokumentację projektu. Do pliku trafia to, co jest wiadome: że reguły są, że nie są opisane,
 że wymagają testów przed zmianą.
 
 ---

@@ -58,7 +58,7 @@ rabat = Decimal("0") if promocja_liczona else rabaty.rabat_pozycji(pozycja, staw
 ```
 
 **Po co ten komentarz, skoro jest test.** Test mówi „tak jest". Komentarz mówi „wiemy,
-że tak nie powinno być, i wiemy dlaczego tego dziś nie ruszamy". Następna osoba,
+że tak nie powinno być, i wiemy, dlaczego nie ruszamy tego teraz". Następna osoba,
 która tu trafi, nie musi przechodzić całej drogi od nowa.
 
 Cztery funkcje mają komentarz `REGULA` - to są miejsca, których nie wolno upraszczać.
@@ -114,7 +114,7 @@ Porównywane pola: `netto`, `rabat_lacznie`, `vat`, `brutto`, `do_zaplaty`,
 w tym cztery korekty, faktury w EUR i USD, pozycje z promocjami aktywnymi i wygasłymi,
 faktury z zaliczkami i nieaktywnego kontrahenta. Kombinacje, których nikt nie wypisał.
 
-**Rób oba.** Testy są szybkie i mówią, co się zepsuło. Porównanie na danych jest wolniejsze
+**Potrzebne są oba.** Testy są szybkie i mówią, co się zepsuło. Porównanie na danych jest wolniejsze
 i mówi tylko, **że** się zepsuło - ale łapie to, o czym nikt nie pomyślał.
 
 ---
@@ -179,10 +179,10 @@ To naprawdę jest błąd. Ale naprawa błędu w commicie refaktoryzacyjnym oznac
 - zmiana kwot wchodzi na produkcję bez decyzji biznesu,
 - nie da się jej cofnąć osobno, bo siedzi w środku 136 linii zmian.
 
-**Refaktoryzacja i zmiana zachowania nie jadą w jednym commicie.** To jest twarda reguła,
+**Refaktoryzacja i zmiana zachowania nie trafiają do jednego commita.** To jest twarda reguła,
 nie preferencja stylistyczna.
 
-Jeżeli agent zgłosił tę propozycję osobno, a ty jej nie zastosowałeś - lab zaliczony
+Propozycja zgłoszona przez agenta osobno i niezastosowana oznacza lab zaliczony
 tak, jak trzeba. Propozycja trafia do backlogu jako zgłoszenie z uzasadnieniem
 i wyliczoną różnicą 54 zł na przykładzie.
 
@@ -196,8 +196,8 @@ bo nie niosą informacji, a dokładają skakanie po pliku.
 
 **Zmiana kolejności ostrzeżeń.** Lista `ostrzezenia` jest częścią odpowiedzi API.
 Testy sprawdzają obecność, nie kolejność - ale klient może polegać na pierwszym elemencie.
-Porównanie na 204 fakturach porównuje posortowane listy; jeśli chcesz być ostrożniejszy,
-porównuj nieposortowane.
+Porównanie na 204 fakturach zestawia listy posortowane; ostrożniejszy wariant zestawia
+je nieposortowane.
 
 **Zatrzymanie się na zielonych testach.** To jest najczęstszy błąd w tym labie.
 Testy zielone to warunek konieczny, nie wystarczający.

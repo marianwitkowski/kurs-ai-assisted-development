@@ -1,7 +1,8 @@
 # Biblioteka promptów
 
 Prompty użyte w kursie, zebrane w jednym miejscu. Przy każdym **dlaczego jest tak
-sformułowany** - to jest ważniejsze niż sama treść, bo swoje zadania będziesz formułował sam.
+sformułowany** - to jest ważniejsze niż sama treść, bo własne zadania trzeba sformułować
+samodzielnie.
 
 ---
 
@@ -124,8 +125,8 @@ Przy (a) i (b) podaj, JAKI DOWÓD w repozytorium to potwierdza.
 Jeżeli dowodu nie ma - klasyfikacja to (c).
 ```
 
-Ostatnie zdanie jest całym promptem. Bez niego dostaniesz stanowcze „to jest celowa reguła"
-bez cienia dowodu.
+Ostatnie zdanie jest całym promptem. Bez niego w odpowiedzi pada stanowcze
+„to jest celowa reguła" bez cienia dowodu.
 
 ### Testy charakterystyki
 
@@ -164,7 +165,7 @@ Nie proponuj poprawek. Nie oceniaj ważności ani pilności.
 Każda pozycja musi mieć numer linii, który sprawdziłeś.
 ```
 
-Ocena ryzyka należy do ciebie - agent nie zna twojego biznesu ani twojego kalendarza.
+Ocena ryzyka należy do zespołu - agent nie zna ani jego biznesu, ani jego kalendarza.
 
 ### Klasyfikacja migracji
 
@@ -243,8 +244,9 @@ a przypadek niepewny ma trafić do człowieka, a nie dostać strzał modelu.
 Zaproponuj podział na warstwy i powiedz, KTÓRA WARSTWA PODEJMUJE KTÓRĄ DECYZJĘ.
 ```
 
-Jeśli odpowiedź ma dwie warstwy (model + walidacja), dopytaj o trzecią: **decyzję progową
-w kodzie**. Model, który sam decyduje, czy jest wystarczająco pewny, jest modelem bez nadzoru.
+Odpowiedź z dwiema warstwami (model + walidacja) wymaga dopytania o trzecią: **decyzję
+progową w kodzie**. Model, który sam decyduje, czy jest wystarczająco pewny, jest modelem
+bez nadzoru.
 
 ### Obrona przed wstrzyknięciem
 
@@ -264,18 +266,18 @@ Pięć wzorców, które powtarzają się we wszystkich powyższych:
 
 | Wzorzec | Przykład |
 |---|---|
-| **Żądaj dowodu** | „podaj plik i numer linii, który sprawdziłeś" |
-| **Opisz przypadek pusty** | „jeżeli nie ma - napisz dokładnie: nie ma takiej funkcji" |
-| **Rozdziel czynności** | „wypisz pytania, nie odpowiadaj na nie" |
-| **Postaw granice** | „zakres: tylko X; nie zmieniaj Y; zatrzymaj się i powiedz" |
-| **Narzuć format wyniku** | „dokładnie te sekcje, nic więcej, limit 40 linii" |
+| **Żądanie dowodu** | „podaj plik i numer linii, który sprawdziłeś" |
+| **Opis przypadku pustego** | „jeżeli nie ma - napisz dokładnie: nie ma takiej funkcji" |
+| **Rozdzielenie czynności** | „wypisz pytania, nie odpowiadaj na nie" |
+| **Postawienie granic** | „zakres: tylko X; nie zmieniaj Y; zatrzymaj się i powiedz" |
+| **Narzucony format wyniku** | „dokładnie te sekcje, nic więcej, limit 40 linii" |
 
 Czego unikać:
 
-| Nie pisz | Bo | Napisz |
+| Do unikania | Bo | Ma być |
 |---|---|---|
 | „w razie potrzeby dodaj…" | model zawsze uzna, że potrzeba | wprost, czy ma dodać |
 | „zrób to porządnie" | nieweryfikowalne | konkretne kryterium |
-| „obsłuż przypadki brzegowe" | wymyśli swoje | wymień które |
-| „jak w reszcie projektu" | w projekcie są trzy style | wskaż plik wzorcowy |
-| „na razie uproszczona wersja" | nie wiadomo, co uproszczone | wypisz, czego **nie** robimy |
+| „obsłuż przypadki brzegowe" | wymyśli swoje | wyliczenie konkretnych przypadków |
+| „jak w reszcie projektu" | w projekcie są trzy style | wskazanie pliku wzorcowego |
+| „na razie uproszczona wersja" | nie wiadomo, co uproszczone | lista tego, czego **nie** robimy |

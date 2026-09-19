@@ -1,6 +1,6 @@
 # Lab 4.3 - Refaktoryzacja pod ochroną testów
 
-**Czas: ~30 min** · **Tag startowy: `lab-4-3-start`** · **Produkt: zrefaktoryzowane `app/rozliczenia.py`**
+**Tag startowy: `lab-4-3-start`** · **Produkt: zrefaktoryzowane `app/rozliczenia.py`**
 
 ---
 
@@ -12,14 +12,14 @@ git checkout lab-4-3-start
 make test          # 32 testy, wszystkie zielone
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** -
+> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-4-2"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -30,9 +30,9 @@ make test          # 32 testy, wszystkie zielone
 > i poda komendę ratunkową; prościej wyprzedzić go przez `git branch moje-4-3`
 > **przed** skokiem.
 
-Tag zawiera **wzorcowe testy charakterystyki**. Jeśli wolisz pracować na swoich, odłóż moje
-przez `git stash push -u` i przywróć swoje przez `git stash apply`. Wtedy ochrona będzie taka,
-jaką sobie zbudowałeś.
+Tag zawiera **wzorcowe testy charakterystyki**. Do pracy na własnych: odłożyć wzorcowe
+przez `git stash push -u` i przywrócić własne przez `git stash apply`. Wtedy ochrona jest
+dokładnie taka, jaką zbudował uczestnik.
 
 ---
 
@@ -43,7 +43,7 @@ grosza** na żadnej fakturze - i złapać agenta, gdy spróbuje „uprościć" r
 
 ---
 
-## Krok 1 - ustaw granice, zanim agent zacznie (3 min)
+## Krok 1 - granice przed startem agenta
 
 ```
 Zrefaktoryzuj oblicz_fakture() w app/rozliczenia.py.
@@ -67,11 +67,11 @@ Trzy zdania robią tu robotę: „co do grosza", „napisz, ale nie poprawiaj",
 
 ---
 
-## Krok 2 - refaktoryzacja (12 min)
+## Krok 2 - refaktoryzacja
 
-Pozwól agentowi pracować, ale **czytaj, co pisze w wiadomościach**, nie tylko w kodzie.
+Agent pracuje samodzielnie, ale **jego wiadomości wymagają czytania**, nie tylko kod.
 
-Zdania, po których natychmiast zaglądasz w diff:
+Zdania, po których trzeba natychmiast zajrzeć w diff:
 
 > „Uprościłem też…" · „Przy okazji poprawiłem…" · „Ten warunek wydawał się zbędny…"
 > · „Ujednoliciłem zaokrąglanie…" · „To wyglądało na pomyłkę, więc…"
@@ -87,9 +87,9 @@ git diff tests/       # MUSI być puste
 
 ---
 
-## Krok 3 - polowanie na uproszczenia (8 min)
+## Krok 3 - polowanie na uproszczenia
 
-Nawet gdy testy są zielone, przejrzyj diff pod kątem czterech konkretnych miejsc.
+Nawet przy zielonych testach diff wymaga przeglądu pod kątem czterech konkretnych miejsc.
 To są te, które agent „poprawia" najczęściej:
 
 | Co sprawdzić | Gdzie szukać w diffie | Dlaczego to ważne |
@@ -110,7 +110,7 @@ Zaliczka: `if zaliczka > 0 and zaliczka > brutto` wygląda na warunek z nadmiaro
 pierwszym członem. Nie jest - **korekta ma ujemne brutto**, więc bez guardu `0 > -5400`
 jest prawdziwe i `do_zaplaty` spada z −5400,00 do 0,00. **32 testy nadal zielone.**
 
-Sprawdź to wprost:
+Sprawdzenie wprost:
 
 ```bash
 .venv/bin/python -c "
@@ -132,9 +132,9 @@ Ma być **jedno** ostrzeżenie, nie dwa.
 
 ---
 
-## Krok 4 - dowód na całej bazie (5 min)
+## Krok 4 - dowód na całej bazie
 
-Testy pokrywają kilkanaście przypadków. Baza ma 204 faktury. Porównaj wyniki przed i po:
+Testy pokrywają kilkanaście przypadków. Baza ma 204 faktury. Porównanie wyników przed i po:
 
 ```bash
 zapisz() {
@@ -152,8 +152,8 @@ git stash pop -q && zapisz > /tmp/po.txt
 diff /tmp/przed.txt /tmp/po.txt && echo "IDENTYCZNE na wszystkich 204 fakturach"
 ```
 
-To jest ostateczny dowód refaktoryzacji zachowawczej. Jeśli `diff` cokolwiek pokazuje -
-zmieniłeś zachowanie, niezależnie od tego, że testy są zielone.
+To jest ostateczny dowód refaktoryzacji zachowawczej. Każdy wynik `diff` oznacza zmianę
+zachowania, niezależnie od tego, że testy są zielone.
 
 ---
 
@@ -174,20 +174,20 @@ git commit -m "Refaktoryzacja oblicz_fakture() bez zmiany zachowania"
 - [ ] Reguły biznesowe mają komentarz mówiący, że są celowe.
 - [ ] Znany błąd (rabat przy wygasłej promocji) **nadal tam jest**, z komentarzem.
 - [ ] Ostrzeżenie o wygasłej promocji pojawia się dokładnie raz.
-- [ ] Jeśli agent zaproponował poprawkę błędu - masz ją zapisaną i **nie zastosowałeś** jej.
+- [ ] Poprawka błędu zaproponowana przez agenta jest zapisana i **niezastosowana**.
 
 ## Pułapki
 
 **„Testy są zielone, więc jest dobrze."** Testy pokrywają to, co ktoś pomyślał.
-Porównanie na 204 fakturach pokrywa to, co jest w danych. Rób oba.
+Porównanie na 204 fakturach pokrywa to, co jest w danych. Potrzebne są oba.
 
 **Poprawienie znanego błędu przy okazji.** Rabat przy wygasłej promocji **jest** błędem.
 Poprawka jest o jedną linię. I nie wolno jej zrobić w tym labie - bo to jest zmiana kwot
 na fakturach, która wymaga decyzji działu handlowego i osobnego wdrożenia.
-Refaktoryzacja i zmiana zachowania nie jadą w jednym commicie. Nigdy.
+Refaktoryzacja i zmiana zachowania nie trafiają do jednego commita. Nigdy.
 
-**Zmiana testu, żeby przeszedł.** Jeśli pojawiła się pokusa, żeby dotknąć `tests/` -
-to znaczy, że refaktoryzacja zmieniła zachowanie. Cofnij refaktoryzację, nie test.
+**Zmiana testu, żeby przeszedł.** Pokusa dotknięcia `tests/` oznacza, że refaktoryzacja
+zmieniła zachowanie. Cofnąć należy refaktoryzację, nie test.
 
 **Rozbicie funkcji na dwadzieścia trzylinijkowych.** Cel to czytelność, nie liczba funkcji.
 Sześć-siedem nazwanych kroków wystarczy. Dwadzieścia funkcji z nazwami `_krok_1`, `_krok_2`

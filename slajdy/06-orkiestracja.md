@@ -10,7 +10,7 @@ footer: 'AI Assisted Development · Moduł 6'
 
 # Orkiestracja wieloagentowa
 
-## Moduł 6 · dzień 2
+## Moduł 6 · 6 lekcji · 2 laby
 
 Worktree, subagenci, podział zadań, budżety tur.
 
@@ -18,7 +18,6 @@ Worktree, subagenci, podział zadań, budżety tur.
 CO POWIEDZIEĆ: Ten moduł jest o dzieleniu pracy między agentów tak, żeby scalenie
 było tanie. Połowa modułu to umiejętność zrobienia tego, druga połowa to wiedza,
 kiedy tego nie robić.
-CZAS: ~1 min
 -->
 
 ---
@@ -30,10 +29,9 @@ CZAS: ~1 min
 Uruchomienie trzech agentów nie daje trzykrotnego przyspieszenia.
 
 <!--
-CO POWIEDZIEĆ: To jest teza całego modułu. Równoległość nie jest darmowa: płacisz
-trzy razy za tokeny i dokładasz sobie pracę, której sekwencyjnie w ogóle by nie było.
+CO POWIEDZIEĆ: To jest teza całego modułu. Równoległość nie jest darmowa: tokeny idą
+trzy razy, a do tego dochodzi praca, której sekwencyjnie w ogóle by nie było.
 Musi się opłacić, a nie zawsze się opłaca.
-CZAS: ~1 min
 -->
 
 ---
@@ -44,10 +42,10 @@ CZAS: ~1 min
 |---|---|
 | zadania są **niezależne**: wynik jednego nie jest wejściem drugiego | zadania dotyczą tego samego pliku (scalenie zje zysk) |
 | każde wymaga **czytania** dużej ilości kodu (to jest ta część, która trwa) | jedno zadanie zależy od decyzji podjętej w drugim |
-| **konflikty da się przewidzieć**: wiesz z góry, gdzie się zetkną | całość jest krótsza niż narzut na przygotowanie środowisk |
+| **konflikty da się przewidzieć**: wiadomo z góry, gdzie zadania się zetkną | całość jest krótsza niż narzut na przygotowanie środowisk |
 
-> Jeżeli nie potrafisz z góry powiedzieć, gdzie będzie konflikt, **podział jest zły**.
-> Wróć do kartki, zanim odpalisz agentów.
+> Jeżeli nie da się z góry wskazać miejsca konfliktu, **podział jest zły**.
+> Przed uruchomieniem agentów podział wraca na kartkę.
 
 <!--
 CO POWIEDZIEĆ: Prawa kolumna jest ważniejsza od lewej. Najdroższy błąd to nie zły
@@ -55,7 +53,6 @@ prompt, tylko zrównoleglenie czegoś, co było sekwencyjne. Reguła na dole jes
 operacyjna: to test, który robi się na kartce w minutę.
 NA CO UWAŻAĆ: Sala instynktownie szuka miejsc, gdzie „da się puścić równolegle".
 Odwróć to pytanie: gdzie te zadania się zetkną?
-CZAS: ~3 min
 -->
 
 ---
@@ -69,7 +66,7 @@ CZAS: ~3 min
   <div class="strzalka">→</div>
   <div class="krok">Streszczenia<small>nie transkrypty</small></div>
   <div class="strzalka">→</div>
-  <div class="krok wyroz">Scalanie<small>decyzje wracają do ciebie</small></div>
+  <div class="krok wyroz">Scalanie<small>decyzje wracają do orkiestratora</small></div>
 </div>
 
 Wykonawca odpowiada za **jedno zadanie, od początku do zielonej bramki**.
@@ -79,11 +76,10 @@ Nie odpowiada za to, co robią pozostali.
 i nie dogadają się w trakcie: wszystko, czego potrzebują, jest w zleceniu.
 
 <!--
-CO POWIEDZIEĆ: Orkiestrator nie pisze kodu w zadaniach. Jego robota to granice
-i scalanie. Jeśli zaczyna pisać kod, przestaje panować nad całością.
+CO POWIEDZIEĆ: Orkiestrator nie pisze kodu w zadaniach. Jego zadanie to granice
+i scalanie. Gdy zaczyna pisać kod, przestaje panować nad całością.
 NA CO UWAŻAĆ: „A niech się dogadają w trakcie" nie istnieje. Każda informacja,
 której wykonawca nie dostał w zleceniu, jest informacją, którą sobie dopowie.
-CZAS: ~2 min
 -->
 
 ---
@@ -95,8 +91,8 @@ CZAS: ~2 min
 | Kontekst | osobny per subagent | osobny per sesja |
 | Pliki | ten sam katalog (o ile nie ma izolacji) | osobne katalogi |
 | Konflikty przy pisaniu | **realne** | nie ma, są dopiero przy scalaniu |
-| Kto orkiestruje | sesja główna | ty |
-| Widzisz przebieg | streszczenie na końcu | cały, w osobnym terminalu |
+| Kto orkiestruje | sesja główna | człowiek |
+| Widoczność przebiegu | streszczenie na końcu | cały, w osobnym terminalu |
 
 Trzecia forma to połączenie: subagent z `isolation: worktree` dostaje własny katalog,
 a mimo to jest orkiestrowany przez sesję główną.
@@ -107,7 +103,6 @@ nadpisać pliki w trakcie pracy. Worktree przesuwa konflikt na moment scalania,
 czyli tam, gdzie git umie go pokazać.
 PYTANIE Z SALI: „To po co w ogóle subagenci bez worktree?" Bo nie każde zadanie
 pisze do plików. Inwentaryzacja, przeszukanie kodu, przegląd - tam konfliktu nie ma.
-CZAS: ~2 min
 -->
 
 ---
@@ -115,9 +110,9 @@ CZAS: ~2 min
 # Po co jest subagent
 
 <div class="przeplyw">
-  <div class="krok">Zlecenie<small>tylko to, co mu dasz</small></div>
+  <div class="krok">Zlecenie<small>tylko to, co w nim zapisano</small></div>
   <div class="strzalka">→</div>
-  <div class="krok wyroz">Pusty kontekst<small>nie widzi twojej rozmowy</small></div>
+  <div class="krok wyroz">Pusty kontekst<small>nie widzi rozmowy w sesji głównej</small></div>
   <div class="strzalka">→</div>
   <div class="krok">Logi, grep, treść plików<small>zostają u niego</small></div>
   <div class="strzalka">→</div>
@@ -131,11 +126,10 @@ Do sesji głównej wraca **streszczenie, nie transkrypt**.
 
 <!--
 CO POWIEDZIEĆ: Subagent to nie jest „drugi pracownik". To jest sposób na to, żeby
-czytanie trzydziestu plików nie wylądowało w twoim oknie kontekstowym. Przyrost
+czytanie trzydziestu plików nie trafiło do okna kontekstowego sesji głównej. Przyrost
 w sesji głównej jest taki sam, czy przeczytał trzy pliki, czy trzydzieści.
-NA CO UWAŻAĆ: Pusty kontekst znaczy też, że subagent nie wie nic z waszej rozmowy
+NA CO UWAŻAĆ: Pusty kontekst znaczy też, że subagent nie wie nic z dotychczasowej rozmowy
 sprzed dziesięciu minut. To najczęstsza przyczyna bezużytecznego wyniku.
-CZAS: ~3 min
 -->
 
 ---
@@ -155,8 +149,8 @@ maxTurns: 25
 ---
 ```
 
-- `isolation: worktree` - własny, tymczasowy katalog; twój checkout nietknięty
-- `maxTurns` - twardy budżet tur; subagenta **nie widzisz w trakcie pracy**
+- `isolation: worktree` - własny, tymczasowy katalog; główny checkout nietknięty
+- `maxTurns` - twardy budżet tur; subagenta **nie widać w trakcie pracy**
 - `description` - kryterium wyboru **dla modelu**, nie dokumentacja dla człowieka
 
 Limity: **20** subagentów jednocześnie, **3** poziomy zagnieżdżenia.
@@ -166,17 +160,16 @@ Sensowny sufit dla człowieka, który ma potem przeczytać wyniki: trzy-cztery.
 CO POWIEDZIEĆ: Agent jest plikiem w repozytorium, czyli przechodzi przez review
 jak każdy inny artefakt. Trzy pola z listy decydują o tym, czy jest bezpieczny.
 NA CO UWAŻAĆ: Opis, który mówi wyłącznie, co agent robi, jest wadliwy. Model czyta
-go, decydując, czy sięgnąć po agenta sam. Zdanie „do czego NIE służy" robi tu
-najwięcej roboty.
+go, decydując, czy sięgnąć po agenta sam. Zdanie „do czego NIE służy" ma tu
+największe znaczenie.
 PYTANIE Z SALI: „Który model dostanie subagent?" Kolejność: parametr per wywołanie,
 potem `model` z frontmattera, potem `CLAUDE_CODE_SUBAGENT_MODEL`, na końcu model
 sesji głównej.
-CZAS: ~3 min
 -->
 
 ---
 
-# Format wyniku: narzuć go
+# Format wyniku: do narzucenia
 
 ```text
 ZAKRES: <co miało być zmienione>
@@ -187,19 +180,18 @@ BRAMKA: zielona | czerwona (+ pierwsze 5 linii błędu)
 RYZYKA: <co może się zepsuć, czego nie sprawdziłem>
 ```
 
-Plus **limit długości**. W labie: 40 linii.
+Do tego **limit długości**. W labie: 40 linii.
 
 > Sekcja `POMINIĘTE` daje subagentowi trzecie wyjście obok „zrobiłem wszystko po swojemu"
 > i „stanąłem bez wyjaśnienia". Jest jedyną rzeczą, która chroni przed cichym
 > rozstrzygnięciem.
 
 <!--
-CO POWIEDZIEĆ: Bez narzuconego formatu trzy raporty są nieporównywalne i musisz je
-czytać jak eseje. Z formatem porównujesz je w kolumnie. `BRAMKA` jako osobne pole
+CO POWIEDZIEĆ: Bez narzuconego formatu trzy raporty są nieporównywalne i trzeba je
+czytać jak eseje. Z formatem porównuje się je w kolumnie. `BRAMKA` jako osobne pole
 wymusza uruchomienie: bez niego „gotowe" znaczy „skończyłem pisać".
 NA CO UWAŻAĆ: Limit długości nie jest kosmetyką. Streszczenie na trzysta linii to
 transkrypt w przebraniu i cały zysk kontekstowy znika.
-CZAS: ~3 min
 -->
 
 ---
@@ -220,7 +212,7 @@ ani `.venv`, ani `.env`, ani lokalnych baz.
 do wzorca **i** są gitignorowane.
 
 <!--
-CO POWIEDZIEĆ: Pierwsze `make test` w świeżym worktree wywali się na braku `.venv`.
+CO POWIEDZIEĆ: Pierwsze `make test` w świeżym worktree kończy się błędem na braku `.venv`.
 To nie jest awaria konfiguracji, to jest właściwość worktree. Decyzję podejmuje się
 raz, świadomie, dla całego zespołu.
 NA CO UWAŻAĆ: Dwie linie do `.gitignore`, zanim ktokolwiek użyje worktree:
@@ -229,7 +221,6 @@ pokażą się jako nieśledzone w głównym checkoucie. Bez drugiej czyjeś osob
 ustawienie `baseRef` zacznie obowiązywać cały zespół.
 PYTANIE Z SALI: „A baza w repozytorium kursu?" Plik SQLite leży w katalogu worktree,
 a `python seed.py` odtwarza ją od zera. Tu akurat problemu nie ma.
-CZAS: ~3 min
 -->
 
 ---
@@ -252,14 +243,13 @@ CZAS: ~3 min
 `${CLAUDE_PROJECT_DIR}` wskazuje katalog, w którym **wystartowała sesja**, i nie zmienia się
 po wejściu w worktree. Ścieżka worktree przychodzi do hooka w polu **`cwd`**.
 
-Dlatego hook bramki z modułu 5 czyta `cwd`. Sprawdź swój dzisiaj.
+Dlatego hook bramki z modułu 5 czyta `cwd`. Hook z labu 5.1 wymaga sprawdzenia.
 
 <!--
 CO POWIEDZIEĆ: To jest najgroźniejszy błąd z tego modułu, bo wygląda jak sukces.
-Zielona bramka, którą dostajesz, dotyczy kodu, którego nikt nie tknął.
+Zielona bramka, która wtedy wraca, dotyczy kodu, którego nikt nie zmienił.
 NA CO UWAŻAĆ: To wyjdzie dopiero w labie 6.1, na hooku `bramka.sh` z labu 5.1.
 Zapowiedz to teraz, żeby wiedzieli, czego szukać.
-CZAS: ~3 min
 -->
 
 ---
@@ -281,12 +271,11 @@ CZAS: ~3 min
 | w dwustu liniach, nieprzewidziany | wieczór |
 
 <!--
-CO POWIEDZIEĆ: Nie unikamy konfliktu, tylko go lokalizujemy. Wypisz przed startem
-pliki, których dotknie każde zadanie, część wspólną zaznacz w zleceniu obu wykonawców,
-a scalaj od zadania o najmniejszym zasięgu.
+CO POWIEDZIEĆ: Nie unikamy konfliktu, tylko go lokalizujemy. Przed startem trzeba wypisać
+pliki, których dotknie każde zadanie, część wspólną zaznaczyć w zleceniu obu wykonawców,
+a scalać od zadania o najmniejszym zasięgu.
 NA CO UWAŻAĆ: „Dotykają tego samego pliku" to za mało, żeby przewidzieć konflikt.
 Git konfliktuje na nakładających się zmianach, nie na tym samym pliku.
-CZAS: ~3 min
 -->
 
 ---
@@ -299,7 +288,7 @@ CZAS: ~3 min
 | „Spróbuję innego podejścia" po raz trzeci | brakuje mu informacji, której nie ma w repo |
 | Czytanie kolejnych plików bez zmian w kodzie | szuka czegoś, czego nie ma |
 | Rosnące, coraz bardziej ogólne komunikaty | stracił kontakt z zadaniem |
-| **Modyfikacja testu, żeby przeszedł** | zadanie jest niewykonalne tak, jak je postawiłeś |
+| **Modyfikacja testu, żeby przeszedł** | zadanie jest niewykonalne tak, jak je postawiono |
 
 Ostatni jest najgroźniejszy, bo **wygląda na sukces**.
 
@@ -309,7 +298,6 @@ albo agent napotkał przeszkodę, której nie umie nazwać.
 NA CO UWAŻAĆ: Ostatni wiersz przechodzi przez bramkę. Zielone testy po zmianie testu
 to nie jest zielona bramka, to jest przesunięta poprzeczka. Przy przeglądzie diffu
 patrz najpierw, czy testy się nie zmieniły.
-CZAS: ~2 min
 -->
 
 ---
@@ -321,21 +309,20 @@ CZAS: ~2 min
 | `maxTurns` | frontmatter subagenta |
 | `--max-budget-usd` | flaga CLI, **tylko w trybie `-p`** |
 | `timeout` | pole hooka |
-| `Esc` | ty, natychmiast |
+| `Esc` | ręcznie, natychmiast |
 
 Po przerwaniu **nie „spróbuj jeszcze raz"**: to samo zlecenie da ten sam wynik.
-Brakuje informacji → dopisz ją do zlecenia albo do `CLAUDE.md`.
-Zadanie źle postawione → podziel je albo rozstrzygnij sam to, czego agent nie może.
+Brakuje informacji → dopisać ją do zlecenia albo do `CLAUDE.md`.
+Zadanie źle postawione → podzielić je albo rozstrzygnąć ręcznie to, czego agent nie może.
 
 Zasada w treści agenta to prośba. `maxTurns` to egzekucja - jak hook z modułu 5.
 
 <!--
 CO POWIEDZIEĆ: `maxTurns` na subagencie jest ważniejszy niż na sesji głównej, bo
-sesję główną przerwiesz `Esc`, a subagenta nie widzisz w trakcie. Bez limitu tur
+sesję główną przerywa `Esc`, a subagent jest niewidoczny w trakcie. Bez limitu tur
 zużyje budżet i wróci ze streszczeniem, którego nie da się użyć.
 NA CO UWAŻAĆ: `--max-budget-usd` działa tylko z `-p`. W sesji interaktywnej nie ma
 go czym zastąpić poza `Esc` i własną uwagą.
-CZAS: ~3 min
 -->
 
 ---
@@ -344,28 +331,27 @@ CZAS: ~3 min
 
 # Laby 6.1 i 6.2
 
-**Zanim cokolwiek odpalisz** (`origin/main` to stan z modułu 1):
+**Przed pierwszym uruchomieniem** (`origin/main` to stan z modułu 1):
 
 ```bash
 echo '{"worktree": {"baseRef": "head"}}' > .claude/settings.local.json
 ```
 
-**Lab 6.1 (~60 min)** - trzy worktree, trzy zadania, **jeden zaplanowany konflikt**
+**Lab 6.1** - trzy worktree, trzy zadania, **jeden zaplanowany konflikt**
 w `app/rabaty.py`. Migracja `datetime.utcnow()`: **pięć wystąpień w czterech plikach**.
 Kryterium akceptacji: ostrzeżeń z **4 na 0**, `make gate` zielone, **47 testów**.
 
-**Lab 6.2 (~20 min)** - `.claude/agents/migrator.md` z `isolation: worktree`,
+**Lab 6.2** - `.claude/agents/migrator.md` z `isolation: worktree`,
 `maxTurns: 25` i narzuconym formatem wyniku. `/context` przed i po.
 
 <!--
-CO POWIEDZIEĆ: Konflikt w labie 6.1 jest celowy i wiecie z góry, gdzie będzie.
+CO POWIEDZIEĆ: Konflikt w labie 6.1 jest celowy, a jego miejsce znane z góry.
 Rozwiązanie polega na wzięciu obu zmian: kodu z zadania C i komentarza z zadania A.
 `git checkout --ours` jest szybkie i kasuje połowę pracy.
 NA CO UWAŻAĆ: Domyślne `baseRef: "fresh"` dałoby worktree bez testów, bez `CLAUDE.md`
-i bez celu `gate` w `Makefile`. Kwadrans szukania przyczyny. To samo ustawienie jest
+i bez celu `gate` w `Makefile`. Przyczyna jest nieoczywista. To samo ustawienie jest
 potrzebne w labie 6.2, a plik jest nieśledzony, więc `git stash -u` go zabierze.
 PYTANIE Z SALI: „Czy ta równoległość się opłaciła?" Przy trzech krótkich zadaniach
-raczej nie: narzut jest stały. Opłaca się, gdy samo czytanie kodu w każdym zadaniu
-trwa kwadrans. Wiedza, kiedy tego nie robić, jest warta tyle samo.
-CZAS: ~2 min
+raczej nie: narzut jest stały. Opłaca się tam, gdzie samo wczytanie się w kod każdego
+zadania jest kosztowne. Wiedza, kiedy tego nie robić, jest warta tyle samo.
 -->

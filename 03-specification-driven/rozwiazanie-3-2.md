@@ -16,7 +16,7 @@ git show lab-4-1-start:tests/test_odsetki.py
 ```
 
 **Pięć plików, jedna linia usunięta** (import w `raporty.py`). To jest diff mieszczący się
-w zakresie. Wszystko ponad to jest sygnałem, że zakres popłynął.
+w zakresie. Wszystko ponad to jest sygnałem, że zakres się rozszerzył.
 
 ---
 
@@ -117,11 +117,12 @@ kontrahent 5: 8 pozycji, pominietych walutowych: 8
 na nim osiem faktur bez odsetek z podanym powodem. Przy cichym pominięciu widziałby
 pustą listę i uznał, że kontrahent płaci w terminie.
 
-To jest wzorzec ogólniejszy: **kiedy specyfikacja milczy, wybieraj wariant, który zostawia ślad.**
+To jest wzorzec ogólniejszy: **przy milczeniu specyfikacji wybierać wariant, który
+zostawia ślad.**
 
 Dobra odpowiedź agenta w tym kroku to taka, która **najpierw mówi, że specyfikacja tego nie
-rozstrzyga**, a dopiero potem proponuje. Jeżeli od razu napisał kod bez komentarza -
-masz świeży przykład dopowiedzenia, dwadzieścia minut po module o dopowiadaniu.
+rozstrzyga**, a dopiero potem proponuje. Kod napisany od razu, bez komentarza, to świeży
+przykład dopowiedzenia - dwadzieścia minut po module o dopowiadaniu.
 
 ---
 
@@ -137,7 +138,7 @@ masz świeży przykład dopowiedzenia, dwadzieścia minut po module o dopowiadan
 Kroki 1-2 nie dotykają ani jednej linii istniejącego kodu. Można je wyrzucić i zacząć
 od nowa bez konsekwencji. Dopiero krok 4 wchodzi w `app/raporty.py` i `app/main.py`.
 
-To jest ta sama zasada, co w specyfikacji: **układaj pracę tak, żeby najdroższe zmiany
+To jest ta sama zasada, co w specyfikacji: **układać pracę tak, żeby najdroższe zmiany
 były ostatnie.** Nie dlatego, że tak wypada, tylko dlatego, że wtedy najczęstszy błąd
 - odrzucenie po drodze - kosztuje najmniej.
 
@@ -145,9 +146,9 @@ były ostatnie.** Nie dlatego, że tak wypada, tylko dlatego, że wtedy najczęs
 
 ## Najczęstsze potknięcia
 
-**Testy napisane po implementacji.** Sprawdź swoją historię: `git log --oneline` powinno
+**Testy napisane po implementacji.** Rozstrzyga historia: `git log --oneline` powinno
 pokazać commit z testami przed commitem z kodem, albo przynajmniej `make test` z błędem
-`ImportError` po kroku 1. Jeśli tego nie ma, testy sprawdzają kod, a nie specyfikację.
+`ImportError` po kroku 1. Bez tego testy sprawdzają kod, a nie specyfikację.
 
 **Liczby przeliczone przez agenta.** Prompt w kroku 1 mówi wprost: „liczby bierz dosłownie
 ze specyfikacji, nie przeliczaj". Jeżeli agent policzył je sam i wyszło mu 123,16 zamiast
@@ -159,4 +160,4 @@ jest parametrem obowiązkowym na poziomie funkcji czystej. Ryzyko ze specyfikacj
 ostatni wiersz.
 
 **Dodanie zapisu not do bazy.** Sekcja 2 wymienia to wprost jako poza zakresem.
-Jeżeli w twoim diffie jest `CREATE TABLE noty` - cofnij i przeczytaj sekcję 2 jeszcze raz.
+`CREATE TABLE noty` w diffie oznacza cofnięcie zmiany i ponowne przeczytanie sekcji 2.

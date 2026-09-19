@@ -1,6 +1,6 @@
 # Lab 6.1 - Trzy worktree, trzy zadania, jeden konflikt
 
-**Czas: ~60 min** · **Tag startowy: `lab-6-1-start`** · **Produkt: trzy scalone branche, rozwiązany konflikt, czysty `git worktree list`**
+**Tag startowy: `lab-6-1-start`** · **Produkt: trzy scalone branche, rozwiązany konflikt, czysty `git worktree list`**
 
 ---
 
@@ -10,17 +10,17 @@
 cd repo-cwiczeniowe
 git checkout lab-6-1-start
 make gate            # zielone: 32 testy, lint czysty
-pytest -q 2>&1 | tail -1     # zapisz liczbę ostrzeżeń - wrócisz do niej na końcu
+pytest -q 2>&1 | tail -1     # liczba ostrzeżeń - do porównania na końcu labu
 ```
 
-> **Masz niezacommitowaną pracę z poprzedniego labu?** `git checkout` ją zablokuje -
-> także pliki **nieśledzone** (hooki, `tests/`, `docs/`). Odłóż wszystko jedną komendą:
+> **Niezacommitowana praca z poprzedniego labu blokuje `git checkout`** - także pliki
+> **nieśledzone** (hooki, `tests/`, `docs/`). Wszystko odkłada jedna komenda:
 >
 > ```bash
 > git stash push -u -m "moje-5-2"
 > ```
 >
-> Wracasz do niej przez `git stash list` i `git stash apply stash@{0}`.
+> Powrót do niej: `git stash list` i `git stash apply stash@{0}`.
 >
 > `git switch -c` **nie wystarczy** - nie commituje niczego, więc ani nie zachowuje pracy,
 > ani nie odblokowuje skoku na tag.
@@ -35,8 +35,8 @@ pytest -q 2>&1 | tail -1     # zapisz liczbę ostrzeżeń - wrócisz do niej na 
 
 ## Cel
 
-Puścić trzy niezależne zadania równolegle, w izolowanych katalogach, scalić je
-i rozwiązać **zaplanowany** konflikt. Plus zobaczyć, co worktree kosztuje w praktyce.
+Uruchomić trzy niezależne zadania równolegle, w izolowanych katalogach, scalić je
+i rozwiązać **zaplanowany** konflikt. Do tego zmierzyć, co worktree kosztuje w praktyce.
 
 ---
 
@@ -48,53 +48,50 @@ i rozwiązać **zaplanowany** konflikt. Plus zobaczyć, co worktree kosztuje w p
 | **B** | Dokumentacja API w `docs/api.md` | `docs/api.md` |
 | **C** | Migracja `datetime.utcnow()` → `datetime.now(UTC)` | **`app/rabaty.py`**, `app/raporty.py`, `app/powiadomienia.py`, `app/platnosci.py` |
 
-**Zauważ, zanim zaczniesz: A i C dotykają tego samego pliku.** To jest celowe.
-Konflikt jest zaplanowany i wiesz z góry, gdzie będzie - w `app/rabaty.py`,
-w linii z `datetime.utcnow()`.
+**A i C dotykają tego samego pliku.** To jest celowe. Konflikt jest zaplanowany,
+a jego miejsce znane z góry - w `app/rabaty.py`, w linii z `datetime.utcnow()`.
 
 To jest cała pointa podziału: **nie unikamy konfliktu, tylko go lokalizujemy.**
 
 ---
 
-## Krok 1 - trzy worktree (7 min)
+## Krok 1 - trzy worktree
 
 **Najpierw jedno ustawienie.** Domyślnie Claude Code tworzy worktree z **domyślnej gałęzi
 zdalnego repozytorium** (`worktree.baseRef: "fresh"`). W tym repozytorium `origin/main`
-wskazuje **stan startowy z modułu 1** - a ty stoisz sześć modułów dalej, na tagu
+wskazuje **stan startowy z modułu 1**, a praca toczy się sześć modułów dalej, na tagu
 `lab-6-1-start`.
 
 Worktree utworzony z `main` nie miałby ani `CLAUDE.md`, ani testów, ani hooków, ani skilla.
-`make gate` w nim nie przejdzie, bo nie ma czego uruchomić - a ty spędzisz kwadrans
-na szukaniu, dlaczego.
+`make gate` w nim nie przejdzie, bo nie ma czego uruchomić - a przyczyna jest nieoczywista.
 
 ```bash
 echo '{"worktree": {"baseRef": "head"}}' > .claude/settings.local.json
 ```
 
-> Jeśli plik już istnieje z innymi ustawieniami, **nie nadpisuj go** - scal:
+> Przy pliku istniejącym z innymi ustawieniami **nie wolno go nadpisać** - trzeba scalić:
 > ```bash
 > jq '. * {worktree: {baseRef: "head"}}' .claude/settings.local.json > /tmp/s.json \
 >   && mv /tmp/s.json .claude/settings.local.json
 > ```
 >
-> **Nie kasuj tego pliku po labie** - lab 6.2 też go potrzebuje, a jest nieśledzony,
+> **Tego pliku nie należy kasować po labie** - lab 6.2 też go potrzebuje, a jest nieśledzony,
 > więc `git stash -u` i `git checkout` go zabiorą.
 
-`"head"` każe tworzyć worktree z **bieżącego lokalnego `HEAD`** - czyli z tagu,
-na którym właśnie stoisz.
+`"head"` każe tworzyć worktree z **bieżącego lokalnego `HEAD`** - czyli z bieżącego tagu.
 
-`.claude/settings.local.json` jest plikiem **osobistym**: twoje ustawienia, nie zespołu.
+`.claude/settings.local.json` jest plikiem **osobistym**: ustawienia jednej osoby, nie zespołu.
 Jest w `.gitignore` tego repozytorium, więc `git status` go nie pokaże i nie wciągnie go
-żadne `git add -A`. W swoim projekcie dopisz go tam, zanim ktokolwiek zacznie go używać -
-inaczej pierwsza osoba, która ustawi sobie `baseRef`, narzuci to całemu zespołowi.
+żadne `git add -A`. We własnym projekcie trzeba go tam dopisać, zanim ktokolwiek zacznie
+go używać - inaczej pierwsza osoba, która ustawi sobie `baseRef`, narzuci to całemu zespołowi.
 
-> To jest realna pułapka, nie artefakt szkolenia. Zawsze gdy pracujesz na czymkolwiek
-> innym niż domyślna gałąź - na branchu feature, na tagu, na cudzym pull requeście -
-> `"fresh"` da ci worktree **bez tej pracy**. Domyślne zachowanie jest słuszne
-> (izolowany eksperyment z czystego stanu) i dokładnie dlatego zaskakuje, gdy chcesz
-> czegoś innego.
+> To jest realna pułapka, nie artefakt szkolenia. Przy pracy na czymkolwiek innym
+> niż domyślna gałąź - na branchu feature, na tagu, na cudzym pull requeście -
+> `"fresh"` daje worktree **bez tej pracy**. Domyślne zachowanie jest słuszne
+> (izolowany eksperyment z czystego stanu) i dokładnie dlatego zaskakuje przy każdej
+> innej potrzebie.
 
-Aktywuj środowisko Pythona **przed** uruchomieniem Claude Code - hook bramki dziedziczy
+Środowisko Pythona wymaga aktywacji **przed** uruchomieniem Claude Code - hook bramki dziedziczy
 `PATH` po procesie, który go uruchomił:
 
 ```bash
@@ -109,7 +106,7 @@ claude --worktree zadanie-b
 claude --worktree zadanie-c
 ```
 
-Wariant ręczny, jeśli wolisz widzieć mechanikę:
+Wariant ręczny, pokazujący mechanikę:
 
 ```bash
 git worktree add .claude/worktrees/zadanie-a -b worktree-zadanie-a lab-6-1-start
@@ -118,7 +115,7 @@ git worktree add .claude/worktrees/zadanie-c -b worktree-zadanie-c lab-6-1-start
 git worktree list
 ```
 
-**Sprawdź, czego w nich nie ma:**
+**Kontrola, czego w nich nie ma:**
 
 ```bash
 ls -a .claude/worktrees/zadanie-a | grep -E '^\.venv$|^\.env$' || echo "brak .venv i .env - świeży checkout"
@@ -128,16 +125,16 @@ Worktree to świeży checkout. Nie ma w nim **niczego z `.gitignore`** - ani `.v
 ani bazy `rozliczenia.db`.
 
 Baza to nie problem: `Makefile` ma ją jako zależność, więc pierwszy `make test` w worktree
-odtworzy ją z `seed.py`. Środowisko to problem - `.venv` nikt za ciebie nie zbuduje.
+odtworzy ją z `seed.py`. Środowisko to problem - `.venv` trzeba zbudować samodzielnie.
 
-Najprostsze obejście na czas labu: użyj `.venv` z głównego checkoutu w każdym terminalu.
+Najprostsze obejście na czas labu: `.venv` z głównego checkoutu w każdym terminalu.
 
 ```bash
 source /pełna/ścieżka/do/repo-cwiczeniowe/.venv/bin/activate
 ```
 
-**Zrób to zanim uruchomisz `claude` w tym terminalu.** Hook bramki z labu 5.1 woła
-`make gate`, a `Makefile` używa gołych `ruff` i `pytest` - bez aktywowanego środowiska
+**Aktywacja musi poprzedzać uruchomienie `claude` w tym terminalu.** Hook bramki z labu 5.1
+woła `make gate`, a `Makefile` używa gołych `ruff` i `pytest` - bez aktywowanego środowiska
 bramka zrobi się czerwona z powodu „command not found".
 
 W realnym projekcie tę decyzję podejmuje się raz: instalacja per worktree, współdzielony
@@ -145,9 +142,9 @@ interpreter albo `.worktreeinclude` dla plików spoza gita.
 
 ---
 
-## Krok 2 - trzy zlecenia (25 min)
+## Krok 2 - trzy zlecenia
 
-Odpal je równolegle, każde w swoim terminalu.
+Uruchomić je równolegle, każde w swoim terminalu.
 
 ### Zadanie A
 
@@ -194,7 +191,7 @@ Zakres: tylko ta zamiana. Żadnych poprawek przy okazji.
 make gate musi być zielone, a pytest ma przestać pokazywać DeprecationWarning.
 ```
 
-**W zadaniu C sprawdź odpowiedź na pierwszą część.** Poprawna klasyfikacja:
+**W zadaniu C odpowiedź na pierwszą część wymaga sprawdzenia.** Poprawna klasyfikacja:
 **pięć wystąpień w czterech plikach** (`app/raporty.py` ma dwa), z czego cztery to
 domyślne wartości parametrów, a piąte (`app/rabaty.py`) jest wewnątrz decyzji o cenie
 pozycji. Zamiana jest równoważna we wszystkich pięciu
@@ -205,9 +202,9 @@ Agent, który napisze „wszystkie cztery to prosta zamiana", pominął to rozr�
 
 ---
 
-## Krok 3 - scalanie (15 min)
+## Krok 3 - scalanie
 
-Wróć do głównego checkoutu. Scalaj **od najmniejszego zasięgu**:
+Powrót do głównego checkoutu. Scalanie **od najmniejszego zasięgu**:
 
 ```bash
 git merge --no-edit worktree-zadanie-b     # tylko docs/api.md - czysto
@@ -225,9 +222,9 @@ Konflikt wygląda tak:
 >>>>>>> worktree-zadanie-c
 ```
 
-**Jedna linia, obie zmiany potrzebne.** Rozwiązanie: weź kod z C i komentarz z A.
+**Jedna linia, obie zmiany potrzebne.** Rozwiązanie: kod z C i komentarz z A.
 
-Zwróć uwagę, czego git **nie** zgłosił: linia importu (`from datetime import UTC, datetime`)
+Warto odnotować, czego git **nie** zgłosił: linia importu (`from datetime import UTC, datetime`)
 scaliła się automatycznie, bo tylko C ją zmieniał.
 
 ```bash
@@ -243,7 +240,7 @@ Tak wygląda kryterium akceptacji dla migracji.
 
 ---
 
-## Krok 4 - sprzątanie (8 min)
+## Krok 4 - sprzątanie
 
 ```bash
 git worktree list
@@ -258,20 +255,20 @@ Jeśli git odmawia usunięcia:
 
 | Komunikat | Powód | Co zrobić |
 |---|---|---|
-| `contains modified or untracked files` | jest tam praca | `--force` (tracisz ją) albo najpierw scal |
+| `contains modified or untracked files` | jest tam praca | `--force` (praca ginie) albo najpierw scalić |
 | `is locked` | agent jeszcze pracuje albo sesja padła | `git worktree unlock <ścieżka>` |
 
 > `.claude/worktrees/` jest już w `.gitignore` tego repozytorium od pierwszego commita.
-> W swoim projekcie dopisz to **przed** pierwszym `--worktree`, inaczej zawartość worktree
-> pojawi się jako nieśledzone pliki w głównym checkoucie.
+> We własnym projekcie trzeba to dopisać **przed** pierwszym `--worktree`, inaczej zawartość
+> worktree pojawi się jako nieśledzone pliki w głównym checkoucie.
 
 ---
 
 ## Krok 5 - rachunek
 
-Zapisz sobie odpowiedzi:
+Odpowiedzi do zapisania:
 
-| Pytanie | Twoja odpowiedź |
+| Pytanie | Odpowiedź |
 |---|---|
 | Ile czasu zajęło przygotowanie trzech worktree? | |
 | Ile czasu zajęło scalenie i rozwiązanie konfliktu? | |
@@ -279,8 +276,8 @@ Zapisz sobie odpowiedzi:
 | Czy się opłaciło? | |
 
 **Uczciwa odpowiedź na trzy zadania tej wielkości brzmi „raczej nie".** Narzut jest stały,
-a zadania są krótkie. Równoległość zaczyna się opłacać przy zadaniach, w których
-samo czytanie kodu trwa kwadrans - i wtedy trzy kwadranse zamieniają się w jeden.
+a zadania są krótkie. Równoległość zaczyna się opłacać tam, gdzie samo wczytanie się
+w kod każdego zadania jest kosztowne - wtedy narzut rozkłada się na coś, co go pokrywa.
 
 Wiedza, **kiedy tego nie robić**, jest tu warta tyle samo co umiejętność zrobienia tego.
 
@@ -289,21 +286,21 @@ Wiedza, **kiedy tego nie robić**, jest tu warta tyle samo co umiejętność zro
 ## Kryteria zaliczenia
 
 - [ ] Trzy worktree utworzone i trzy zadania wykonane równolegle.
-- [ ] Wiedziałeś **przed** scalaniem, gdzie będzie konflikt.
+- [ ] Miejsce konfliktu było znane **przed** scalaniem.
 - [ ] Konflikt rozwiązany tak, że obie zmiany zostały zachowane.
 - [ ] `grep -rn "utcnow" app/` nic nie zwraca.
 - [ ] `pytest` pokazuje **0 ostrzeżeń** (było 4).
 - [ ] `make gate` zielone, 47 testów.
 - [ ] `git worktree list` pokazuje tylko główny checkout, branche usunięte.
-- [ ] Umiesz powiedzieć, czy w tym przypadku równoległość się opłaciła.
+- [ ] Rozstrzygnięte, czy w tym przypadku równoległość się opłaciła.
 
 ## Pułapki
 
-**Praca w worktree bez środowiska.** Pierwsze `make test` w świeżym worktree wywali się
-na braku `.venv`. To nie jest błąd konfiguracji - to jest właściwość worktree,
+**Praca w worktree bez środowiska.** Pierwsze `make test` w świeżym worktree kończy się
+błędem na braku `.venv`. To nie jest błąd konfiguracji - to jest właściwość worktree,
 którą trzeba obsłużyć raz, świadomie.
 
-**Scalanie w przypadkowej kolejności.** Zacznij od zadania o najmniejszym zasięgu.
+**Scalanie w przypadkowej kolejności.** Zaczynać od zadania o najmniejszym zasięgu.
 Dzięki temu konflikt, gdy już przyjdzie, dotyczy jednego pliku, a nie trzech naraz.
 
 **Rozwiązanie konfliktu przez wybór jednej strony.** `git checkout --ours` jest szybkie
@@ -313,9 +310,9 @@ i kasuje pracę drugiego zadania. Tu obie zmiany są potrzebne.
 Porzucone worktree trzymają branche, blokują usuwanie i po tygodniu nikt nie pamięta,
 co w nich jest.
 
-**Hook bramki testujący nie ten katalog.** Jeśli twój `bramka.sh` z labu 5.1 używa
-`${CLAUDE_PROJECT_DIR}` zamiast `cwd`, w worktree testuje **główny checkout** -
-i świeci na zielono dla kodu, którego nikt nie zmienił. Sprawdź to teraz.
+**Hook bramki testujący nie ten katalog.** `bramka.sh` z labu 5.1 używający
+`${CLAUDE_PROJECT_DIR}` zamiast `cwd` testuje w worktree **główny checkout** -
+i świeci na zielono dla kodu, którego nikt nie zmienił. To wymaga sprawdzenia teraz.
 
 ---
 

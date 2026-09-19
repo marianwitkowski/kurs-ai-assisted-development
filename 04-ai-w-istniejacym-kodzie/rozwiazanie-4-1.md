@@ -27,10 +27,10 @@ Te, które znajduje rzadziej - bo wymagają zrozumienia, a nie dopasowania wzorc
 | Endpoint zwraca fakturę bez sprawdzenia, czyja jest | `app/main.py:43-54` | kod **wygląda** poprawnie, jest wywołanie `_kontrahent_z_naglowka()` - tyle że jego wynik nie jest do niczego użyty |
 | Kursy walut wpisane ręcznie | `app/konfiguracja.py:14-18` | to nie jest błąd w kodzie, tylko w procesie |
 
-Zwróć uwagę na pierwszy z nich. `app/main.py:44` woła funkcję autoryzacyjną i **wyrzuca
-jej wynik do kosza**. Statyczna analiza tego nie złapie: token jest sprawdzany, wyjątek
-przy złym tokenie leci poprawnie. Brakuje jednego porównania, którego nie ma czym wykryć
-poza czytaniem ze zrozumieniem. Wrócimy do tego w module 8.
+Pierwszy z nich wymaga szczególnej uwagi. `app/main.py:44` woła funkcję autoryzacyjną
+i **odrzuca jej wynik**. Statyczna analiza tego nie złapie: token jest sprawdzany, wyjątek
+przy złym tokenie trafia poprawnie. Brakuje jednego porównania, którego nie ma czym wykryć
+poza czytaniem ze zrozumieniem. Temat wraca w module 8.
 
 ## Weryfikacja numerów linii
 
@@ -42,8 +42,8 @@ grep -rn "utcnow" app/
 sed -n '6p' app/konfiguracja.py
 ```
 
-Jeżeli choć jeden numer jest przesunięty o więcej niż linię-dwie, traktuj całą listę
-jako punkt wyjścia do własnego sprawdzenia, a nie jako wynik.
+Jeżeli choć jeden numer jest przesunięty o więcej niż linię-dwie, cała lista jest punktem
+wyjścia do własnego sprawdzenia, a nie wynikiem.
 
 ---
 
@@ -79,7 +79,7 @@ Dlatego w mapie wzorcowej ma ryzyko **wysokie**, mimo że to jedna linia.
 
 ## Krok 3 - dlaczego ocena nie może przyjść od agenta
 
-Porównaj dwa zdania o tej samej pozycji:
+Dwa zdania o tej samej pozycji:
 
 > **Agent:** „Zalecam refaktoryzację `oblicz_fakture()` - funkcja jest zbyt długa
 > i narusza zasadę pojedynczej odpowiedzialności."
@@ -118,7 +118,7 @@ Agent, który wypisze cztery, przejrzał **pliki**, a nie **wystąpienia**.
 `app/raporty.py:80` powstało dopiero w labie 3.2, razem z `noty_odsetkowe()`.
 
 Różnica techniczna: `datetime.utcnow()` zwraca obiekt **bez strefy**, `datetime.now(UTC)` -
-**ze strefą**. Wszędzie tam, gdzie natychmiast bierzemy `.date()`, różnicy nie ma.
+**ze strefą**. Wszędzie tam, gdzie natychmiast wchodzi `.date()`, różnicy nie ma.
 Gdyby wynik był porównywany z inną datą albo zapisywany - byłaby.
 
 **Dla `app/rabaty.py:29` właściwą poprawką nie jest zamiana wywołania.** Właściwą poprawką
@@ -134,11 +134,11 @@ zamiana `utcnow()` na `now(UTC)`" jest typowa i błędna.
 ## Najczęstsze potknięcia
 
 **Lista rekomendacji zamiast listy faktów.** Prompt z kroku 1 wprost zakazuje ocen.
-Jeśli dostałeś kolumnę „priorytet: wysoki/średni/niski" - model ocenił za ciebie,
-nie znając ani twojego biznesu, ani twojego kalendarza.
+Kolumna „priorytet: wysoki/średni/niski" oznacza, że model ocenił samodzielnie,
+nie znając ani domeny biznesowej, ani kalendarza zespołu.
 
 **Zaufanie numerom linii bez sprawdzenia.** To najtańsza weryfikacja w całym kursie:
 trzy komendy `sed`.
 
-**Pominięcie kroku 2.** Bez niego mapa ryzyka jest listą rzeczy, które i tak byś zauważył.
+**Pominięcie kroku 2.** Bez niego mapa ryzyka jest listą rzeczy widocznych i bez agenta.
 Cała wartość jest w znalezisku, którego nie widać z jednego pliku.

@@ -1,5 +1,7 @@
 # Checklista samooceny - moduł 7
 
+Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
+
 - [ ] Znam kolejność obniżania kosztów i wiem, dlaczego zmiana modelu jest **ostatnia**. → *7.1*
 - [ ] Wiem, że cache jest przypisany do modelu - i co to znaczy dla kaskady modeli. → *7.1, 7.2*
 - [ ] Umiem przypisać model i effort do **roli**, nie do „trudności zadania". → *7.2*
@@ -24,11 +26,11 @@
 - [ ] Umiem zbudować golden set, który działa offline i sprawdza źródło decyzji. → *7.7, lab 7.2*
 - [ ] Wiem, przed czym próg pewności **nie** chroni. → *lab 7.2 krok 5*
 
-## Jeśli zostało ci pięć minut
+## Przy pięciu wolnych minutach
 
-Otwórz `/usage` i spójrz na atrybucję. Jeśli jakiś serwer MCP, plugin albo skill
-zjada więcej niż kilka procent, a nie używasz go w tym projekcie - wyłącz go teraz.
-To jest najtańsza optymalizacja, jaką zrobisz w tym tygodniu.
+Otworzyć `/usage` i sprawdzić atrybucję. Serwer MCP, plugin albo skill, który odpowiada
+za więcej niż kilka procent zużycia, a nie jest używany w tym projekcie - do wyłączenia
+od razu. To jest najtańsza optymalizacja z całego modułu.
 
 ---
 

@@ -1,38 +1,38 @@
 # Moduł 1 - Ekosystem i ograniczenia modeli
 
-> Czego się tu nauczysz: dobierać klasę narzędzia i model do rodzaju zadania oraz rozpoznawać
-> cztery tryby, w których model zawodzi - zanim zaufasz jego wynikowi.
+> Zakres modułu: dobór klasy narzędzia i modelu do rodzaju zadania oraz rozpoznawanie
+> czterech trybów, w których model zawodzi - zanim jego wynik zostanie przyjęty.
 
 ---
 
-## 1.1. Trzy klasy narzędzi, trzy różne kontrakty
+## Lekcja 1.1 - Trzy klasy narzędzi, trzy różne kontrakty
 
 Wszystkie trzy „rozmawiają z modelem", ale różnią się tym, **co widzą** i **co mogą zrobić**.
-To nie jest różnica w wygodzie. To różnica w kontrakcie, który z nimi zawierasz.
+To nie jest różnica w wygodzie. To różnica w kontrakcie zawieranym z każdym z nich.
 
 | | Model konwersacyjny | Asystent w IDE | Agent w repozytorium |
 |---|---|---|---|
 | Przykłady | claude.ai, ChatGPT | Copilot inline, autouzupełnianie | Claude Code, Cursor Agent, Codex CLI |
-| Co widzi | to, co wkleisz | otwarty plik + kilka sąsiednich | całe repo, ale czyta selektywnie |
+| Co widzi | to, co zostanie wklejone | otwarty plik + kilka sąsiednich | całe repo, ale czyta selektywnie |
 | Co może zrobić | wypisać tekst | wstawić fragment kodu | czytać, pisać, uruchamiać komendy, commitować |
-| Kto weryfikuje | ty, przed wklejeniem | ty, przy akceptacji podpowiedzi | **musisz to zorganizować** |
-| Pętla zwrotna | brak | kompilator / linter w IDE | testy, hooki, CI - jeśli je masz |
-| Koszt błędu | zero (nic się nie stało) | mały (widzisz diff od razu) | **duży** (zmiany w wielu plikach naraz) |
+| Kto weryfikuje | człowiek, przed wklejeniem | człowiek, przy akceptacji podpowiedzi | **wymaga osobnego zorganizowania** |
+| Pętla zwrotna | brak | kompilator / linter w IDE | testy, hooki, CI - jeśli istnieją |
+| Koszt błędu | zero (nic się nie stało) | mały (diff widoczny od razu) | **duży** (zmiany w wielu plikach naraz) |
 
 ### Kiedy które
 
-**Model konwersacyjny** - gdy problem nie jest w kodzie, tylko w twojej głowie.
+**Model konwersacyjny** - gdy problem nie jest w kodzie, tylko w jego zrozumieniu.
 Wybór biblioteki, ocena trzech podejść do migracji, sformułowanie wymagania, zrozumienie
 nieznanego protokołu. Nie ma kontekstu projektu i to jest zaleta: nie zasugeruje się tym,
-jak coś zrobiono u ciebie do tej pory.
+jak coś zrobiono w projekcie do tej pory.
 
-**Asystent w IDE** - gdy wiesz dokładnie, co ma powstać, i chodzi tylko o szybkość pisania.
-Kolejna funkcja według wzorca, który już jest obok. Test do funkcji, którą właśnie napisałeś.
+**Asystent w IDE** - gdy kształt wyniku jest znany i chodzi tylko o szybkość pisania.
+Kolejna funkcja według wzorca, który już jest obok. Test do właśnie napisanej funkcji.
 Wypełnienie struktury, której kształt jest oczywisty.
 
 **Agent w repozytorium** - gdy zadanie wymaga **przeczytania czegoś, zanim zacznie się pisać**.
 Analiza, gdzie leży problem. Zmiana dotykająca kilku plików. Migracja. Napisanie testów
-do kodu, którego nie znasz. Wszystko, co zaczyna się od „znajdź, a potem zmień".
+do nieznanego kodu. Wszystko, co zaczyna się od „znajdź, a potem zmień".
 
 ```mermaid
 graph TD
@@ -45,16 +45,16 @@ graph TD
   F -- wiele --> H[Agent, tryb planowania<br/>+ specyfikacja + bramki]
 ```
 
-Najczęstszy błąd na starcie: używanie agenta do zadań z gałęzi „nie" (płacisz za czytanie repo,
-którego nie potrzebujesz) albo asystenta w IDE do zadań z gałęzi „wiele plików"
-(dostajesz spójny lokalnie kod, który nie pasuje do reszty systemu).
+Najczęstszy błąd na starcie: używanie agenta do zadań z gałęzi „nie" (koszt czytania repo,
+które nie jest potrzebne) albo asystenta w IDE do zadań z gałęzi „wiele plików"
+(kod spójny lokalnie, niepasujący do reszty systemu).
 
 ---
 
-## 1.2. Model-to-Task Mapping
+## Lekcja 1.2 - Model-to-Task Mapping
 
 Modele różnią się nie „jakością" w skali 1-10, tylko **stosunkiem zdolności do ceny**.
-Dobranie modelu do zadania to najprostsza dźwignia kosztowa, jaką masz - i jedyna,
+Dobranie modelu do zadania to najprostsza dostępna dźwignia kosztowa - i jedyna,
 która nic nie kosztuje w implementacji.
 
 Stan na wrzesień 2026 (ceny za milion tokenów, API Anthropic):
@@ -65,9 +65,9 @@ Stan na wrzesień 2026 (ceny za milion tokenów, API Anthropic):
 | Claude Sonnet 5 | `claude-sonnet-5` | 1M | $2 | $10 |
 | Claude Haiku 4.5 | `claude-haiku-4-5` | 200K | $1 | $5 |
 
-> Ceny i dostępność modeli zmieniają się. Nie ucz się tej tabeli na pamięć - naucz się jej
-> sprawdzać: `/model` w Claude Code pokazuje aktualną listę, a `client.models.list()` w API
-> zwraca `max_input_tokens` i `capabilities` każdego modelu.
+> Ceny i dostępność modeli zmieniają się. Tabeli nie warto uczyć się na pamięć - warto znać
+> sposób jej sprawdzenia: `/model` w Claude Code pokazuje aktualną listę, a `client.models.list()`
+> w API zwraca `max_input_tokens` i `capabilities` każdego modelu.
 
 Mapowanie, które działa w praktyce:
 
@@ -78,24 +78,24 @@ Mapowanie, które działa w praktyce:
 | Masowe, mechaniczne przekształcenia (rename, migracja składni) | Haiku / Sonnet | Zadanie jest deterministyczne, liczy się przepustowość |
 | Subagent zbierający fakty („znajdź wszystkie wywołania X") | Haiku | Wynik to lista, nie rozumowanie |
 | Code review pod kątem bezpieczeństwa | Opus | Fałszywy negatyw jest droższy niż cały koszt modelu |
-| Debugowanie, gdy nie wiesz, gdzie jest problem | Opus | Cała wartość leży w postawieniu dobrej hipotezy |
+| Debugowanie, gdy lokalizacja problemu jest nieznana | Opus | Cała wartość leży w postawieniu dobrej hipotezy |
 
 ### Poziom wysiłku (effort) - druga dźwignia
 
-Poza wyborem modelu sterujesz **głębokością rozumowania**: `/effort` w Claude Code,
+Poza wyborem modelu dostępne jest sterowanie **głębokością rozumowania**: `/effort` w Claude Code,
 `output_config.effort` w API. Pięć poziomów: `low`, `medium`, `high`, `xhigh`, `max`.
 
 > **Nie każdy model obsługuje effort.** Działa na Opusie, Sonnecie 5 i Fable.
 > **Haiku 4.5 go nie obsługuje** - ustawienie poziomu nic tam nie zmienia.
-> Gdy ustawisz poziom, którego model nie ma, Claude Code schodzi do najwyższego
+> Przy ustawieniu poziomu, którego model nie ma, Claude Code schodzi do najwyższego
 > obsługiwanego (`xhigh` na Opusie 4.6 działa jak `high`).
 >
 > Druga rzecz: `/effort` z **wpisanym** poziomem zapisuje go jako **domyślny
 > na kolejne sesje**. To samo robi wybór modelu w `/model`. Łatwo o tym zapomnieć
 > i przez tydzień płacić za Opusa na `max`.
 
-Zasada: **najpierw zejdź z effortu, dopiero potem z modelu.** Nowszy model na niskim efforcie
-często wypada lepiej niż starszy na wysokim - a przy tym nie rozbijasz cache'u
+Zasada: **najpierw schodzić z effortu, dopiero potem z modelu.** Nowszy model na niskim efforcie
+często wypada lepiej niż starszy na wysokim - a przy tym nie rozbija cache'u
 (cache jest przypisany do modelu, więc przeskakiwanie między modelami kosztuje osobno).
 
 | Rodzaj pracy | Effort |
@@ -108,10 +108,10 @@ często wypada lepiej niż starszy na wysokim - a przy tym nie rozbijasz cache'u
 
 ---
 
-## 1.3. Cztery tryby, w których model zawodzi
+## Lekcja 1.3 - Cztery tryby, w których model zawodzi
 
 To nie są „wady, które kiedyś naprawią". To właściwości działania modeli językowych.
-Twoja praca polega na zbudowaniu procesu, który je łapie - nie na nadziei, że nie wystąpią.
+Praca polega na zbudowaniu procesu, który je wychwytuje - nie na nadziei, że nie wystąpią.
 
 ### Halucynacja
 
@@ -124,7 +124,7 @@ Objawy w kodzie:
 - plik pod ścieżką, która „wyglądałaby sensownie",
 - cytat z dokumentacji, którego w niej nie ma.
 
-**Reguła przeciwdziałania:** jeżeli model twierdzi coś o twoim kodzie, ma to pokazać.
+**Reguła przeciwdziałania:** jeżeli model twierdzi coś o kodzie projektu, ma to pokazać.
 Nie „wyjaśnij mi, co robi `oblicz_odsetki`", tylko „przeczytaj plik, w którym jest
 `oblicz_odsetki`, i zacytuj jego sygnaturę z numerem linii". Wymuszenie cytatu zamienia
 halucynację w komunikat „nie znalazłem".
@@ -132,9 +132,9 @@ halucynację w komunikat „nie znalazłem".
 ### Błędne założenie
 
 Model dostaje niepełną specyfikację i **uzupełnia ją sam**, milcząco. Powstaje kod,
-który działa i przechodzi testy - ale realizuje nie to wymaganie, które miałeś na myśli.
+który działa i przechodzi testy - ale realizuje nie to wymaganie, które było zamierzone.
 
-To jest groźniejsze od halucynacji, bo halucynacja się wywala, a błędne założenie przechodzi.
+To jest groźniejsze od halucynacji, bo halucynacja kończy się błędem, a błędne założenie przechodzi.
 Cały moduł 3 jest o tym, jak pisać specyfikację odporną na dopowiadanie.
 
 ### Nadmierna pewność
@@ -142,9 +142,9 @@ Cały moduł 3 jest o tym, jak pisać specyfikację odporną na dopowiadanie.
 Model nie ma wbudowanego sygnału „nie wiem". Odpowiedź zmyślona i odpowiedź sprawdzona
 brzmią identycznie - tym samym rzeczowym tonem. Nie da się tego odróżnić po sposobie pisania.
 
-**Reguła przeciwdziałania:** nie kalibruj zaufania po tonie. Kalibruj po tym, czy odpowiedź
+**Reguła przeciwdziałania:** zaufania nie kalibruje się po tonie. Kalibruje je to, czy odpowiedź
 jest **weryfikowalna**: czy ma cytat z pliku, czy testy przechodzą, czy komenda się wykonała.
-Odpowiedź bez punktu zaczepienia w rzeczywistości traktuj jak hipotezę.
+Odpowiedź bez punktu zaczepienia w rzeczywistości pozostaje hipotezą.
 
 ### Rozrost kontekstu
 
@@ -160,13 +160,13 @@ zadanie. Szczegóły w module 7.
 
 ---
 
-## 1.4. Środowisko kursu: Claude Code
+## Lekcja 1.4 - Środowisko kursu: Claude Code
 
-Cały kurs prowadzimy na Claude Code, bo ma komplet elementów, o których jest ten program:
+Cały kurs jest prowadzony na Claude Code, bo ma komplet elementów, o których jest ten program:
 pliki kontekstowe, tryb planowania, hooki, subagentów, worktree i widoczne liczniki zużycia.
-Nie chodzi o narzędzie - chodzi o to, żeby dało się pokazać każdy mechanizm, o którym mówimy.
+Nie chodzi o narzędzie - chodzi o to, żeby dało się pokazać każdy omawiany mechanizm.
 
-### Minimum, które musisz umieć od teraz
+### Minimum obowiązujące od teraz
 
 | Komenda | Do czego |
 |---|---|
@@ -175,20 +175,20 @@ Nie chodzi o narzędzie - chodzi o to, żeby dało się pokazać każdy mechaniz
 | `/effort` | zmiana poziomu wysiłku |
 | `/context` | co zajmuje okno kontekstowe |
 | `/usage` | zużycie: limity planu, atrybucja, statystyki cache |
-| `/clear` | koniec zadania, czyścimy kontekst |
+| `/clear` | koniec zadania, wyczyszczenie kontekstu |
 | `/rewind` | cofnięcie rozmowy i kodu do wcześniejszego punktu |
 | `/status` | wersja, model, załadowane pliki ustawień |
 | Shift+Tab | przełączanie trybu uprawnień, w tym trybu planowania |
 | Esc | przerwanie pracy modelu **natychmiast** |
 | Esc Esc | wybór punktu, do którego cofnąć rozmowę |
 
-`Esc` to najważniejszy klawisz w tej liście. Gdy widzisz, że model idzie w złą stronę,
+`Esc` to najważniejszy klawisz w tej liście. Gdy model idzie w złą stronę,
 koszt przerwania po trzech sekundach jest zerowy, a koszt czekania do końca - pełny.
 
 ### Porównanie z alternatywami
 
-Nie po to, żeby uzasadniać wybór, tylko po to, żebyś wiedział, co przenieść do środowiska,
-które masz w firmie.
+Nie po to, żeby uzasadniać wybór, tylko po to, żeby było wiadomo, co przenieść do środowiska
+używanego w firmie.
 
 | | Claude Code | Cursor | GitHub Copilot | Codex CLI | Gemini CLI |
 |---|---|---|---|---|---|
@@ -207,28 +207,27 @@ deterministyczne bramki, higiena kontekstu, review diffa przed commitem. To jest
 i działa wszędzie.
 
 Nie przenosi się **mechanika**: składnia hooków, format skilla, nazwa pliku kontekstowego.
-To trzeba przetłumaczyć na narzędzie, które masz.
+To trzeba przetłumaczyć na używane narzędzie.
 
-Gdy pracujesz w zespole mieszanym: pliki kontekstowe trzymajcie w repo w tylu wariantach,
-ile narzędzi jest w użyciu, ale **treść niech będzie jedna** - jeden plik źródłowy, reszta
-niech go dołącza albo niech będzie generowana. Dwie rozjeżdżające się wersje standardów
-projektu są gorsze niż żadna.
+W zespole mieszanym pliki kontekstowe zostają w repo w tylu wariantach, ile narzędzi
+jest w użyciu, ale **treść pozostaje jedna** - jeden plik źródłowy, reszta go dołącza
+albo jest generowana. Dwie rozjeżdżające się wersje standardów projektu są gorsze niż żadna.
 
 ---
 
-## 1.5. Czego ten kurs nie obiecuje
+## Lekcja 1.5 - Czego ten kurs nie obiecuje
 
 Trzy rzeczy warto ustawić od razu, bo inaczej pojawiają się jako rozczarowanie w module 5.
 
 **Agent nie zastąpi zrozumienia problemu.** Zamienia „napisz ten kod" na „sprawdź ten kod".
-Druga czynność jest szybsza, ale wymaga tej samej wiedzy. Jeśli nie umiesz ocenić diffa,
-agent nie przyspiesza cię - tylko przyspiesza wjazd długu technicznego.
+Druga czynność jest szybsza, ale wymaga tej samej wiedzy. Bez umiejętności oceny diffa
+agent nie przyspiesza pracy - przyspiesza przyrost długu technicznego.
 
 **Prędkość generowania to nie prędkość dostarczania.** Wąskim gardłem przestaje być pisanie,
-a staje się weryfikacja. Dlatego drugi dzień jest w całości o tym, jak zrobić weryfikację
+a staje się weryfikacja. Dlatego moduły 5-8 są w całości o tym, jak zrobić weryfikację
 deterministyczną, zamiast czytać wszystko oczami.
 
-**Nie każde zadanie się opłaca.** Jednolinijkowa poprawka, którą znasz na pamięć, jest szybsza
+**Nie każde zadanie się opłaca.** Jednolinijkowa poprawka znana na pamięć jest szybsza
 z klawiatury. Sesja agenta ma stały narzut: wczytanie kontekstu, czytanie plików, diff, review.
 Poniżej pewnego progu narzut jest większy niż zysk.
 
@@ -238,7 +237,7 @@ Poniżej pewnego progu narzut jest większy niż zysk.
 
 1. Trzy klasy narzędzi różnią się kontraktem, nie wygodą. Agent widzi repo i może w nim pisać -
    dlatego wymaga procesu, a nie tylko dobrego promptu.
-2. Model dobieraj do kosztu błędu, nie do trudności zadania. Najpierw schodź z effortu, potem z modelu.
+2. Model dobiera się do kosztu błędu, nie do trudności zadania. Najpierw schodzić z effortu, potem z modelu.
 3. Cztery tryby porażki: halucynacja, błędne założenie, nadmierna pewność, rozrost kontekstu.
    Każdy ma swoją regułę przeciwdziałania - wymuszony cytat, precyzyjna specyfikacja,
    weryfikowalność, `/clear`.

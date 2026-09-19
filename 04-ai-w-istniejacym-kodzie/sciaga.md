@@ -2,9 +2,9 @@
 
 ## Trzy pytania oceniające ryzyko
 
-1. Co się stanie, jeśli tego **nie ruszę**? (nic / dług / awaria / strata pieniędzy)
-2. Co się stanie, jeśli **ruszę i się pomylę**? (nic / test złapie / produkcja)
-3. **Czym sprawdzę**, że nie zepsułem? (testy / ręcznie / **nijak**)
+1. Co się stanie **bez zmiany**? (nic / dług / awaria / strata pieniędzy)
+2. Co się stanie **przy zmianie z pomyłką**? (nic / test złapie / produkcja)
+3. **Czym sprawdzić**, że nic się nie zepsuło? (testy / ręcznie / **nijak**)
 
 > „Nijak" na pytanie 3 → pozycja **nie nadaje się do naprawy**, nadaje się do napisania testu.
 
@@ -50,7 +50,7 @@ Nie zmieniaj testów. Uważasz, że coś jest błędem - NAPISZ, ale nie poprawi
 | Test utrwala | na stałe | tymczasowo, z komentarzem |
 | Zmiana wymaga | decyzji biznesu | poprawki |
 
-**Nie rozstrzygaj po wyglądzie.** Reguła w legacy wygląda dokładnie jak błąd.
+**Wygląd nie rozstrzyga.** Reguła w legacy wygląda dokładnie jak błąd.
 
 ## Kolejność w legacy
 

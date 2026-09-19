@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Sprawdzenie srodowiska przed szkoleniem "AI Assisted Development".
-# Uruchom z katalogu repozytorium cwiczeniowego:
+# Sprawdzenie srodowiska przed kursem "AI Assisted Development".
+# Do uruchomienia z katalogu materialow kursu albo z repo-cwiczeniowe/:
 #
 #     ./sprawdz-srodowisko.sh
 #
@@ -79,16 +79,27 @@ fi
 
 naglowek "Repozytorium cwiczeniowe"
 
+# Skrypt lezy w katalogu materialow, a sprawdzac ma repozytorium cwiczeniowe.
+# Uruchamiany bywa z obu miejsc, wiec sam sobie znajduje wlasciwy katalog zamiast
+# zgadywac po obecnosci `.git` - katalog materialow TEZ jest repozytorium git
+# (uczestnik go sklonowal), wiec `.git` niczego nie rozstrzyga.
 if [[ -f "app/main.py" && -f "seed.py" ]]; then
   ok "jestes w katalogu repozytorium cwiczeniowego"
-elif [[ -d .git || -f .git ]] || [[ "$(basename "$PWD")" == "repo-cwiczeniowe" ]]; then
+elif [[ -f "repo-cwiczeniowe/app/main.py" && -f "repo-cwiczeniowe/seed.py" ]]; then
+  cd repo-cwiczeniowe
+  ok "wszedlem do repo-cwiczeniowe/"
+elif [[ -d "repo-cwiczeniowe" && -z "$(ls -A repo-cwiczeniowe 2>/dev/null)" ]] \
+  || [[ "$(basename "$PWD")" == "repo-cwiczeniowe" && -z "$(ls -A . 2>/dev/null)" ]]; then
   blad "katalog repo-cwiczeniowe/ jest PUSTY - submodul sie nie pobral"
-  printf '\n  Klonowales bez --recurse-submodules. Napraw bez klonowania od nowa:\n'
-  printf '      cd .. && git submodule update --init --recursive\n'
+  printf '\n  Klon bez --recurse-submodules. Naprawa bez klonowania od nowa:\n'
+  printf '      git submodule update --init --recursive\n'
+  printf '      (z katalogu materialow kursu)\n'
   printf '\nPodsumowanie: %d bledow, %d ostrzezen\n' "$bledy" "$ostrzezenia"
   exit 1
 else
-  blad "uruchom ten skrypt z katalogu repo-cwiczeniowe/"
+  blad "nie znalazlem repozytorium cwiczeniowego"
+  printf '\n  Skrypt uruchamia sie z katalogu materialow kursu albo z repo-cwiczeniowe/:\n'
+  printf '      cd kurs-ai-assisted-development && ./sprawdz-srodowisko.sh\n'
   printf '\nPodsumowanie: %d bledow, %d ostrzezen\n' "$bledy" "$ostrzezenia"
   exit 1
 fi
@@ -171,12 +182,12 @@ naglowek "Podsumowanie"
 printf '  bledow: %d, ostrzezen: %d\n\n' "$bledy" "$ostrzezenia"
 
 if [[ "$bledy" -gt 0 ]]; then
-  printf 'Napraw bledy PRZED szkoleniem. Pierwsza godzina dnia 1 nie jest na instalacje.\n'
+  printf 'Bledy nalezy naprawic PRZED modulem 1 - lab nie jest miejscem na instalacje.\n'
   exit 1
 fi
 if [[ "$ostrzezenia" -gt 0 ]]; then
   printf 'Srodowisko zadziala, ale czesc cwiczen moze byc ograniczona.\n'
   exit 0
 fi
-printf 'Wszystko gotowe. Do zobaczenia na szkoleniu.\n'
+printf 'Srodowisko gotowe.\n'
 exit 0

@@ -14,7 +14,7 @@ Reguła z `CLAUDE.md` („zmiana w `app/` bez testu wymaga wyraźnej zgody") jes
 nie egzekucją**. Model dostaje ją jako wiadomość użytkownika po prompcie systemowym,
 czyta ją i zwykle stosuje.
 
-„Zwykle" jest tu słowem kluczowym. Przy tym samym prompcie raz dostaniesz test, raz wzmiankę
+„Zwykle" jest tu słowem kluczowym. Przy tym samym prompcie raz pojawia się test, raz wzmianka
 „nie dopisałem testu", raz nic. Nie ma w tym błędu - tak działa kontekst.
 
 To nie jest argument przeciw `CLAUDE.md`. To jest argument za tym, żeby **wiedzieć,
@@ -45,7 +45,7 @@ Cztery decyzje warte uwagi:
 
 | Decyzja | Dlaczego |
 |---|---|
-| `// ""` w jq i sprawdzenie `-f` | pole może nie istnieć; hook nie ma prawa się wywalić |
+| `// ""` w jq i sprawdzenie `-f` | pole może nie istnieć; hook nie ma prawa zakończyć się błędem |
 | tylko `.py` | `ruff format` na `.md` to hałas w diffie |
 | jeden plik, nie katalog | `ruff format app/` dorzuca do diffa pliki, których nikt nie ruszał |
 | `\|\| true` i zawsze `exit 0` | brak `ruff` w PATH nie może zatrzymać pracy |
@@ -58,7 +58,7 @@ To jest jedyny sposób, żeby hook `PostToolUse` powiedział coś modelowi - prz
 stderr idzie wyłącznie do logu debugowania. Przydatne np. w hooku, który waliduje to,
 co właśnie powstało, i chce zgłosić problem.
 
-Dla hooka **formatującego** i tak chcemy `exit 0`: formatowanie nie jest problemem,
+Dla hooka **formatującego** właściwy jest `exit 0`: formatowanie nie jest problemem,
 o którym model ma się dowiedzieć.
 
 ---
@@ -147,7 +147,7 @@ Wynik testu:
 
 ### Dlaczego to jest ważniejsze niż sam hook
 
-Naturalny odruch przy tym zadaniu brzmi: *„muszę zapamiętać, że już blokowałem"* - i piszesz
+Naturalny odruch przy tym zadaniu brzmi: *„trzeba zapamiętać, że blokada już była"* - i powstaje
 plik-znacznik w `scratchpad_dir`, kluczowany po `session_id`, kasowany przy zielonej bramce.
 
 Ta wersja **działa**. Jest tylko:
@@ -168,9 +168,9 @@ Schemat wejścia zdarzenia `Stop` niesie:
 Uzbrojenie wraca samo, bo `stop_hook_active` jest `false` w każdej turze rozpoczętej
 normalnie. Nie ma czego kasować.
 
-> **Przeczytaj schemat wejścia, zanim napiszesz obejście.**
+> **Schemat wejścia trzeba przeczytać, zanim powstanie obejście.**
 >
-> To jest ta sama zasada, co żądanie cytatu z modułu 1: sprawdź, co **jest**, zamiast
+> To jest ta sama zasada, co żądanie cytatu z modułu 1: sprawdzić, co **jest**, zamiast
 > zakładać, czego **nie ma**. Różnica polega na tym, że tutaj obejście przechodzi testy,
 > działa na sali i nikt nigdy się nie dowie, że było zbędne.
 
@@ -194,17 +194,17 @@ fałszywy spokój, bo bramka **świeci na zielono**.
 
 | | `~/.claude/settings.json` | `.claude/settings.json` |
 |---|---|---|
-| Kto ma | ty | cały zespół po `git pull` |
-| Zmiana | edytujesz plik | pull request |
+| Kto ma | jeden użytkownik | cały zespół po `git pull` |
+| Zmiana | edycja pliku | pull request |
 | Historia | brak | `git log` |
 | Nowy człowiek w zespole | nie ma | ma od pierwszego dnia |
 
-Hook w katalogu domowym to twoja prywatna wygoda. Hook w repozytorium to **standard zespołu**
-- i dlatego może być przedmiotem dyskusji, a nie tylko twoją preferencją.
+Hook w katalogu domowym to prywatna wygoda. Hook w repozytorium to **standard zespołu**
+- i dlatego może być przedmiotem dyskusji, a nie czyjąś preferencją.
 
 Uwaga na precedencję: `permissions.allow` z pliku projektowego czeka na **zaufanie folderu**
 przez każdego członka zespołu. Reguły `deny` i `ask` działają natychmiast.
-Dlatego blokady wpisuj jako `deny`.
+Dlatego blokady zapisuje się jako `deny`.
 
 ---
 
@@ -214,10 +214,10 @@ Dlatego blokady wpisuj jako `deny`.
 a w transkrypcie pojawia się notka `hook error` - łatwa do przeoczenia.
 
 **Formatowanie katalogu w `PostToolUse`.** Diff puchnie o pliki, których nikt nie dotykał.
-Po dwóch dniach review staje się nieczytelne i ktoś wyłącza hook.
+Review przestaje być czytelne i ktoś wyłącza hook.
 
-**Bramka bez limitu czasu.** `make gate` na dużym projekcie może trwać minuty.
-Domyślny timeout hooka to 600 s, ale w tym repozytorium ustawiamy 180 s -
+**Bramka bez limitu czasu.** `make gate` na dużym projekcie potrafi się nie kończyć.
+Domyślny timeout hooka to 600 s, ale w tym repozytorium ustawione jest 180 s -
 lepiej, żeby bramka poddała się szybko, niż żeby sesja stała.
 
 **Blokada, której nie da się obejść świadomie.** Hook ma chronić przed pomyłką,

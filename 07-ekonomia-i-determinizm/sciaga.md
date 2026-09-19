@@ -25,7 +25,7 @@ messages=[{"role": "user", "content": zmienne}],
 Maks. **4 punkty** na żądanie. Minimalny prefiks 512-4096 tokenów (krócej - nie zacache'uje się).
 
 **TTL domyślny: 1 h na subskrypcji, 5 min na kluczu API.** To domyślka, nie limit -
-na kluczu API godzinę włączasz przez `promptCacheTtl: "1h"` albo `ENABLE_PROMPT_CACHING_1H=1`;
+na kluczu API godzinę włącza `promptCacheTtl: "1h"` albo `ENABLE_PROMPT_CACHING_1H=1`;
 w API bezpośrednio `cache_control: {"type":"ephemeral","ttl":"1h"}`.
 
 **Weryfikacja: `usage.cache_read_input_tokens`.** Zero przy powtórzeniach = cichy invalidator.
@@ -40,7 +40,7 @@ dynamiczna lista narzędzi (`tools` idzie **przed** `system`) · **zmiana modelu
 | `/clear` | między niepowiązanymi zadaniami - **kosztuje zero** |
 | `/compact <instrukcja>` | gdy potrzebna ciągłość (sam jest dużym żądaniem) |
 | `# Compact instructions` w `CLAUDE.md` | stałe instrukcje kompakcji |
-| Celowany prompt | mów **co ustalić**, nie **jak czytać** |
+| Celowany prompt | podać **co ustalić**, nie **jak czytać** |
 
 Hook `PreToolUse` filtrujący wyjście komendy:
 ```json
@@ -60,17 +60,17 @@ klient.messages.batches.retrieve(paczka.id).processing_status   # aż "ended"
 klient.messages.batches.results(paczka.id)
 ```
 
-> **Wyniki w DOWOLNEJ kolejności.** Kluczuj po `custom_id`, nigdy po pozycji.
+> **Wyniki w DOWOLNEJ kolejności.** Kluczowanie po `custom_id`, nigdy po pozycji.
 
 ## Pomiar
 
 **Pro/Max:** `/usage` → paski limitu planu, **atrybucja** (skille, subagenci, MCP),
 flagi zachowań (≥10% zużycia), `d`/`w`. Linia `Prompt cache (main)`.
-Kwota z bloku `Session` **nie jest twoim rachunkiem** - liczona lokalnie po cenniku.
+Kwota z bloku `Session` **nie jest rachunkiem** - liczona lokalnie po cenniku katalogowym.
 
 **Klucz API:** `usage.input_tokens`, `usage.output_tokens`, `usage.cache_read_input_tokens`.
 
-Mierz **koszt na ukończone zadanie**, nie na zapytanie.
+Mierzy się **koszt na ukończone zadanie**, nie na zapytanie.
 
 ## Determinizm w produkcie
 

@@ -31,6 +31,7 @@ Sprawdzenie na żywo: `/model` albo `client.models.list()`.
 | Zadanie | Model | Effort |
 |---|---|---|
 | Decyzja architektoniczna, plan migracji | Opus | `high`-`max` |
+| Czego Opus na `max` nie domyka | Fable | `high`-`max` |
 | Implementacja wg specyfikacji | Sonnet | `medium`-`high` |
 | Masowe przekształcenia mechaniczne | Haiku (bez effortu) / Sonnet | `low` |
 | Subagent zbierający fakty | Haiku | - (nie obsługuje) |

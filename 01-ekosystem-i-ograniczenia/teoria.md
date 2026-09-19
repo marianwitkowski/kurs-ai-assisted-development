@@ -61,9 +61,20 @@ Stan na wrzesień 2026 (ceny za milion tokenów, API Anthropic):
 
 | Model | ID | Kontekst | Wejście | Wyjście |
 |---|---|---|---|---|
+| Claude Fable 5.1 | `claude-fable-5-1` | 1M | $10 | $50 |
 | Claude Opus 5 | `claude-opus-5` | 1M | $5 | $25 |
 | Claude Sonnet 5 | `claude-sonnet-5` | 1M | $2 | $10 |
 | Claude Haiku 4.5 | `claude-haiku-4-5` | 200K | $1 | $5 |
+
+> **Fable nie jest „Opusem tylko lepszym".** Jest wolniejszy i dwa razy droższy, przeznaczony
+> do wymagającego rozumowania i pracy agentowej o długim horyzoncie. Kolejność sięgania
+> jest taka: Opus 5 domyślnie, Fable dopiero wtedy, gdy Opus na wyższym efforcie nadal
+> nie wystarcza. Odwrotna kolejność to płacenie podwójnie za to samo.
+>
+> Jedna rzecz działa tu na korzyść Fable: **odczyt z cache kosztuje na nim 0,025 ceny
+> wejścia zamiast 0,1**. Po przeliczeniu daje to $0,25 za milion odczytanych tokenów
+> wobec $0,50 na Opusie - **odczyt z cache jest na Fable dwa razy tańszy**, mimo dwa razy
+> droższego wejścia. Przy długim, stabilnym prefiksie sama cena z tabeli myli.
 
 > Ceny i dostępność modeli zmieniają się. Tabeli nie warto uczyć się na pamięć - warto znać
 > sposób jej sprawdzenia: `/model` w Claude Code pokazuje aktualną listę, a `client.models.list()`

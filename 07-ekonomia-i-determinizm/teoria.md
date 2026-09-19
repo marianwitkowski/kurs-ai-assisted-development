@@ -39,6 +39,7 @@ Model dobiera się do **roli w procesie**, nie do „trudności zadania".
 | Rola | Model | Effort | Dlaczego |
 |---|---|---|---|
 | Planista, decyzje architektoniczne | Opus | `high`-`max` | błąd kosztuje dni pracy |
+| Zadanie, którego Opus na `max` nie domyka | Fable | `high`-`max` | ostatni szczebel, dwa razy droższy - dopiero po nieudanej próbie na Opusie |
 | Wykonawca wg specyfikacji | Sonnet | `medium`-`high` | kształt jest ustalony |
 | Zbieracz faktów, subagent | Haiku | - | wynik to lista, nie rozumowanie; **Haiku nie obsługuje effortu** |
 | Przekształcenia mechaniczne | Haiku (bez effortu) / Sonnet | `low` | liczy się konsekwencja |

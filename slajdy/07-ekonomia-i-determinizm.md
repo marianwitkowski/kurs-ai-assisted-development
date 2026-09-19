@@ -54,6 +54,7 @@ sufit. Opłacie podlega to, co w nim siedzi, przy każdym zapytaniu.
 | Rola | Model | Effort | Dlaczego |
 |---|---|---|---|
 | Planista, decyzje architektoniczne | Opus | `high`-`max` | błąd kosztuje dni pracy |
+| Czego Opus na `max` nie domyka | Fable | `high`-`max` | 2× drożej - dopiero po nieudanej próbie |
 | Wykonawca wg specyfikacji | Sonnet | `medium`-`high` | kształt jest ustalony |
 | Zbieracz faktów, subagent | Haiku | - | wynik to lista, nie rozumowanie |
 | Przekształcenia mechaniczne | Haiku (bez effortu) / Sonnet | `low` | liczy się konsekwencja |

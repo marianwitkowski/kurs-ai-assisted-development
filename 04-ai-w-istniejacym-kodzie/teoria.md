@@ -226,11 +226,14 @@ działa w każdej sesji, także wtedy, gdy zabraknie go w prompcie.
 **3. Testy charakterystyki.** Tu obrona przestaje zależeć od tego, czy model posłuchał.
 „Uproszczenie" zmieniające wynik **nie przechodzi testu**.
 
-**4. Hook, który uruchamia testy.** Moduł 5. Model nie może zakończyć pracy,
-dopóki bramka jest czerwona - niezależnie od tego, co uważa.
+**4. Hook, który uruchamia testy.** Moduł 5. Model nie zakończy pracy **po cichu**
+przy czerwonej bramce - hook wymusza próbę naprawy i jawne ostrzeżenie.
 
-Progresja jest tu istotna: pierwsze dwa poziomy to **prośby**, dwa ostatnie to **fakty**.
-Prośby działają w większości przypadków. Fakty działają zawsze.
+Progresja jest tu istotna: pierwsze dwa poziomy to **prośby**, poziom trzeci to **fakt**
+(test albo przechodzi, albo nie), a czwarty to **wymuszenie**, nie blokada absolutna.
+Hook blokuje pierwszą próbę zakończenia; po niej przepuszcza turę z ostrzeżeniem, żeby
+sesja nie kręciła się w kółko. Czerwony kod przed wejściem do gałęzi głównej zatrzymuje
+dopiero wymagany check w ustawieniach repozytorium.
 
 ### Sygnały ostrzegawcze w wypowiedzi agenta
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Stop - deterministyczna bramka jakosci. Nie pozwala zakonczyc tury,
-# dopoki `make gate` jest czerwone.
+# Stop - deterministyczna bramka jakosci. Blokuje zakonczenie tury RAZ, gdy
+# `make gate` jest czerwone; po probie naprawy przepuszcza z ostrzezeniem.
+# Twarda blokada czerwonego kodu to wymagany check w ustawieniach repozytorium,
+# nie ten hook.
 #
 # OCHRONA PRZED PETLA - czytaj, zanim napiszesz wlasna.
 #

@@ -155,10 +155,13 @@ Wzorcem jest `app/klasyfikacja_vat.py`.
 3. **Wejście od użytkownika jest niezaufane.** Opis pozycji faktury pochodzi
    od kontrahenta i jest wektorem wstrzyknięcia promptu. Obrona jest w kodzie,
    nie w treści promptu.
-4. **Prompt jest kodem**: w repozytorium, przez review, z testem regresyjnym (golden set).
+4. **Prompt jest kodem**: w repozytorium, przez review, z ewaluacją na oznaczonym zbiorze
+   uruchamianą przy zmianie promptu albo modelu. Golden set offline testuje kod wokół
+   modelu, nie prompt.
 5. **Widać, kto podjął decyzję.** Pole `zrodlo` w wyniku: reguła, model czy wartość domyślna.
-6. **Jest ścieżka do człowieka.** Pozycja z flagą `wymaga_weryfikacji` trafia do kolejki,
-   a nie na fakturę.
+6. **Jest ścieżka do człowieka.** Pozycja z flagą `wymaga_weryfikacji` jest **oznaczona**.
+   Sama flaga nie zatrzymuje użycia wyniku - o tym, czy pozycja trafi na fakturę,
+   decyduje proces, nie flaga.
 
 **[DO USTALENIA]** Kto obsługuje kolejkę weryfikacji i w jakim czasie.
 
@@ -247,7 +250,7 @@ Zasada bez mechanizmu jest życzeniem. Zestawienie, co czym egzekwujemy:
 | Testy przed zakończeniem pracy | hook `Stop` | `.claude/settings.json` |
 | Niebezpieczne komendy | hook `PreToolUse` | `.claude/settings.json` |
 | Brak odczytu `.env` przez agenta | `permissions.deny` | `.claude/settings.json` |
-| Przegląd bezpieczeństwa diffa | skill `/przeglad-bezpieczenstwa` | `.claude/skills/` |
+| Przegląd bezpieczeństwa diffa | skill `/przeglad-bezpieczenstwa` - procedura, ktoś musi ją wywołać | `.claude/skills/` |
 | Konwencje projektu | `CLAUDE.md` | repozytorium |
 | Nowe zależności | review + `CLAUDE.md` | proces |
 

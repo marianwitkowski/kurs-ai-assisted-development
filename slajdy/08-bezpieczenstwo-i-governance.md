@@ -358,7 +358,7 @@ i zwykle niepełna.
 | Testy przed zakończeniem pracy | hook `Stop` |
 | Niebezpieczne komendy | hook `PreToolUse` |
 | Brak odczytu `.env` przez agenta | `permissions.deny` - działa **natychmiast** |
-| Przegląd bezpieczeństwa diffa | skill `/przeglad-bezpieczenstwa` |
+| Przegląd bezpieczeństwa diffa | skill - **procedura**, ktoś musi ją wywołać |
 | Konwencje projektu | `CLAUDE.md` - **prośba** |
 | Nowe zależności | review - **proces** |
 

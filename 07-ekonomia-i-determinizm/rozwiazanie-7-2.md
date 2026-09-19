@@ -57,9 +57,9 @@ Bez niego nie da się odróżnić trzech sytuacji, które dla księgowości są 
 
 | Źródło | Co to znaczy dla człowieka |
 |---|---|
-| `regula` | rozstrzygnięte deterministycznie, nie trzeba sprawdzać |
+| `regula` | rozstrzygnięte deterministycznie i powtarzalnie - ale dopasowanie fragmentu to nadal heurystyka, sprawdzać wyrywkowo (lab 8.2, krok 4) |
 | `model` | model był pewny; warto sprawdzać wyrywkowo |
-| `domyslna` | **nie wiedzieliśmy** - pozycja czeka na człowieka |
+| `domyslna` | **nie wiedzieliśmy** - pozycja jest oznaczona `wymaga_weryfikacji`; czy ktoś ją obejrzy, zależy od procesu, nie od flagi |
 
 I bez niego golden set nie może sprawdzić najważniejszej rzeczy: **czy rozstrzygnięcia
 nie przeniosły się po cichu z warstwy deterministycznej do modelu.**
@@ -116,9 +116,12 @@ def test_golden_zrodlo_decyzji(przypadek):
     assert wynik.zrodlo == przypadek["zrodlo"]
 ```
 
-**Drugi test jest ważniejszy.** Przykład: zmiana promptu, po której model zaczyna
-poprawnie rozpoznawać książki. Pierwszy test nadal przechodzi. Drugi kończy się błędem,
-bo książki mają być rozstrzygane **regułą**, a nie modelem.
+**Drugi test jest ważniejszy.** Przykład: ktoś usuwa `ksiazka` z `REGULY_TWARDE` albo
+przestawia wywołanie modelu przed regułę. Pierwszy test nadal przechodzi - stawka `5`
+się zgadza. Drugi kończy się błędem, bo `zrodlo` to już `model`, a nie `regula`.
+
+Zmiana samego promptu tego testu **nie** zaczerwieni - odpowiedzi modelu pochodzą
+z golden setu, nie z API.
 
 Bez niego rozstrzygnięcia mogłyby po cichu migrować z warstwy darmowej do płatnej,
 przy identycznych wynikach - a jedynym sygnałem byłaby faktura.
@@ -181,7 +184,8 @@ Model był **pewny i w błędzie**, a system mu uwierzył.
 
 > **Próg pewności chroni przed niepewnością, nie przed pewnym błędem.**
 
-Przed pewnym błędem chronią tylko dwie rzeczy: reguła twarda albo człowiek.
+Przed pewnym błędem chroni tylko człowiek. Reguła twarda daje powtarzalność i tańszy
+przebieg, ale jako dopasowanie fragmentu sama bywa pewnie błędna - wraca to w module 8.
 To jest granica, którą trzeba znać i zapisać - bo inaczej ktoś potraktuje próg
 jako gwarancję poprawności.
 

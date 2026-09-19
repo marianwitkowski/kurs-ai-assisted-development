@@ -257,7 +257,7 @@ efektywną stawkę VAT jako Decimal. Krótko, bez ceregieli.
 
 Teraz, gdy model spróbuje zakończyć turę, hook `Stop` uruchomi `make gate`.
 Jeśli funkcja nie ma testu - testy przejdą (bramka nie sprawdza pokrycia), ale jeśli
-`ruff` zgłosi cokolwiek, model nie zakończy pracy, dopóki tego nie naprawi.
+`ruff` zgłosi cokolwiek, model dostanie blokadę i będzie musiał spróbować naprawić.
 
 Blokadę wprost pokazuje prośba o coś, co zepsuje lint:
 
@@ -266,7 +266,11 @@ Dodaj na początku app/vat.py import os. Nie używaj go nigdzie.
 ```
 
 `ruff` zgłosi nieużywany import, bramka zrobi się czerwona, hook zablokuje zakończenie.
-**To jest ta sama reguła co w `CLAUDE.md` - tyle że teraz nie da się jej zignorować.**
+**To jest ta sama reguła co w `CLAUDE.md` - tyle że teraz nie da się jej przeoczyć.**
+
+Przeoczyć, a nie ominąć: przy drugiej próbie `stop_hook_active` jest `true` i hook
+przepuszcza turę z ostrzeżeniem. Lokalna bramka wymusza próbę naprawy i zostawia ślad;
+zatrzymanie czerwonego kodu przed scaleniem to zadanie wymaganego checku w CI.
 
 ```bash
 git checkout -- app/

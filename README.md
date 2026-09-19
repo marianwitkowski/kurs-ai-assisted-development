@@ -239,6 +239,19 @@ Autoryzacja per zasób, prompt injection, sekrety, RODO i AI Act, zasady zespoł
 
 ---
 
+## Zadanie końcowe
+
+**[zadanie-koncowe.md](zadanie-koncowe.md)** - jedno wymaganie w postaci, w jakiej
+przychodzi z działu biznesowego: jednym zdaniem, z lukami. **Bez gotowych promptów
+i bez rozwiązania wzorcowego.**
+
+Szesnaście labów uczy procedury krok po kroku. To zadanie sprawdza, czy procedura
+weszła w nawyk: czy założenia zostaną ujawnione przed kodem, czy zakres zostanie
+utrzymany, czy testy sprawdzą regułę, a nie implementację, i czy na końcu padnie
+uczciwa odpowiedź na pytanie, czego nie sprawdzono.
+
+---
+
 ## Do zabrania do firmy
 
 **[szablony/](szablony/README.md)** - działające pliki wyciągnięte ze stanu końcowego
@@ -246,7 +259,9 @@ repozytorium, nie przykłady do przepisania:
 
 `CLAUDE.md` · `settings.json` z trzema hookami · skill `/przeglad-bezpieczenstwa` ·
 subagent z izolacją w worktree · skan sekretów · `AI-ZASADY.md` ·
-biblioteka promptów · checklista review · szablon specyfikacji · wzór workflow CI
+biblioteka promptów · checklista review · szablon specyfikacji · wzór workflow CI ·
+**checklista gotowości** przed wpuszczeniem modelu do produktu ·
+**ewaluacja promptu** na oznaczonym zbiorze
 
 W `szablony/README.md` jest **kolejność wdrażania**. Wdrażanie wszystkiego naraz kończy się
 wyłączonymi bramkami: projekt, który od początku nie przechodzi żadnej z nich, uczy zespół

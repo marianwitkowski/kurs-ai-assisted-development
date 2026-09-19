@@ -171,9 +171,9 @@ Potem napisz tests/test_golden_vat.py:
 ```
 
 **Test na źródło jest ważniejszy niż test na stawkę.** Prompt, który przypadkiem trafia
-dobrą stawkę, nie jest tym samym co reguła, która trafia zawsze. Bez tego testu
-zmiana promptu mogłaby po cichu przenieść rozstrzygnięcia z warstwy deterministycznej
-do modelu - przy identycznych wynikach.
+dobrą stawkę, nie jest tym samym co reguła, która trafia zawsze. Bez tego testu zmiana
+w kodzie - usunięta reguła twarda albo przestawiona kolejność warstw - mogłaby po cichu
+przenieść rozstrzygnięcia z warstwy deterministycznej do modelu, przy identycznych wynikach.
 
 ```bash
 make gate
@@ -199,7 +199,9 @@ print(w.stawka, w.zrodlo, w.pewnosc, w.wymaga_weryfikacji)
 **Wynik: `0 model 0.99 False`.** Model był pewny i się mylił, a system mu uwierzył.
 
 To jest granica tego mechanizmu i trzeba ją znać: **próg pewności chroni przed niepewnością,
-nie przed pewnym błędem.** Przed pewnym błędem chroni tylko reguła twarda albo człowiek.
+nie przed pewnym błędem.** Przed pewnym błędem chroni tylko człowiek. Reguła twarda przenosi decyzję do kodu
+i czyni ją powtarzalną, ale dopasowanie fragmentu to nadal heurystyka - też potrafi
+pewnie się mylić (moduł 8, lab 8.2).
 
 Do zapisania w komentarzu w kodzie albo w `docs/`. Za pół roku ktoś o to zapyta.
 
@@ -219,6 +221,7 @@ Trzy skrypty w `skrypty/` do uruchomienia z firmowym kluczem API:
 | `klasyfikuj_api.py` | structured output + prompt caching, z **zmierzonym** kosztem z pola `usage` |
 | `batch_klasyfikacja.py` | Batch API, **połowa ceny**, wyniki w dowolnej kolejności |
 | `pomiar_kosztu.py` | koszt per rola: planista / wykonawca / zbieracz faktów |
+| `ewaluacja_promptu.py` *(z `szablony/skrypty/`)* | **to, czego testy offline nie robią**: wywołuje prawdziwy model na golden secie |
 
 > **Trzy kategorie tokenów wejściowych mają trzy różne ceny** i API raportuje je osobno:
 > `input_tokens` po pełnej stawce, `cache_creation_input_tokens` po 1,25 raza drożej
@@ -227,8 +230,37 @@ Trzy skrypty w `skrypty/` do uruchomienia z firmowym kluczem API:
 > je osobno.
 >
 > **Zerowy odczyt cache’u przy pierwszym uruchomieniu jest normalny** - cache dopiero
-> powstaje. Przy kolejnym oznacza albo zbyt krótki prefiks (minimum 1024 tokeny,
-> a dla Haiku 4.5 - 4096), albo zmianę czegoś przed nim.
+> powstaje. Przy kolejnym oznacza albo zbyt krótki prefiks (minimum zależy od modelu:
+> 512 tokenów na Opusie 5, 1024 na Sonnecie 5, 4096 na Haiku 4.5), albo zmianę czegoś
+> przed nim.
+
+### Ewaluacja promptu - jedyny sposób, żeby powiedzieć „nowy prompt jest lepszy"
+
+Golden set z tego labu sprawdza kod klasyfikatora. Prompt sprawdza dopiero to:
+
+```bash
+cp ../szablony/skrypty/ewaluacja_promptu.py skrypty/
+PYTHONPATH=. python skrypty/ewaluacja_promptu.py tests/golden/vat.jsonl
+```
+
+Skrypt puszcza cały oznaczony zbiór przez **prawdziwy model** i wypisuje trafność,
+liczbę przypadków skierowanych do weryfikacji oraz rozkład źródeł decyzji.
+
+Porównanie dwóch promptów na tym samym zbiorze:
+
+```bash
+PYTHONPATH=. python skrypty/ewaluacja_promptu.py tests/golden/vat.jsonl \
+    --prompt-b prompty/wariant_b.txt
+```
+
+**Dwie liczby czyta się razem.** Prompt, który podniósł trafność, ale podwoił liczbę
+pozycji „do weryfikacji", nie wygrał - przesunął pracę na człowieka. Sam wskaźnik
+trafności tego nie pokaże.
+
+> Ten przebieg **kosztuje** i nie jest deterministyczny: ten sam prompt na tym samym
+> zbiorze może dać nieco inny wynik. Dlatego nie chodzi w CI przy każdym commicie,
+> tylko przy zmianie promptu albo modelu - i dlatego przy decyzji patrzy się na
+> kilka przebiegów, a nie na jeden.
 
 ```bash
 pip install anthropic
@@ -263,8 +295,9 @@ i przy pierwszej zmianie progu nikt tego nie zauważy.
 **Testy wołające prawdziwe API.** CI zaczyna kosztować, zależy od sieci i zaczyna
 migotać. Odpowiedzi modelu należą do golden setu.
 
-**Brak testu na źródło decyzji.** Bez niego zmiana promptu może przenieść rozstrzygnięcia
-z reguł do modelu przy identycznych wynikach - a jedynym sygnałem będzie faktura.
+**Brak testu na źródło decyzji.** Bez niego zmiana w kodzie - usunięta reguła twarda albo
+przestawiona kolejność warstw - może przenieść rozstrzygnięcia z reguł do modelu przy
+identycznych wynikach, a jedynym sygnałem będzie faktura.
 
 **Reguły twarde sprawdzane po modelu.** Wtedy koszt obejmuje każdą pozycję, także tę,
 którą rozstrzyga jedno słowo kluczowe. W tym repozytorium reguły pokrywają

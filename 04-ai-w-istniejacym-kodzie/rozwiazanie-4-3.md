@@ -196,8 +196,9 @@ bo nie niosą informacji, a dokładają skakanie po pliku.
 
 **Zmiana kolejności ostrzeżeń.** Lista `ostrzezenia` jest częścią odpowiedzi API.
 Testy sprawdzają obecność, nie kolejność - ale klient może polegać na pierwszym elemencie.
-Porównanie na 204 fakturach zestawia listy posortowane; ostrożniejszy wariant zestawia
-je nieposortowane.
+Porównanie na 204 fakturach zestawia listy ostrzeżeń **bez sortowania** - ich kolejność
+jest częścią kontraktu. Sortowany jest tylko `vat_wg_stawek`, bo to słownik i kolejność
+kluczy nie jest tam kontraktem.
 
 **Zatrzymanie się na zielonych testach.** To jest najczęstszy błąd w tym labie.
 Testy zielone to warunek konieczny, nie wystarczający.

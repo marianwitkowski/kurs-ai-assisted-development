@@ -76,7 +76,8 @@ Mierzy się **koszt na ukończone zadanie**, nie na zapytanie.
 ## Determinizm w produkcie
 
 ```
-1. REGUŁA TWARDA w kodzie   → rozstrzygnięcie bez modelu (darmowe, pewne)
+1. REGUŁA TWARDA w kodzie   → bez modelu (darmowe, powtarzalne - ale dopasowanie
+                              fragmentu to nadal heurystyka)
 2. MODEL + SCHEMAT          → tylko to, czego reguła nie objęła
 3. WALIDACJA POZA SCHEMATEM → schemat gwarantuje kształt, nie sens
 4. DECYZJA PROGOWA w kodzie → model proponuje, kod rozstrzyga

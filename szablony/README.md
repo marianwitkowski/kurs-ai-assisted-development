@@ -19,6 +19,8 @@ Działają - nie są przykładami do przepisania.
 | `szablon-specyfikacji.md` | moduł 3 | do `specyfikacje/` w swoim repo |
 | `ci.yml` | moduł 5 i 8 | wzór workflow GitHub Actions |
 | `gitignore-fragment` | cały kurs | wpisy do `.gitignore`, których brak boli przy pracy z agentem |
+| `skrypty/ewaluacja_promptu.py` | moduł 7 | ewaluacja promptu na oznaczonym zbiorze - wywołuje model, więc kosztuje |
+| `checklista-gotowosci.md` | moduł 7 i 8 | przed wpuszczeniem modelu do produktu |
 
 ---
 

@@ -25,12 +25,23 @@ Odpowiedź, która podaje **tylko** linie 15-19 i 21, wskazuje definicje stałyc
 w którym rabat jest naliczany. To jest ta sama klasa nieścisłości co zły numer linii - warto
 ją wyłapać, bo w większym pliku prowadzi do szukania nie tam, gdzie trzeba.
 
-**Czego się spodziewać:** Haiku zwykle znajduje progi i podaje plik z liniami.
-Sonnet na `medium` częściej dopowiada kontekst (rabat indywidualny, limit). Oba trafiają.
+**Czego się spodziewać w 1a (izolacja):** Haiku zwykle znajduje progi i podaje plik
+z liniami. Sonnet częściej dopowiada kontekst (rabat indywidualny, limit). Oba trafiają.
+Wyższy effort zwykle wydłuża odpowiedź, nie zmienia jej treści - zadanie faktograficzne
+nie ma czego rozważać.
 
-**Wniosek do notatki:** na pytania o fakt, który da się zgrepować, **dopłata za mocniejszy model
-nic nie daje**. Różnica ceny Haiku → Opus to pięciokrotność wejścia i pięciokrotność wyjścia
-za tę samą odpowiedź.
+**Czego się spodziewać w 1b (jedna rozmowa):** drugi model zwykle **powtarza albo rozwija
+odpowiedź pierwszego**, często nie sięgając ponownie po pliki - ma je już w kontekście.
+To wygląda jak zgodność dwóch modeli, a jest zgodnością modelu z tym, co przeczytał
+w rozmowie. Jeżeli pierwsza odpowiedź była niepełna, druga bywa niepełna tak samo.
+
+**Wniosek do notatki:** na pytania o fakt, który da się zgrepować, **dopłata za mocniejszy
+model nic nie daje**. Różnica ceny Haiku → Opus to pięciokrotność wejścia i pięciokrotność
+wyjścia za tę samą odpowiedź.
+
+**Drugi wniosek, ważniejszy na dłuższą metę:** porównanie modeli w jednej rozmowie nie jest
+porównaniem modeli. Żeby cokolwiek zmierzyć, każdy wariant potrzebuje czystego kontekstu,
+tego samego promptu i kilku powtórzeń. Pojedynczy przebieg nie odróżnia modelu od przypadku.
 
 Jeżeli odpowiedź nie zawierała numerów linii - to nie wina modelu. Nie było o nie prośby.
 
@@ -173,17 +184,18 @@ Temat wraca w labie 2.1 z pomiarem, a w labie 7.1 z kosztami.
 ```markdown
 # Model-to-Task - obserwacje z labu 1.1
 
-| Zadanie | Model | Effort | Wynik | Uwaga |
-|---|---|---|---|---|
-| Fakt: progi rabatowe | haiku | - | poprawnie, z plikiem i liniami | ~3 s; Haiku nie obsługuje effortu |
-| Fakt: progi rabatowe | sonnet | (bez zmian) | to samo + rabat indywidualny i limit | wielokrotnie drożej za tę samą treść |
-| Fakt: progi rabatowe | sonnet | low | to samo, krócej | pytanie faktograficzne nie potrzebuje rozumowania |
-| Fakt: progi rabatowe | sonnet | high | to samo, dłużej | tu `high` nie kupuje niczego |
-| oblicz_odsetki A - bez narzędzi | sonnet | (bez zmian) | **zmyślona funkcja**, opis brzmiał wiarygodnie | ton bez cienia wahania |
-| oblicz_odsetki B - normalnie | sonnet | (bez zmian) | zgrepował repo, odpowiedział, że nie ma | narzędzia same zamykają temat |
-| oblicz_odsetki C - z cytatem | sonnet | (bez zmian) | „nie ma takiej funkcji" | działa też tam, gdzie narzędzi nie ma |
-| Rozumowanie: kolejność rabat/VAT | sonnet | medium | poprawnie: rabat przed VAT | nie zauważył kursu walut |
-| Rozumowanie: kolejność rabat/VAT | opus | high | poprawnie + próg walutowy liczony po przeliczeniu kursem | to była realna różnica |
+| Zadanie | Model | Effort | Narzędzia | Wynik | Uwaga |
+|---|---|---|---|---|---|
+| 1a Fakt: progi (izolacja) | haiku | - | 1 grep | poprawnie, z plikiem i liniami | Haiku nie obsługuje effortu |
+| 1a Fakt: progi (izolacja) | sonnet | (bez zmian) | 1-2 | to samo + rabat indywidualny i limit | wielokrotnie drożej za tę samą treść |
+| 1a Fakt: progi (izolacja) | sonnet | low | 1-2 | to samo, krócej | pytanie faktograficzne nie potrzebuje rozumowania |
+| 1a Fakt: progi (izolacja) | sonnet | high | 1-2 | to samo, dłużej | tu `high` nie kupuje niczego |
+| 1b Fakt: progi (jedna rozmowa) | sonnet | (bez zmian) | **0** | powtórzył odpowiedź Haiku | nie sięgnął po pliki - miał je w kontekście |
+| oblicz_odsetki A - bez narzędzi | sonnet | (bez zmian) | 0 | **zmyślona funkcja**, opis brzmiał wiarygodnie | ton bez cienia wahania |
+| oblicz_odsetki B - normalnie | sonnet | (bez zmian) | 1-2 | zgrepował repo, odpowiedział, że nie ma | narzędzia same zamykają temat |
+| oblicz_odsetki C - z cytatem | sonnet | (bez zmian) | 1-2 | „nie ma takiej funkcji" | działa też tam, gdzie narzędzi nie ma |
+| Rozumowanie: kolejność rabat/VAT | sonnet | medium | 2-3 | poprawnie: rabat przed VAT | nie zauważył kursu walut |
+| Rozumowanie: kolejność rabat/VAT | opus | high | 3-4 | poprawnie + próg walutowy liczony po przeliczeniu kursem | to była realna różnica |
 
 ## Kontekst
 - przed /clear: 14%
@@ -199,8 +211,8 @@ od dwóch miejsc w kodzie naraz. Zawsze żądam pliku i linii.
 ## Najczęstsze potknięcia
 
 **Przełączenie modelu bez `/clear` i wniosek, że „drugi model był lepszy".** Drugi model widział
-też odpowiedź pierwszego. W tym labie jest to celowe (porównanie odbywa się w tych samych
-warunkach), ale przy realnym porównaniu trzeba czyścić kontekst między próbami.
+też odpowiedź pierwszego. W kroku 1b jest to celowe - ten krok pokazuje właśnie wpływ
+historii rozmowy, a nie wpływ modelu. Pomiar jest w kroku 1a, w czystym kontekście.
 
 **Uznanie rzeczowego tonu za dowód.** W kroku 2 wariant A i wariant C brzmią tak samo
 pewnie - jeden jest zmyślony, drugi sprawdzony. Różni je nie ton, tylko to,

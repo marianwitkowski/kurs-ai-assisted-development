@@ -323,12 +323,13 @@ dopisać kolumnę „czym to egzekwujemy":
 | Testy przed zakończeniem pracy | hook `Stop` |
 | Niebezpieczne komendy | hook `PreToolUse` |
 | Brak odczytu `.env` przez agenta | `permissions.deny` |
-| Przegląd bezpieczeństwa diffa | skill `/przeglad-bezpieczenstwa` |
+| Przegląd bezpieczeństwa diffa | skill `/przeglad-bezpieczenstwa` - **procedura**, ktoś musi ją wywołać |
 | Konwencje projektu | `CLAUDE.md` - **prośba** |
 | Nowe zależności | review - **proces** |
 
-Dwa ostatnie wiersze nie mają mechanizmu i to jest w porządku - **pod warunkiem
-że wiadomo, które to są.** Polityka, w której wszystko wygląda tak samo mocno,
+Trzy ostatnie wiersze nie mają egzekucji i to jest w porządku - **pod warunkiem
+że wiadomo, które to są.** Skill stoi wyżej od prośby, bo ma stałą treść i przechodzi
+przez review, ale uruchomienie go zależy od człowieka. Polityka, w której wszystko wygląda tak samo mocno,
 jest myląca.
 
 ### Dokumentowanie użycia AI

@@ -235,11 +235,14 @@ zawsze. Utrwalona liczba nie ma tej wady.
   <div class="stopien"><span class="nr">1</span> Prompt: „nie zmieniaj żadnego zachowania" <span class="cena">prośba</span></div>
   <div class="stopien"><span class="nr">2</span> Zapis w <code>CLAUDE.md</code> (moduł 2) <span class="cena">prośba</span></div>
   <div class="stopien"><span class="nr">3</span> Testy charakterystyki <span class="cena">fakt</span></div>
-  <div class="stopien"><span class="nr">4</span> Hook uruchamiający testy (moduł 5) <span class="cena">fakt</span></div>
+  <div class="stopien"><span class="nr">4</span> Hook uruchamiający testy (moduł 5) <span class="cena">wymuszona próba naprawy</span></div>
 </div>
 
-Pierwsze dwa poziomy zależą od tego, czy model posłuchał. Dwa ostatnie nie.
-**Prośby działają w większości przypadków. Fakty działają zawsze.**
+Pierwsze dwa poziomy zależą od tego, czy model posłuchał. Trzeci nie zależy od niczego:
+test przechodzi albo nie. Czwarty wymusza próbę naprawy i zostawia ślad, ale po niej
+przepuszcza turę.
+
+**Prośba bywa zignorowana. Test nie negocjuje. Hook wymusza próbę - nie gwarancję.**
 
 <!--
 CO POWIEDZIEĆ: To jest nić przewodnia całego kursu w wersji na legacy. Zasada

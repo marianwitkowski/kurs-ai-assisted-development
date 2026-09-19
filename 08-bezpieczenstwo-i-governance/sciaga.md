@@ -37,7 +37,7 @@ Różnica: **nie ma odpowiednika placeholderów.**
 | Wykrycie wzorców instrukcji | heurystyka |
 | **Zamknięty zbiór wartości w schemacie** | **gwarancja** |
 | **Decyzja progowa w kodzie** | **gwarancja** |
-| **Ścieżka do człowieka** | **gwarancja** |
+| **Ścieżka do człowieka** | **gwarancja oznaczenia** - flaga to nie proces |
 
 Podejrzanego tekstu **nie sanityzujemy** - kierujemy do człowieka.
 Sprawdzenie **przed** wywołaniem modelu, **po** regule twardej.

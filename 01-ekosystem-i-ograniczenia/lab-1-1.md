@@ -70,56 +70,70 @@ o kodzie wymaga cytatu, zanim zostanie przyjęte.
 > Na końcu labu jest krok, który przywraca stan wyjściowy - tego kroku nie należy pomijać,
 > bo inaczej cały kurs idzie na konfiguracji wybranej teraz.
 
-Najpierw sam **model**, przy nieruszonym poziomie wysiłku:
-
-```
-/model haiku
-```
-
-Zadać pytanie:
+Pytanie jest przez cały krok to samo:
 
 ```
 Ile progów rabatowych ma ten serwis i jakie są ich wartości? Podaj plik i numery linii.
 ```
 
-**Do notatek:** czy odpowiedź jest poprawna, ile trwała, czy podała plik i linie.
+### 1a. Porównanie izolowane - to jest pomiar
 
-Powtórzyć **to samo pytanie** po przełączeniu modelu:
+Cztery warianty, **każdy w czystym kontekście**. `/clear` przed każdym z nich, żeby
+model nie widział poprzednich odpowiedzi ani wyników odczytu plików:
 
 ```
+/clear
+/model haiku
+<pytanie>
+
+/clear
 /model sonnet
-```
+<pytanie>
 
-Teraz sam **poziom wysiłku**, przy nieruszonym modelu - Sonnet effort obsługuje:
-
-```
+/clear
 /effort low
-```
+<pytanie>
 
-...to samo pytanie jeszcze raz, a potem:
-
-```
+/clear
 /effort high
+<pytanie>
 ```
 
-> **Uwaga:** między tymi pytaniami nie ma `/clear` - inaczej krok 4 nie miałby czego
-> zmierzyć. Ma to jednak cenę, którą trzeba znać.
+Zmienia się **jedna rzecz naraz**: najpierw sam model przy nieruszonym poziomie wysiłku,
+potem sam poziom wysiłku przy nieruszonym modelu. Haiku nie obsługuje effortu, więc
+sprawdzanie go na Haiku niczego nie pokaże.
 
-> **To porównanie nie izoluje wpływu modelu.** Drugi model widzi w kontekście odpowiedź
-> pierwszego i wyniki odczytu plików, więc zmienia się nie jedna rzecz, tylko dwie:
-> konfiguracja **i** dostępna informacja. Wniosek „Sonnet był lepszy" jest tu nieuprawniony.
->
-> Porównanie, które izoluje: **osobna sesja na każdy wariant**, ten sam tag repozytorium,
-> ten sam prompt, nic wcześniej w kontekście. Do notatek trafia wtedy również liczba
-> wywołań narzędzi i to, czy cache był ciepły. Przy wniosku o jakości - kilka powtórzeń,
-> bo pojedynczy przebieg nie odróżnia modelu od przypadku.
->
-> W tym labie zostajemy przy jednej sesji, bo celem jest **zobaczyć dźwignie**, a nie
-> zmierzyć modele. Metoda pomiarowa wraca w labie 7.1.
+**Do notatek** dla każdego z czterech przebiegów: czy odpowiedź jest poprawna, czy podała
+plik i numery linii, **ile razy model sięgnął po narzędzia**. Ostatnia kolumna bywa
+ciekawsza od pozostałych: model, który zgrepował repo trzy razy, rozwiązał inne zadanie
+niż ten, który odpowiedział od razu.
 
-**Do notatek:** czy droższy **model** zmienił odpowiedź na pytanie o prosty fakt
-i czy wyższy **effort** cokolwiek zmienił. To są dwie różne dźwignie - a na zadaniu
-faktograficznym zwykle nie widać żadnej.
+> **Jeden przebieg na wariant nie wystarcza do wniosku o jakości.** Odpowiedzi modelu
+> nie są identyczne między uruchomieniami. Przy realnym porównaniu robi się kilka powtórzeń
+> i patrzy na rozrzut, a nie na pojedynczy wynik. Tutaj chodzi o zobaczenie dźwigni,
+> nie o zmierzenie modeli - ale wniosek „Sonnet jest lepszy" nie ma na tej próbce pokrycia.
+
+### 1b. To samo bez `/clear` - demonstracja wpływu historii
+
+Teraz świadomie odwrotnie. **Bez `/clear`**, w jednej rozmowie, po kolei:
+
+```
+/model haiku
+<pytanie>
+/model sonnet
+<pytanie>
+```
+
+**Do notatek:** czy druga odpowiedź różni się od tej, którą ten sam model dał
+w izolacji w kroku 1a.
+
+To jest sedno tego kroku. W jednej rozmowie drugi model widzi odpowiedź pierwszego
+i wyniki odczytu plików, więc **nie odpowiada na to samo pytanie w tych samych warunkach**.
+Zmieniają się dwie rzeczy naraz: konfiguracja i dostępna informacja. Porównanie
+przeprowadzone w ten sposób mierzy wpływ historii rozmowy, a nie wpływ modelu -
+i właśnie dlatego jest najczęstszym błędem przy „sprawdzaniu, który model jest lepszy".
+
+Kontekst z tego kroku zostaje: potrzebny jest w kroku 4.
 
 ---
 
@@ -221,17 +235,18 @@ Zapisać `notatki/model-to-task.md` (katalog `notatki/` jest gitignorowany, to b
 ```markdown
 # Model-to-Task - obserwacje z labu 1.1
 
-| Zadanie | Model | Effort | Wynik | Uwaga |
-|---|---|---|---|---|
-| Fakt: progi rabatowe | haiku | - | | |
-| Fakt: progi rabatowe | sonnet | (bez zmian) | | |
-| Fakt: progi rabatowe | sonnet | low | | |
-| Fakt: progi rabatowe | sonnet | high | | |
-| oblicz_odsetki A - bez narzędzi | | | | |
-| oblicz_odsetki B - normalnie | | | | |
-| oblicz_odsetki C - z cytatem | | | | |
-| Rozumowanie: kolejność rabat/VAT | sonnet | medium | | |
-| Rozumowanie: kolejność rabat/VAT | opus | high | | |
+| Zadanie | Model | Effort | Narzędzia | Wynik | Uwaga |
+|---|---|---|---|---|---|
+| 1a Fakt: progi (izolacja) | haiku | - | | | |
+| 1a Fakt: progi (izolacja) | sonnet | (bez zmian) | | | |
+| 1a Fakt: progi (izolacja) | sonnet | low | | | |
+| 1a Fakt: progi (izolacja) | sonnet | high | | | |
+| 1b Fakt: progi (jedna rozmowa) | sonnet | (bez zmian) | | | |
+| oblicz_odsetki A - bez narzędzi | | | | | |
+| oblicz_odsetki B - normalnie | | | | | |
+| oblicz_odsetki C - z cytatem | | | | | |
+| Rozumowanie: kolejność rabat/VAT | sonnet | medium | | | |
+| Rozumowanie: kolejność rabat/VAT | opus | high | | | |
 
 ## Kontekst
 - przed /clear: ... %

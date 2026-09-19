@@ -307,7 +307,8 @@ w nich wykonywany. To ich zakres, nie wada. Wadą jest nazwać je testem promptu
 CO POWIEDZIEĆ: To jest slajd, na którym najłatwiej uśpić czujność sali. Testy offline
 są szybkie, darmowe i zielone - i nie mówią nic o prompcie. Sprawdzają kod wokół modelu.
 NA CO UWAŻAĆ: Test na źródło decyzji jest ważniejszy niż test na stawkę: bez niego zmiana
-promptu może po cichu przenieść rozstrzygnięcia z warstwy deterministycznej do modelu
+w kodzie - usunięta reguła twarda albo przestawiona kolejność warstw - może po cichu
+przenieść rozstrzygnięcia z warstwy deterministycznej do modelu
 przy identycznych wynikach, a jedynym sygnałem będzie faktura.
 PYTANIE Z SALI: „To po co w ogóle te testy offline?" Bo łapią regresje w regułach twardych,
 progu i routingu - czyli w kodzie napisanym w tym labie. Ewaluacja promptu jest osobna,

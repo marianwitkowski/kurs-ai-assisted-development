@@ -249,8 +249,12 @@ o sposobie pracy z ostatnich sesji.
 ### Na kluczu API
 
 Tam są prawdziwe liczby: `usage.input_tokens`, `usage.output_tokens`,
-`usage.cache_read_input_tokens` w każdej odpowiedzi. Pomnożone przez cennik dają koszt
-per zadanie i per rola.
+`usage.cache_creation_input_tokens` i `usage.cache_read_input_tokens` w każdej odpowiedzi.
+
+**Każda kategoria wejścia ma inną cenę**, więc pomnożenie sumy przez jedną stawkę daje
+zły wynik: zwykłe wejście po pełnej, zapis do cache'u 1,25 raza drożej przy TTL 5 minut
+i 2 razy przy TTL 1 godziny, odczyt po jednej dziesiątej. Rozbicie zapisu po TTL jest
+w `usage.cache_creation`.
 
 Gotowy skrypt: `skrypty/pomiar_kosztu.py` - uruchamia to samo zadanie w trzech rolach
 i wypisuje tabelę. Koszt jest **zmierzony** z pola `usage` każdej odpowiedzi, a nie
@@ -365,9 +369,10 @@ Trzy rzeczy, które robią golden set użytecznym:
    trafia dobrze, to nie to samo co reguła, która trafia zawsze.
 2. **Działa offline.** Odpowiedzi modelu są w golden secie, testy chodzą na mocku.
    CI nie płaci za tokeny i nie zależy od sieci.
-3. **Zmiana wyniku jest świadoma.** Gdy test po zmianie promptu kończy się błędem,
-   golden set aktualizuje się **razem z uzasadnieniem w commicie**. To jest różnica
-   między zmianą a dryfem.
+3. **Zmiana wyniku jest świadoma.** Gdy test kończy się błędem po zmianie kodu - reguły
+   twardej, progu, routingu - albo po odświeżeniu zapisanych odpowiedzi, golden set
+   aktualizuje się **razem z uzasadnieniem w commicie**. To jest różnica między zmianą
+   a dryfem.
 
 ---
 

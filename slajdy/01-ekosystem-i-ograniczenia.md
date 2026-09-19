@@ -292,8 +292,10 @@ Niezacommitowana praca: `git stash push -u -m "moje-1-1"` przed `git checkout`.
 CO POWIEDZIEĆ: Cel labu jest jeden: zobaczyć na własne oczy, że odpowiedź zmyślona
 i sprawdzona brzmią tym samym tonem. Reszta to notatki potrzebne
 w module 7, gdy policzymy to w pieniądzach.
-NA CO UWAŻAĆ: W krokach 1-3 nie robimy `/clear` - porównujemy odpowiedzi w tych samych
-warunkach. Przy realnym porównaniu modeli trzeba czyścić kontekst między próbami.
+NA CO UWAŻAĆ: W kroku 1a `/clear` idzie przed każdym wariantem - to jest pomiar w czystym
+kontekście. Krok 1b celowo go pomija i pokazuje, jak historia rozmowy psuje porównanie:
+drugi model zwykle powtarza odpowiedź pierwszego, nie sięgając po pliki. W krokach 2-3
+kontekst zostaje, bo tam nie porównujemy modeli.
 I pilnujcie kroku 6, inaczej cały kurs idzie na konfiguracji wybranej do jednego pytania.
 PYTANIE Z SALI: „Mam nieczysty katalog, `git checkout` nie działa." `git stash push -u`,
 z `-u`, bo blokują też pliki nieśledzone. `git switch -c` tu nie pomoże - nic nie commituje,

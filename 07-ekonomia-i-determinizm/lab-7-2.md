@@ -212,7 +212,11 @@ git commit -m "Klasyfikacja stawki VAT przez model, z determinizmem w kodzie"
 
 ---
 
-## Krok 6 - skrypty na później (opcjonalnie, w firmie)
+## Krok 6 - skrypty na później (rozszerzenie)
+
+> **Rozszerzenie.** Ta część nie jest potrzebna do przejścia labów tego modułu.
+> Wymaga **własnego klucza API** - na subskrypcji Pro/Max te skrypty nie zadziałają.
+> Do wykonania później, w firmie, na własnym repozytorium.
 
 Trzy skrypty w `skrypty/` do uruchomienia z firmowym kluczem API:
 

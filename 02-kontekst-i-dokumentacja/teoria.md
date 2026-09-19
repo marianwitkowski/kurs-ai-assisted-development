@@ -292,6 +292,10 @@ sprzeczności między `~/.claude/CLAUDE.md`, projektowym, zagnieżdżonymi i reg
 
 ## Lekcja 2.6 - MCP - jeszcze jeden kanał kontekstu
 
+> **Rozszerzenie.** Ta część nie jest potrzebna do przejścia labów tego modułu.
+> MCP nie ma w kursie ćwiczenia. Wraca natomiast w module 8 jako wektor ataku,
+> więc warto przeczytać, nawet pomijając mechanikę podłączania serwerów.
+
 Model Context Protocol to standard podłączania modelu do zewnętrznych źródeł: bazy, systemu
 zgłoszeń, wyszukiwarki dokumentacji. Z punktu widzenia tego modułu MCP to **czwarty sposób
 dostarczenia wiedzy** - obok plików projektowych, long contextu i RAG-a.

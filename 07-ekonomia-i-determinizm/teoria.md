@@ -199,6 +199,10 @@ Inne miejsca, w których to samo działa: subagent zwracający streszczenie zami
 
 ## Lekcja 7.5 - Batch API
 
+> **Rozszerzenie.** Ta część nie jest potrzebna do przejścia labów tego modułu.
+> Batch wymaga klucza API i nie wraca w żadnym ćwiczeniu. Warto go znać, bo zmienia
+> rachunek o połowę tam, gdzie natychmiastowość nie jest potrzebna.
+
 **Połowa ceny**, asynchronicznie. Zwykle do godziny, maksymalnie 24 h.
 
 Nadaje się do: przeklasyfikowania archiwum, masowej ekstrakcji, generowania opisów,

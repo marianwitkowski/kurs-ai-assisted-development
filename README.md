@@ -40,6 +40,11 @@ Każdy moduł ma ten sam układ:
 | `sciaga.md` | ściąga: komendy, składnia, liczby - do trzymania obok terminala |
 | `checklista.md` | samoocena na koniec modułu; odsyłacz `→ 5.2` wskazuje lekcję |
 
+**[slownik.md](slownik.md)** - definicje terminów używanych w kursie, z odsyłaczem
+do lekcji, w której pojęcie jest omówione w całości. Część nazw (`hook`, `worktree`,
+`subagent`, `skill`, `effort`) pojawia się już w module 1, zanim zostanie wyjaśniona -
+słownik istnieje po to, żeby nie zatrzymywały czytania.
+
 Rozwiązania nie są kluczem odpowiedzi. Tłumaczą, **dlaczego** wzorcowe rozwiązanie
 wygląda tak, a nie inaczej, i wypisują najczęstsze potknięcia.
 
@@ -78,6 +83,28 @@ git checkout lab-4-2-start
 
 Powrót do odłożonej pracy: `git stash list` i `git stash apply stash@{0}`.
 `git switch -c` tu **nie pomaga** - nie commituje, więc nie odblokowuje skoku.
+
+---
+
+## Wariant podstawowy i rozszerzony
+
+Program jest jeden i wszystkie moduły są w nim potrzebne. Trzy części da się jednak
+pominąć bez zrywania ciągłości, bo **nie mają ćwiczenia i nie wracają w żadnym labie**.
+Są oznaczone w tekście jako **Rozszerzenie**.
+
+| Część | Dlaczego rozszerzenie | Dlaczego warto mimo to |
+|---|---|---|
+| [Lekcja 2.6](02-kontekst-i-dokumentacja/teoria.md) - MCP | brak ćwiczenia | wraca w module 8 jako wektor ataku |
+| [Lekcja 7.5](07-ekonomia-i-determinizm/teoria.md) - Batch API | brak ćwiczenia | zmienia rachunek o połowę tam, gdzie natychmiastowość nie jest potrzebna |
+| [Lab 7.2, krok 6](07-ekonomia-i-determinizm/lab-7-2.md) - skrypty API | **wymaga własnego klucza API** | jedyne miejsce, w którym koszt jest mierzony, a nie szacowany |
+
+Ostatni wiersz jest twardym ograniczeniem, nie kwestią czasu: kurs zakłada subskrypcję
+Pro/Max, a te skrypty potrzebują klucza API. Do wykonania później, na własnym repozytorium.
+Tam też należy [ewaluacja promptu](szablony/skrypty/ewaluacja_promptu.py) - jedyne
+ćwiczenie, które faktycznie sprawdza jakość odpowiedzi modelu.
+
+**Reszta materiału jest podstawowa**, łącznie z mechaniką narzędzia w modułach 5 i 6:
+hooki, uprawnienia, worktree i subagenci mają ćwiczenia i wracają w kolejnych modułach.
 
 ---
 

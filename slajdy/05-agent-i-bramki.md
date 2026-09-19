@@ -190,12 +190,14 @@ Blokuje wyłącznie dwójka.
 
 **stdout trafia do modelu tylko przy czterech zdarzeniach:** `SessionStart`,
 `UserPromptSubmit`, `UserPromptExpansion`, `PostModelSwitch`.
-Poza nimi: JSON z polem `systemMessage` albo stderr przy blokadzie.
+`systemMessage` idzie do **użytkownika**, `additionalContext` do **modelu**,
+stderr do modelu przy blokadzie.
 
 <!--
 CO POWIEDZIEĆ: To jest slajd, który warto sfotografować. Trzy różne zachowania
 wyglądają w dokumentacji tak samo, a robią co innego. Drugi wiersz jest użyteczny:
-to jedyny sposób, żeby hook `PostToolUse` powiedział cokolwiek modelowi.
+to najprostsza droga, żeby hook `PostToolUse` powiedział cokolwiek modelowi -
+druga to pole `additionalContext`.
 NA CO UWAŻAĆ: Przy kodzie 0 stderr idzie wyłącznie do logu debugowania i model
 go nie widzi. Ludzie piszą `echo ... >&2` i dziwią się, że nic się nie dzieje.
 PYTANIE Z SALI: „Jak więc hook `PostToolUse` ma zgłosić problem?" Kodem 2. Narzędzie

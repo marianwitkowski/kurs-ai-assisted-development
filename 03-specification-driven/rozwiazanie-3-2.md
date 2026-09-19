@@ -148,7 +148,12 @@ były ostatnie.** Nie dlatego, że tak wypada, tylko dlatego, że wtedy najczęs
 
 **Testy napisane po implementacji.** Rozstrzyga historia: `git log --oneline` powinno
 pokazać commit z testami przed commitem z kodem, albo przynajmniej `make test` z błędem
-`ImportError` po kroku 1. Bez tego testy sprawdzają kod, a nie specyfikację.
+`ImportError` po kroku 1.
+
+Test napisany po kodzie nie jest bezwartościowy - łapie przyszłe regresje tak samo dobrze.
+Ryzyko jest inne: **powiela założenia implementacji**, także te błędne. Test napisany
+ze specyfikacji sprawdza, czy kod robi to, co miał robić; test napisany z kodu sprawdza,
+czy kod robi to, co robi.
 
 **Liczby przeliczone przez agenta.** Prompt w kroku 1 mówi wprost: „liczby bierz dosłownie
 ze specyfikacji, nie przeliczaj". Jeżeli agent policzył je sam i wyszło mu 123,16 zamiast

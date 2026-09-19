@@ -2,7 +2,7 @@
 
 Lista do uczciwego wypełnienia. Każde „nie" wskazuje **lekcję**, do której warto wrócić.
 
-- [ ] Umiem wyjaśnić, dlaczego agent nie dopyta, tylko dopowie - i że to właściwość,
+- [ ] Umiem wyjaśnić, dlaczego agent zwykle nie dopyta, tylko dopowie - i że to właściwość,
       a nie usterka do naprawienia lepszym modelem. → *3.1*
 - [ ] Wiem, dlaczego błędne założenie jest groźniejsze od halucynacji. → *3.1*
 - [ ] Policzyłem, ile rozstrzygnięć agent podjął za mnie przy gołym wymaganiu. → *lab 3.1 krok 1*

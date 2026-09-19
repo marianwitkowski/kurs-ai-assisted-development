@@ -192,11 +192,12 @@ która i tak nie będzie potrzebna. Pytanie brzmi zawsze: czy potrzebuję ciąg�
 
 ```json
 {"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "allow",
- "updatedInput": {"command": "pytest -q 2>&1 | grep -E 'FAIL|ERROR' | head -50"}}}
+ "updatedInput": {"command": "pytest -q > /tmp/pytest.log 2>&1; k=$?; grep -E \"FAIL|ERROR\" /tmp/pytest.log | head -50; exit $k"}}}
 ```
 
 > `updatedInput` zastępuje **całe** wejście narzędzia, nie scala się z nim.
 > W `jq` buduje się je przez `(.tool_input + {command: $filtered})`.
+> Filtr zwraca kod `pytest`, nie kod `head`: `head` kończy się sukcesem zawsze.
 
 To samo robi subagent zwracający streszczenie (moduł 6), skill zamiast rozdętego
 `CLAUDE.md` (moduł 2), CLI zamiast serwera MCP.
@@ -288,26 +289,29 @@ twarda albo człowiek.
 
 ---
 
-# Golden set jest testem regresyjnym promptu
+# Golden set: co testuje, a czego nie
 
-Prompt jest kodem. Zmiana promptu jest zmianą zachowania systemu.
+| | Co uruchamia | Co wykrywa |
+|---|---|---|
+| **Testy offline** | kod klasyfikatora, na zapisanych odpowiedziach | reguły, próg, routing, obsługę odpowiedzi |
+| **Ewaluacja promptu** | prawdziwy model na oznaczonym zbiorze | regresję promptu i zmianę modelu |
 
-| Cecha | Dlaczego bez niej golden set nie działa |
-|---|---|
-| Sprawdza **źródło decyzji** | reguła, model czy wartość domyślna to trzy różne sytuacje |
-| Działa **offline** | odpowiedzi modelu leżą w pliku, CI nie płaci za tokeny i nie zależy od sieci |
-| Zmiana wyniku jest **świadoma** | aktualizacja golden setu razem z uzasadnieniem w commicie |
+**Podmiana `PROMPT_SYSTEMOWY` zostawia testy offline zielone** - prompt nigdy nie jest
+w nich wykonywany. To ich zakres, nie wada. Wadą jest nazwać je testem promptu.
 
 ```
 {"opis": "Hosting miesieczny", "oczekiwana": "23", "zrodlo": "model", "odpowiedz": {...}}
 ```
 
 <!--
-CO POWIEDZIEĆ: Test na źródło decyzji jest ważniejszy niż test na stawkę. Prompt, który
-przypadkiem trafia dobrze, to nie to samo co reguła, która trafia zawsze.
-NA CO UWAŻAĆ: Bez testu na źródło zmiana promptu może po cichu przenieść rozstrzygnięcia
-z warstwy deterministycznej do modelu przy identycznych wynikach - jedynym sygnałem
-będzie faktura.
+CO POWIEDZIEĆ: To jest slajd, na którym najłatwiej uśpić czujność sali. Testy offline
+są szybkie, darmowe i zielone - i nie mówią nic o prompcie. Sprawdzają kod wokół modelu.
+NA CO UWAŻAĆ: Test na źródło decyzji jest ważniejszy niż test na stawkę: bez niego zmiana
+promptu może po cichu przenieść rozstrzygnięcia z warstwy deterministycznej do modelu
+przy identycznych wynikach, a jedynym sygnałem będzie faktura.
+PYTANIE Z SALI: „To po co w ogóle te testy offline?" Bo łapią regresje w regułach twardych,
+progu i routingu - czyli w kodzie napisanym w tym labie. Ewaluacja promptu jest osobna,
+kosztuje tokeny i nie musi chodzić przy każdym commicie.
 -->
 
 ---

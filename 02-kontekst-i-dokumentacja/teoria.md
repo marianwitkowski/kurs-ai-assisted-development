@@ -13,9 +13,13 @@ wyniki wszystkich komend i całą historię wymiany. To jest okno kontekstowe.
 
 Dwie konsekwencje, które trzeba mieć w głowie jednocześnie:
 
-**Koszt rośnie kwadratowo z długością sesji.** Każde kolejne zapytanie niesie wszystko,
-co było wcześniej. Dziesiąte pytanie w sesji jest znacznie droższe niż pierwsze, nawet jeśli
-brzmi identycznie.
+**Suma przetworzonego kontekstu rośnie kwadratowo z liczbą tur.** Każde kolejne zapytanie
+niesie wszystko, co było wcześniej, więc dziesiąte pytanie w sesji przetwarza znacznie
+więcej niż pierwsze, nawet jeśli brzmi identycznie.
+
+Rachunek nie rośnie tak samo szybko: prompt caching, kompakcja i sposób rozliczania
+wyraźnie go spłaszczają. Kwadratowo rośnie **praca do wykonania**, a nie automatycznie
+kwota - i to rozróżnienie jest tematem modułu 7.
 
 **Jakość spada wraz z rozrostem.** To jest mniej oczywiste i ważniejsze. Model o oknie 1M tokenów
 nie „rozumie" miliona tokenów równie dobrze jak dziesięciu tysięcy. Instrukcja utopiona wśród
@@ -67,8 +71,9 @@ Trzy sposoby dostarczenia modelowi wiedzy. Nie konkurują ze sobą, rozwiązują
 | Kiedy zawodzi | gdy wiedzy nie ma w repo | gdy „wszystko" nie mieści się w oknie | gdy pytanie nie trafia w indeks |
 
 **Praktyczna reguła.** Wiedza o kodzie → pliki projektowe, zawsze. Agent ma `Grep` i `Read`
-i sam dojdzie tam, gdzie trzeba. RAG nad własnym repozytorium nie ma sensu: kosztuje utrzymanie
-indeksu, a agent dostaje nieaktualne fragmenty zamiast bieżącego pliku.
+i sam dojdzie tam, gdzie trzeba. Przy repozytorium, które agent jest w stanie przeszukać
+sam, RAG zwykle nie zarabia na siebie: kosztuje utrzymanie indeksu, a agent dostaje
+nieaktualne fragmenty zamiast bieżącego pliku.
 
 RAG ma sens dla wiedzy **spoza repo** i **dużej**: dokumentacja wewnętrzna na tysiąc stron,
 archiwum zgłoszeń, regulacje branżowe. Progiem nie jest technologia, tylko pytanie:
@@ -82,7 +87,7 @@ gdzie budowanie czegokolwiek byłoby stratą czasu.
 ## Lekcja 2.3 - Dokumentacja użyteczna dla ludzi i dla modeli
 
 To ta sama dokumentacja. Model potrzebuje dokładnie tego, czego potrzebuje nowy
-człowiek w zespole - tylko jest bardziej bezlitosny wobec braków, bo nie dopyta.
+człowiek w zespole - tylko jest bardziej bezlitosny wobec braków, bo zwykle nie dopyta.
 Zamiast tego dopowie.
 
 ### Co model wyciągnie sam z kodu (tego nie pisać)

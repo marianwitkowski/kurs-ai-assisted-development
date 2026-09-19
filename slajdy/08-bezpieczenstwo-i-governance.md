@@ -73,7 +73,7 @@ tam, gdzie punkt nie dotyczy - brak ustalenia musi być odróżnialny od braku s
 
 ---
 
-# Luka, której nie złapie żadne narzędzie
+# Luka, której nie złapie sam linter
 
 ```python
 def szczegoly_faktury(faktura_id: int, authorization: str | None = Header(default=None)) -> dict:

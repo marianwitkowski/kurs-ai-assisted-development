@@ -38,7 +38,7 @@ powstał skill z checklistą.
 
 ---
 
-## Lekcja 8.2 - Luka, której nie złapie żadne narzędzie
+## Lekcja 8.2 - Luka, której nie złapie sam linter
 
 ```python
 def szczegoly_faktury(faktura_id: int, authorization: str | None = Header(default=None)) -> dict:

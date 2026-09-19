@@ -216,9 +216,19 @@ Trzy skrypty w `skrypty/` do uruchomienia z firmowym kluczem API:
 
 | Skrypt | Pokazuje |
 |---|---|
-| `klasyfikuj_api.py` | structured output + prompt caching na żywo |
+| `klasyfikuj_api.py` | structured output + prompt caching, z **zmierzonym** kosztem z pola `usage` |
 | `batch_klasyfikacja.py` | Batch API, **połowa ceny**, wyniki w dowolnej kolejności |
 | `pomiar_kosztu.py` | koszt per rola: planista / wykonawca / zbieracz faktów |
+
+> **Trzy kategorie tokenów wejściowych mają trzy różne ceny** i API raportuje je osobno:
+> `input_tokens` po pełnej stawce, `cache_creation_input_tokens` po 1,25 raza drożej
+> (przy TTL 5 minut), `cache_read_input_tokens` po jednej dziesiątej. Liczenie ich razem
+> zaniża rachunek przy pierwszym wywołaniu i zawyża przy kolejnych - oba skrypty liczą
+> je osobno.
+>
+> **Zerowy odczyt cache’u przy pierwszym uruchomieniu jest normalny** - cache dopiero
+> powstaje. Przy kolejnym oznacza albo zbyt krótki prefiks (minimum 1024 tokeny,
+> a dla Haiku 4.5 - 4096), albo zmianę czegoś przed nim.
 
 ```bash
 pip install anthropic

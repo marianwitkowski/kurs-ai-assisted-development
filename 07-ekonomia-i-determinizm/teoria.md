@@ -175,13 +175,18 @@ w kontekście - same błędy:
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
     "permissionDecision": "allow",
-    "updatedInput": { "command": "pytest -q 2>&1 | grep -E 'FAIL|ERROR' | head -50" }
+    "updatedInput": { "command": "pytest -q > /tmp/pytest.log 2>&1; k=$?; grep -E \"FAIL|ERROR\" /tmp/pytest.log | head -50; exit $k" }
   }
 }
 ```
 
 **`updatedInput` podmienia CAŁE wejście narzędzia**, nie scala się z nim - w jq buduje się je
 przez `(.tool_input + {command: $filtered})`, żeby nie zgubić pozostałych pól.
+
+> **Filtr nie może zjeść kodu wyjścia.** Naiwne `pytest | grep | head` zwraca kod
+> **ostatniej** komendy potoku, czyli `head` - a `head` kończy się sukcesem zawsze.
+> Nieudane testy wyglądałyby wtedy jak udane. Dlatego kod `pytest` jest zapamiętywany
+> w `k` i zwracany na końcu, a pełny raport zostaje w pliku, gdy trzeba go obejrzeć.
 
 To jest najbardziej niedoceniana dźwignia z całego modułu: przenosi filtrowanie
 z kontekstu modelu do powłoki, gdzie jest darmowe.
@@ -248,7 +253,10 @@ Tam są prawdziwe liczby: `usage.input_tokens`, `usage.output_tokens`,
 per zadanie i per rola.
 
 Gotowy skrypt: `skrypty/pomiar_kosztu.py` - uruchamia to samo zadanie w trzech rolach
-i wypisuje tabelę.
+i wypisuje tabelę. Koszt jest **zmierzony** z pola `usage` każdej odpowiedzi, a nie
+oszacowany z długości tekstu. Rola zbieracza faktów jedzie na Haiku **bez pola `effort`**,
+bo ten model go nie obsługuje - podanie go byłoby błędem kontraktu, nawet gdyby API
+przyjęło żądanie.
 
 ### Co mierzyć
 
@@ -328,9 +336,21 @@ Schemat gwarantuje **kształt**, nie **sens**. Zawsze zostaje warstwa, której s
 
 Te sprawdzenia należą do kodu. **Schemat ich nie złapie.**
 
-### Golden set jako test regresyjny promptu
+### Golden set: co testuje, a czego nie
 
 Prompt jest kodem. Zmiana promptu jest zmianą zachowania systemu - i tak samo wymaga testu.
+Tylko że test musi wtedy **wywołać model**, a to kosztuje i nie jest deterministyczne.
+
+Stąd podział na dwie rzeczy, które łatwo pomylić:
+
+| | Co uruchamia | Co wykrywa | Kiedy |
+|---|---|---|---|
+| **Testy offline** (golden set z zapisanymi odpowiedziami) | kod klasyfikatora, na gotowych odpowiedziach | regresje w regułach twardych, progu, routingu i obsłudze odpowiedzi | każdy commit, w CI |
+| **Ewaluacja promptu** | prawdziwy model na oznaczonym zbiorze | regresje promptu i zmiany modelu | przy zmianie promptu albo modelu |
+
+> **Testy offline nie wykryją regresji promptu.** Odpowiedzi pochodzą z pliku, więc
+> podmiana `PROMPT_SYSTEMOWY` na cokolwiek zostawi je zielone. To nie jest wada tych
+> testów - to ich zakres. Wadą jest nazwanie ich testem promptu i spanie spokojnie.
 
 Golden set to zbiór przypadków z oczekiwanymi wynikami, uruchamiany w CI:
 
@@ -363,6 +383,7 @@ Trzy rzeczy, które robią golden set użytecznym:
 7. Batch API: połowa ceny, wyniki **w dowolnej kolejności**, kluczowanie po `custom_id`.
 8. Na Pro/Max pomiar idzie paskami limitu i atrybucją, nie kwotą z bloku `Session`.
 9. W produkcie: reguła w kodzie → model ze schematem → **decyzja progowa w kodzie**.
-10. Schemat gwarantuje kształt, nie sens. Golden set jest testem regresyjnym promptu.
+10. Schemat gwarantuje kształt, nie sens. Testy offline sprawdzają kod klasyfikatora;
+    regresję promptu wykrywa dopiero ewaluacja wołająca model.
 
 Następny krok: [lab 7.1](lab-7-1.md), potem [lab 7.2](lab-7-2.md). · [Ściąga](sciaga.md)

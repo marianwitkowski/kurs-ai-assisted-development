@@ -45,10 +45,11 @@ dynamiczna lista narzędzi (`tools` idzie **przed** `system`) · **zmiana modelu
 Hook `PreToolUse` filtrujący wyjście komendy:
 ```json
 {"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "allow",
- "updatedInput": {"command": "pytest -q 2>&1 | grep -E 'FAIL|ERROR' | head -50"}}}
+ "updatedInput": {"command": "pytest -q > /tmp/pytest.log 2>&1; k=$?; grep -E \"FAIL|ERROR\" /tmp/pytest.log | head -50; exit $k"}}}
 ```
 
 > `updatedInput` zastępuje **całe** wejście narzędzia - w jq: `(.tool_input + {command: $filtered})`.
+> Filtr musi zwrócić kod `pytest`, nie kod `head` - inaczej nieudane testy wyglądają jak udane.
 
 ## Batch API
 

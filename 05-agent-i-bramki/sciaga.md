@@ -29,7 +29,10 @@ Pozostałe warte znajomości: `UserPromptSubmit`, `SubagentStop`, `PreCompact`,
 `PermissionRequest`, `PermissionDenied`, `Notification` → ignorują całkowicie.
 
 **stdout trafia do modelu tylko przy:** `SessionStart`, `UserPromptSubmit`,
-`UserPromptExpansion`, `PostModelSwitch`. Poza nimi - `systemMessage` albo stderr.
+`UserPromptExpansion`, `PostModelSwitch`.
+
+`systemMessage` -> **użytkownik**. `additionalContext` -> **model**.
+stderr -> model, ale tylko przy blokadzie.
 
 ## Konfiguracja
 

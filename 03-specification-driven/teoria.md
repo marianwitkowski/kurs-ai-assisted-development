@@ -242,7 +242,8 @@ Dopiero z odpowiedziami zaczyna się praca z agentem.
 
 ## Do zapamiętania
 
-1. Agent nie dopyta. Lukę w specyfikacji wypełni najbardziej prawdopodobną treścią.
+1. Agent zwykle nie dopyta. Lukę w specyfikacji wypełni najbardziej prawdopodobną treścią
+   - i robi to tym chętniej, im bardziej zadanie wygląda na wykonalne bez pytania.
 2. Błędne założenie jest groźniejsze od halucynacji, bo przechodzi przez testy i review.
 3. Tryb planowania rozdziela „co zrobić" od „zrobić". Plan bez wypisanych założeń i ryzyk
    nie jest planem.

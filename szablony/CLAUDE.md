@@ -42,7 +42,6 @@ a zaokrąglenia następują w konkretnych miejscach. Przestawienie kolejności z
 
 ## Czego w repozytorium nie ma
 
-- Testów (katalog `tests/` nie istnieje).
 - Migracji schematu bazy.
 - Obsługi wielu walut poza przelicznikiem w `app/konfiguracja.py` - kursy są wpisane ręcznie.
 

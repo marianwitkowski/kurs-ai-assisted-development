@@ -54,8 +54,9 @@ Ostatni punkt wymaga doprecyzowania, bo łatwo go zapamiętać źle. `PostToolUs
 **nie potrafi zablokować** - narzędzie już się wykonało. Ale kod 2 **nie jest tam
 ignorowany**: stderr trafia wtedy **do modelu**.
 
-To jest jedyny sposób, żeby hook `PostToolUse` powiedział coś modelowi - przy kodzie 0
-stderr idzie wyłącznie do logu debugowania. Przydatne np. w hooku, który waliduje to,
+Przy kodzie 0 stderr idzie wyłącznie do logu debugowania, więc `exit 2` jest najprostszą
+drogą, żeby hook `PostToolUse` powiedział coś modelowi. Nie jedyną: zdarzenia obsługujące
+standardowy model decyzji przyjmują też pole `additionalContext` w JSON-ie. Przydatne np. w hooku, który waliduje to,
 co właśnie powstało, i chce zgłosić problem.
 
 Dla hooka **formatującego** właściwy jest `exit 0`: formatowanie nie jest problemem,

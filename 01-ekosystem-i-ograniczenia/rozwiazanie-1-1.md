@@ -51,13 +51,19 @@ tak, jak podpowiedział model w tym labie, kończy się `AttributeError`.
 
 | Wariant | Co zwykle wychodzi |
 |---|---|
-| **A** - bez narzędzi, z pamięci | **konfabulacja**: parametry `kwota`, `data_terminu`, `data_zaplaty`, wzór `kwota × stopa × dni / 365`. Sensowne, spójne, całe zmyślone |
+| **A** - bez narzędzi, z pamięci | najczęściej **konfabulacja**: parametry `kwota`, `data_terminu`, `data_zaplaty`, wzór `kwota × stopa × dni / 365`. Sensowne, spójne, całe zmyślone. Bywa też poprawne „nie wiem, nie mam dostępu do plików" - i to nie jest nieudany lab |
 | **B** - normalnie | model **grepuje repo** i odpowiada poprawnie: „nie ma takiej funkcji" |
 | **C** - z wymuszeniem cytatu | „nie ma takiej funkcji" - powtarzalnie |
 
 **Wariant B jest w tej wersji zwykle poprawny i to jest dobra wiadomość.** Agent z dostępem do plików
 ma odruch sprawdzania. Gdyby lab został zaprojektowany wokół kontrastu B↔C, w 2026 nie
 pokazywałby już niczego.
+
+> **Jeżeli wariant A odmówił zamiast zmyślić**, obserwacja z labu jest ta sama, tylko
+> po drugiej stronie: model bez punktu zaczepienia w pliku **czasem** konfabuluje,
+> a **czasem** przyznaje się do braku wiedzy - i z samej odpowiedzi nie da się z góry
+> powiedzieć, który przypadek zachodzi. Dokładnie dlatego weryfikacja nie może polegać
+> na ocenie tonu.
 
 **Istota labu leży w wariancie A.** W **tonie** odpowiedzi A nie ma ani jednego sygnału
 niepewności, bo model nie ma takiego sygnału do wystawienia. Brzmi dokładnie tak samo jak

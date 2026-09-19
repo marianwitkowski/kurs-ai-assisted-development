@@ -142,8 +142,16 @@ modelowi. Przy kodzie 0 stderr idzie wyłącznie do logu debugowania i model go 
 
 **stdout trafia do modelu tylko przy czterech zdarzeniach:** `SessionStart`,
 `UserPromptSubmit`, `UserPromptExpansion`, `PostModelSwitch`. Przy pozostałych idzie
-do logu debugowania - do przekazania czegoś modelowi służy JSON z polem
-`systemMessage` albo stderr przy blokadzie.
+do logu debugowania.
+
+Dwa pola JSON-a łatwo pomylić, bo mają różnych odbiorców:
+
+| Pole | Do kogo |
+|---|---|
+| `systemMessage` | **do użytkownika** - komunikat w interfejsie |
+| `additionalContext` | **do modelu** - kontekst, na którym może działać |
+
+Trzecia droga do modelu to stderr przy blokadzie (`exit 2`).
 
 ### Wejście na stdin
 
@@ -251,8 +259,15 @@ i blokuje pracę przy pierwszym fałszywym trafieniu, po czym ktoś ją wyłącz
 
 **Bramka jakości** (`Stop`) - `make gate`, `exit 2` gdy czerwona, z ochroną przed pętlą
 opisaną wyżej.
-To jest hook, który realnie zmienia sposób pracy: model nie może zakończyć tury,
+To jest hook, który realnie zmienia sposób pracy: model nie zakończy tury po cichu,
 zostawiając czerwone testy.
+
+> **Czego ten hook nie robi.** Po pierwszej blokadzie `stop_hook_active` jest `true`
+> i hook przepuszcza turę, nawet gdy bramka nadal jest czerwona. To jest świadomy
+> kompromis: bez niego sesja kręciłaby się w kółko. **Lokalny hook wymusza próbę naprawy
+> i ostrzeżenie, nie niemożność zakończenia pracy.** Tym, co naprawdę blokuje czerwony
+> kod przed wejściem do gałęzi głównej, jest wymagany check w CI - konfigurowany
+> w ustawieniach repozytorium, nie w samym pliku workflow.
 
 ---
 
@@ -329,7 +344,8 @@ To jest ten sam mechanizm, co specyfikacja z modułu 3 i hooki z tego modułu:
 2. `git diff` bije opis agenta. Zawsze.
 3. Hook to kod przy zdarzeniu. Kod 2 blokuje, kod 0 przepuszcza, inny to błąd nieblokujący.
 4. stdout trafia do modelu tylko przy `SessionStart`, `UserPromptSubmit`,
-   `UserPromptExpansion` i `PostModelSwitch`. Poza nimi - `systemMessage` albo stderr.
+   `UserPromptExpansion` i `PostModelSwitch`. `systemMessage` idzie do użytkownika,
+   `additionalContext` do modelu, stderr do modelu przy blokadzie.
 5. `${CLAUDE_PROJECT_DIR}` zostaje w katalogu startu sesji; `cwd` idzie za sesją do worktree.
 6. Hook `Stop` ma gotową ochronę przed pętlą: pole `stop_hook_active` i limit 8 kolejnych
    blokad. Własny znacznik jest zbędny - wystarczy schemat wejścia.

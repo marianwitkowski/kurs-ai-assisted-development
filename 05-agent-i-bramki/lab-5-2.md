@@ -71,7 +71,7 @@ Frontmatter (--- musi być w pierwszej linii pliku):
 - name: Przegląd bezpieczeństwa
 - description: kiedy po to sięgać i co to robi
 - argument-hint: "[zakres, np. HEAD, staged, lab-1-1-start]"
-- allowed-tools: tylko odczyt i git diff - skill ma raportować, nie poprawiać
+- allowed-tools: tylko odczyt i git diff - lista narzędzi używanych bez pytania o zgodę
 
 Treść na razie pusta, dopiszemy ją w kolejnym kroku.
 ```
@@ -234,9 +234,10 @@ git commit -m "Skill /przeglad-bezpieczenstwa"
 
 ## Pułapki
 
-**Skill, który poprawia kod.** `allowed-tools` bez `Edit` i `Write` to nie ozdoba.
-Przegląd, który po drodze poprawia, traci wartość dowodową: nie wiadomo, co było,
-a co jest.
+**Skill, który poprawia kod.** Przegląd, który po drodze poprawia, traci wartość dowodową:
+nie wiadomo, co było, a co jest. Pominięcie `Edit` i `Write` w `allowed-tools` zmniejsza
+ryzyko, ale **nie jest blokadą** - to lista narzędzi używanych bez pytania, nie wyłączna
+lista dostępnych. Blokadą jest dopiero `permissions.deny`.
 
 **Checklista, która „dostosowuje się do diffa".** Cała wartość leży w tym, że jest stała.
 Model decydujący sam, które punkty pominąć, sprowadza skill z powrotem do promptu z kroku 1.

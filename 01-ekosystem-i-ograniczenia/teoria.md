@@ -195,10 +195,20 @@ używanego w firmie.
 | Forma | CLI + IDE + desktop | fork VS Code | rozszerzenie IDE + agent | CLI | CLI |
 | Plik kontekstowy projektu | `CLAUDE.md` | `.cursor/rules/` | `.github/copilot-instructions.md` | `AGENTS.md` | `GEMINI.md` |
 | Hooki na zdarzenia | tak, 33 zdarzenia, blokujące | ograniczone | nie | ograniczone | ograniczone |
-| Subagenci z własnym kontekstem | tak | częściowo | nie | nie | nie |
+| Subagenci z własnym kontekstem | tak | częściowo | nie | tak | ograniczone |
 | Izolacja w git worktree | wbudowana (`--worktree`) | ręcznie | nie dotyczy | ręcznie | ręcznie |
-| Reużywalne workflow w repo | skille (`.claude/skills/`) | reguły | prompt files | nie | rozszerzenia |
-| Rozliczenie | subskrypcja lub API | subskrypcja | subskrypcja | API | API / subskrypcja |
+| Reużywalne workflow w repo | skille (`.claude/skills/`) | reguły | prompt files | skille (`.agents/skills/`) | rozszerzenia |
+| Rozliczenie | subskrypcja lub API | subskrypcja | subskrypcja | subskrypcja lub API | API / subskrypcja |
+
+> **Stan na 19 września 2026.** Ta tabela starzeje się szybciej niż reszta materiału -
+> każda z tych pozycji dostaje nowe funkcje co kilka tygodni. Przed użyciem jej jako
+> argumentu w rozmowie o wyborze narzędzia warto sprawdzić dokumentację źródłową.
+> Wiersze dotyczące Codexa pochodzą z dokumentacji subagentów, skilli i logowania.
+
+Podział „czat / autouzupełnianie / agent" jest podziałem **trybów pracy**, nie produktów.
+Ten sam produkt bywa dostępny we wszystkich trzech: Copilot ma i autouzupełnianie,
+i tryb agentowy, a Claude Code ma CLI, wtyczkę do IDE i aplikację desktopową.
+Wybór narzędzia do kursu nie wynika z tego, że pozostałe są słabsze.
 
 **Co przenosi się między narzędziami, a co nie**
 

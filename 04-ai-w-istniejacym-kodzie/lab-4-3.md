@@ -30,9 +30,17 @@ make test          # 32 testy, wszystkie zielone
 > i poda komendę ratunkową; prościej wyprzedzić go przez `git branch moje-4-3`
 > **przed** skokiem.
 
-Tag zawiera **wzorcowe testy charakterystyki**. Do pracy na własnych: odłożyć wzorcowe
-przez `git stash push -u` i przywrócić własne przez `git stash apply`. Wtedy ochrona jest
-dokładnie taka, jaką zbudował uczestnik.
+Tag zawiera **wzorcowe testy charakterystyki** - już zacommitowane, więc `git stash`
+ich nie odłoży. Do pracy na własnych testach z labu 4.2 służy droga przez gałąź:
+
+```bash
+git checkout moje-4-2                  # gałąź z labu 4.2, jeśli została założona
+git checkout lab-4-3-start -- app/     # kod ze stanu startowego 4.3
+```
+
+Wtedy ochroną są testy napisane w labie 4.2, a refaktoryzowany kod pochodzi z tagu.
+Bez gałęzi z 4.2 pozostaje praca na wzorcowych - i to jest w porządku, bo lab 4.3
+sprawdza refaktoryzację, a nie testy.
 
 ---
 
@@ -144,7 +152,7 @@ con = db.polacz()
 for f in db.wszystkie_faktury(con):
     r = raporty.rozlicz_fakture_z_bazy(con, f.id)
     print(f.id, r.netto, r.rabat_lacznie, r.vat, r.brutto, r.do_zaplaty,
-          r.termin_platnosci, sorted(r.vat_wg_stawek.items()), sorted(r.ostrzezenia))
+          r.termin_platnosci, sorted(r.vat_wg_stawek.items()), r.ostrzezenia)
 "
 }
 git stash -q && zapisz > /tmp/przed.txt
@@ -152,8 +160,15 @@ git stash pop -q && zapisz > /tmp/po.txt
 diff /tmp/przed.txt /tmp/po.txt && echo "IDENTYCZNE na wszystkich 204 fakturach"
 ```
 
-To jest ostateczny dowód refaktoryzacji zachowawczej. Każdy wynik `diff` oznacza zmianę
-zachowania, niezależnie od tego, że testy są zielone.
+> **Ostrzeżenia porównywane bez sortowania.** Ich kolejność jest częścią kontraktu
+> (krok 1: „kolejność i treść ostrzeżeń musi zostać identyczna"), więc posortowanie
+> listy ukryłoby dokładnie tę zmianę, której lab szuka. `vat_wg_stawek` jest sortowany,
+> bo to słownik - tam kolejność kluczy nie jest kontraktem.
+
+To jest mocny dowód refaktoryzacji zachowawczej **na tym zbiorze**: 204 fakturach z bazy.
+Dowodem dla wszystkich możliwych wejść nie jest - żadne porównanie na skończonym zbiorze
+nim nie będzie. Każdy wynik `diff` oznacza zmianę zachowania, niezależnie od tego,
+że testy są zielone.
 
 ---
 

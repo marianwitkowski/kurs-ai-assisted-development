@@ -38,10 +38,25 @@ allowed-tools: Bash(git diff *), Bash(git status *), Bash(git log *), Read, Grep
 |---|---|
 | `description` | model czyta to, decydując, czy sięgnąć po skill sam z siebie - dlatego wylicza kategorie, a nie mówi „sprawdza bezpieczeństwo" |
 | `argument-hint` | podpowiedź przy wpisywaniu komendy |
-| `allowed-tools` | **brak `Edit` i `Write`** - skill raportuje, nie poprawia |
+| `allowed-tools` | lista narzędzi używanych **bez pytania o zgodę** - tu tylko odczyt i `git diff` |
 
 Ostatni wiersz jest decyzją projektową, nie ostrożnością. Przegląd, który po drodze poprawia,
 traci wartość dowodową: po zakończeniu nie wiadomo, co było w kodzie, a co skill zmienił.
+
+> **`allowed-tools` to nie jest tryb tylko do odczytu.** Pole mówi, czego wolno użyć
+> **bez dopytywania**, a nie jaka jest wyłączna lista dostępnych narzędzi. Pominięcie
+> `Edit` i `Write` sprawia, że skill nie sięgnie po nie po cichu - nie, że nie może
+> zmienić pliku. Zapis da się też wykonać powłoką.
+>
+> Trzy różne rzeczy, które łatwo skleić w jedną:
+>
+> | | Co robi |
+> |---|---|
+> | Instrukcja „tylko raportuj" w treści skilla | prośba - model zwykle się zastosuje |
+> | `allowed-tools` | uprzednia zgoda na wymienione narzędzia |
+> | `permissions.deny` w `settings.json` | **egzekucja** - tego nie da się obejść |
+>
+> Jeżeli brak zmian ma być gwarantowany, a nie oczekiwany, potrzebny jest trzeci wiersz.
 
 **Nazwa komendy bierze się z katalogu.** `.claude/skills/przeglad-bezpieczenstwa/` daje
 `/przeglad-bezpieczenstwa`, niezależnie od tego, co jest w polu `name`.

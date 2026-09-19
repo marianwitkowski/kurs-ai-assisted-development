@@ -101,6 +101,12 @@ Test wymusza ten przypadek przez `model_construct()`, który omija walidację sc
 
 ## Golden set: dwa testy zamiast jednego
 
+> **Te testy działają offline** - odpowiedzi modelu pochodzą z golden setu, nie z API.
+> Sprawdzają kod: reguły twarde, próg, routing i obsługę odpowiedzi. **Nie sprawdzają
+> promptu.** Podmiana `PROMPT_SYSTEMOWY` na polecenie zwracania zera zostawia je zielone,
+> bo prompt nigdy nie jest w nich wykonywany. Regresję promptu wykrywa osobna ewaluacja
+> na prawdziwym modelu, uruchamiana przy zmianie promptu albo modelu.
+
 ```python
 def test_golden_stawka(przypadek):
     assert wynik.stawka == przypadek["oczekiwana"]
@@ -196,8 +202,9 @@ PROMPT_SYSTEMOWY = """...
 Ostatnie zdanie jest tam nieprzypadkowo i wraca w module 8.
 Opis pozycji faktury pochodzi od kontrahenta - czyli z zewnątrz.
 
-Prompt jest w repozytorium, przechodzi przez review, ma historię w gicie,
-i ma test regresyjny. **Tak samo jak reszta kodu.**
+Prompt jest w repozytorium, przechodzi przez review i ma historię w gicie -
+**tak samo jak reszta kodu.** Czego nie ma za darmo: testu, który by go uruchomił.
+Ten wymaga wywołania modelu i osobnej decyzji, kiedy go uruchamiać.
 
 ---
 

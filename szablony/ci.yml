@@ -17,7 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Skan sekretów potrzebuje historii, żeby sprawdzić też nowe commity.
+          # Pełna historia, żeby dało się rozszerzyć skan o commity, a nie tylko
+          # o drzewo robocze. Domyślny skan czyta PLIKI ŚLEDZONE w bieżącym stanie -
+          # sekret usunięty z pliku, ale obecny w historii, nie zostanie znaleziony.
           fetch-depth: 0
 
       - uses: actions/setup-python@v5

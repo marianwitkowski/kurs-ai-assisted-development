@@ -102,12 +102,24 @@ Teraz sam **poziom wysiłku**, przy nieruszonym modelu - Sonnet effort obsługuj
 /effort high
 ```
 
-> **Uwaga:** między tymi pytaniami nie wolno robić `/clear` - porównanie wymaga
-> tych samych warunków. `/clear` przychodzi w kroku 4.
+> **Uwaga:** między tymi pytaniami nie ma `/clear` - inaczej krok 4 nie miałby czego
+> zmierzyć. Ma to jednak cenę, którą trzeba znać.
 
-**Do notatek:** czy droższy **model** dał lepszą odpowiedź na pytanie o prosty fakt
-i czy wyższy **effort** cokolwiek zmienił. To są dwie różne dźwignie i tu widać,
-że na tym zadaniu żadna nic nie daje.
+> **To porównanie nie izoluje wpływu modelu.** Drugi model widzi w kontekście odpowiedź
+> pierwszego i wyniki odczytu plików, więc zmienia się nie jedna rzecz, tylko dwie:
+> konfiguracja **i** dostępna informacja. Wniosek „Sonnet był lepszy" jest tu nieuprawniony.
+>
+> Porównanie, które izoluje: **osobna sesja na każdy wariant**, ten sam tag repozytorium,
+> ten sam prompt, nic wcześniej w kontekście. Do notatek trafia wtedy również liczba
+> wywołań narzędzi i to, czy cache był ciepły. Przy wniosku o jakości - kilka powtórzeń,
+> bo pojedynczy przebieg nie odróżnia modelu od przypadku.
+>
+> W tym labie zostajemy przy jednej sesji, bo celem jest **zobaczyć dźwignie**, a nie
+> zmierzyć modele. Metoda pomiarowa wraca w labie 7.1.
+
+**Do notatek:** czy droższy **model** zmienił odpowiedź na pytanie o prosty fakt
+i czy wyższy **effort** cokolwiek zmienił. To są dwie różne dźwignie - a na zadaniu
+faktograficznym zwykle nie widać żadnej.
 
 ---
 
@@ -258,8 +270,9 @@ Aktualną konfigurację pokazuje `/status`.
 
 ## Kryteria zaliczenia
 
-- [ ] Porównana odpowiedź poprawna i odpowiedź zmyślona, podane **tym samym tonem**
-      (warianty C i A w kroku 2).
+- [ ] Porównane trzy warianty pytania o `oblicz_odsetki` i rozpoznane, **czym różni się
+      odpowiedź mająca punkt zaczepienia w pliku od odpowiedzi bez niego**. Jeżeli wariant A
+      poprawnie przyznał „nie wiem" zamiast zmyślać - to też jest wynik i też zalicza.
 - [ ] Przywrócony domyślny model i poziom wysiłku (krok 6).
 - [ ] Znany sposób sformułowania pytania, po którym model musi przyznać, że czegoś nie ma.
 - [ ] Zapisana własna reguła doboru modelu - nie cudza tabela.

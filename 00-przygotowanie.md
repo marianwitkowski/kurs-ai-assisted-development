@@ -192,8 +192,9 @@ To nie jest formalność. Kurs zakłada **minimum 60% czasu przy klawiaturze**.
 - **Uprawnienia do instalacji** - blokadę `brew`/`apt` na firmowym laptopie
   trzeba zdjąć teraz, nie w trakcie.
 - **Dostęp do internetu** bez blokady na `api.anthropic.com`.
-- **Brak konfliktu w kalendarzu.** Pominięty moduł blokuje kolejny -
-  laby są sekwencyjne.
+- **Ciągłość pracy.** Laby są sekwencyjne: każdy startuje ze stanu, w którym zakończył się
+  poprzedni. Tag odtwarza stan techniczny pominiętego labu, więc następny da się uruchomić -
+  ale nie zastąpi tego, czego lab uczył. Przy pomijaniu warto przeczytać rozwiązanie.
 
 ---
 

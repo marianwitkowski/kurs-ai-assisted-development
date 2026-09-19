@@ -28,7 +28,7 @@ a ono jest w całości pod naszą kontrolą.
 
 ## Okno kontekstowe to budżet, nie pojemnik
 
-Koszt rośnie kwadratowo z długością sesji. Jakość spada wraz z rozrostem.
+Suma przetworzonego kontekstu rośnie kwadratowo z liczbą tur. Jakość spada wraz z rozrostem.
 
 <!--
 CO POWIEDZIEĆ: Model nie pamięta projektu. Przy każdym zapytaniu dostaje z powrotem całą
@@ -134,7 +134,7 @@ przepływu przez pięć modułów, model musi je przeczytać. Chodzi o to, żeby
 | Aktualność | zawsze bieżąca | tyle, ile wklejono | tyle, ile ma indeks |
 | Zawodzi | gdy wiedzy nie ma w repo | gdy „wszystko" nie mieści się w oknie | gdy pytanie nie trafia w indeks |
 
-**RAG nad własnym repozytorium nie ma sensu.** Próg to pytanie: *czy to da się przeczytać
+**RAG nad repozytorium, które agent przeszuka sam, zwykle nie zarabia na siebie.** Próg to pytanie: *czy to da się przeczytać
 narzędziem plikowym?*
 
 **MCP to kanał czwarty.** Gdy istnieje CLI (`gh`, `aws`), jest tańszy kontekstowo.
@@ -183,7 +183,7 @@ ale sama rabatu nie dostaje - to reguła biznesowa, nie błąd".
 <!--
 CO POWIEDZIEĆ: Dokumentacja dla modelu i dla nowego człowieka w zespole
 to ta sama dokumentacja. Różnica jest jedna - model jest bardziej bezlitosny wobec braków,
-bo nie dopyta. Zamiast tego dopowie. Opis architektury wyliczający katalogi i zależności
+bo zwykle nie dopyta. Zamiast tego dopowie. Opis architektury wyliczający katalogi i zależności
 to najczęstszy typ dokumentacji bezużytecznej dla modelu: zajmuje kontekst i nie wnosi nic.
 NA CO UWAŻAĆ: Uczestnicy zobaczą to w labie 2.2, gdy `/init` wygeneruje
 im dokładnie tę pierwszą kolumnę i trzeba będzie ją skasować.

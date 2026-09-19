@@ -155,13 +155,30 @@ except Exception as e:
 ```
 
 Wykrywanie wzorców jest **heurystyczne** - wykryje to, co zostało przewidziane.
-Realną gwarancją są trzy mechanizmy już obecne w kodzie:
+Pozostałe trzy mechanizmy są mocniejsze, ale każdy z nich gwarantuje co innego
+i żaden nie gwarantuje poprawności:
 
-| Mechanizm | Co gwarantuje |
-|---|---|
-| Zamknięty schemat | wynik nie może być spoza słownika stawek |
-| Decyzja progowa w kodzie | model proponuje, kod rozstrzyga |
-| Ścieżka do człowieka | istnieje i ktoś jej pilnuje |
+| Mechanizm | Co gwarantuje | Czego NIE gwarantuje |
+|---|---|---|
+| Zamknięty schemat | wynik jest jedną ze stawek ze słownika | że jest tą właściwą - odrzuci `0%`, przyjmie błędne `0` |
+| Decyzja progowa w kodzie | rozstrzyga kod, nie model | trafności: pewność `0.99` przy złej stawce przechodzi próg |
+| Ścieżka do człowieka | pozycja zostaje **oznaczona** | że ktoś ją obejrzy - flaga to nie proces |
+
+To jest różnica między **powtarzalnością** a **poprawnością**. Wykonanie jest powtarzalne:
+ten sam opis daje ten sam wynik. Poprawność merytoryczna nie wynika z niczego powyżej -
+liczba, którą walidujemy, nadal pochodzi z tego samego niezaufanego źródła.
+
+**Dopasowanie fragmentu w regule twardej też jest heurystyką**, mimo deterministycznego
+wykonania. Sprawdzenie:
+
+```bash
+PYTHONPATH=. .venv/bin/python -c "
+from app.klasyfikacja_vat import regula_twarda
+print(regula_twarda('To nie jest eksport'))
+"
+```
+
+Zwraca `0`, bo `eksport` jest podciągiem opisu. Reguła nie czyta zdania, tylko szuka słowa.
 
 Heurystyka zmniejsza liczbę prób docierających do modelu. **Nie jest ostatnią linią obrony
 i nie wolno jej tak traktować.**

@@ -225,7 +225,7 @@ Autoryzacja per zasób, prompt injection, sekrety, RODO i AI Act, zasady zespoł
 | Lekcja | Temat |
 |---|---|
 | [8.1](08-bezpieczenstwo-i-governance/teoria.md) | Security-first: co się zmienia, a co nie |
-| [8.2](08-bezpieczenstwo-i-governance/teoria.md) | Luka, której nie złapie żadne narzędzie |
+| [8.2](08-bezpieczenstwo-i-governance/teoria.md) | Luka, której nie złapie sam linter |
 | [8.3](08-bezpieczenstwo-i-governance/teoria.md) | Prompt injection |
 | [8.4](08-bezpieczenstwo-i-governance/teoria.md) | Sekrety |
 | [8.5](08-bezpieczenstwo-i-governance/teoria.md) | Nowa rola dewelopera i code review |

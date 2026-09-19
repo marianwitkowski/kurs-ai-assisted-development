@@ -47,11 +47,18 @@ bramka w worktree testuje nie ten katalog.
 **`make gate` w `bramka.sh`.** Skrypt zakłada `Makefile` w katalogu sesji.
 Przy innym sposobie uruchamiania bramki wystarczy podmienić tę jedną linię.
 
-**Bezpiecznik w `bramka.sh`.** Znacznik jest kasowany, gdy bramka zrobi się zielona.
-Tej linii nie wolno usuwać - bez niej hook blokuje raz na sesję i przez resztę pracy
-jest martwy.
+**Bezpiecznik w `bramka.sh`.** Hook czyta pole `stop_hook_active` z wejścia: `false`
+oznacza pierwszą próbę, `true` - że tura trwa dalej właśnie dlatego, że hook ją zablokował.
+Drugiej blokady nie ma, żeby sesja nie kręciła się w kółko. Ta gałąź jest konieczna;
+wycięcie jej zamienia hook w pętlę.
 
 **`jq`.** Wszystkie hooki go wymagają. Do dopisania w instrukcji onboardingowej zespołu.
+
+**`CLAUDE.md` starzeje się razem z projektem.** Sekcja „Czego w repozytorium nie ma"
+jest najbardziej narażona: wystarczy, że ktoś dopisze testy, a plik zaczyna kłamać.
+Plik kontekstowy, który opisuje nieaktualny stan, jest gorszy od jego braku - model
+przyjmuje go za prawdę i nie sprawdza. Warto dopisać jego przegląd do definicji
+ukończenia zadania, obok testów i dokumentacji.
 
 **Środowisko na `PATH`.** Hook dziedziczy `PATH` po procesie, który uruchomił Claude Code.
 Jeżeli bramka woła gołe `pytest`/`ruff`, a agent wystartował bez aktywowanego środowiska,

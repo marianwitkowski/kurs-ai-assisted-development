@@ -77,6 +77,19 @@ else
   blad "brak Claude Code - https://claude.com/claude-code"
 fi
 
+naglowek "Slajdy - dotyczy tylko prowadzacego"
+
+# Decki buduje prowadzacy przez Marp (npx sciaga marp-cli), uczestnik ich nie buduje.
+# Dlatego brak Node'a NIE jest tu bledem ani ostrzezeniem: nie blokuje zadnego labu,
+# a uczestnikowi, ktory zobaczylby "BLAD", kazaloby instalowac cos niepotrzebnego.
+if command -v npx >/dev/null 2>&1; then
+  ok "npx $(npx --version 2>/dev/null || echo '?') - make html w slajdy/ zadziala"
+else
+  printf '  \033[36mINFO\033[0m      brak Node/npx: make html w slajdy/ nie zbuduje deckow.\n'
+  printf '            Uczestnika to nie dotyczy, prowadzacego tak.\n'
+  printf '            macOS: brew install node · Debian/Ubuntu: apt install nodejs npm\n'
+fi
+
 naglowek "Repozytorium cwiczeniowe"
 
 # Skrypt lezy w katalogu materialow, a sprawdzac ma repozytorium cwiczeniowe.

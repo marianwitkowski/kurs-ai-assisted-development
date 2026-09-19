@@ -1,14 +1,14 @@
 ---
 name: Przegląd bezpieczeństwa
 description: Przegląd zmian w kodzie pod kątem bezpieczeństwa według stałej checklisty zespołu. Sprawdza wstrzyknięcia SQL, autoryzację per zasób, sekrety w kodzie, walidację danych wejściowych i wyciek danych w odpowiedziach. Zwraca raport w ustalonym formacie.
-argument-hint: "[zakres, np. HEAD, staged, lab-1-1-start]"
+argument-hint: "[zakres, np. HEAD, staged, HEAD~1, origin/main...HEAD]"
 allowed-tools: Bash(git diff *), Bash(git status *), Bash(git log *), Read, Grep, Glob
 ---
 
 ## Zakres do przejrzenia
 
 Domyślnie: niezacommitowane zmiany. Jeżeli użytkownik podał argument, potraktuj go
-jako zakres dla `git diff` (np. `staged`, `HEAD~1`, `lab-1-1-start`).
+jako zakres dla `git diff` (np. `staged`, `HEAD~1`, `origin/main...HEAD`).
 
 Stan roboczy w chwili wywołania:
 
@@ -18,9 +18,11 @@ Zmiany niezacommitowane:
 
 !`git diff HEAD`
 
-**Jeżeli oba powyższe bloki są puste**, a użytkownik nie podał argumentu, uruchom
-`git diff lab-1-1-start` i przejrzyj to. Jeżeli podał - użyj jego zakresu.
-Nie przeglądaj całego repozytorium, gdy masz konkretny diff.
+**Jeżeli oba powyższe bloki są puste**, a użytkownik nie podał argumentu, weź gałąź
+wobec głównej: `git diff origin/main...HEAD`. Gdy `origin/main` nie istnieje albo ten
+diff też jest pusty - `git diff HEAD~1`. Gdy i to zawiedzie (jeden commit w repozytorium),
+napisz, że nie ma czego przeglądać, i poproś o zakres. Jeżeli użytkownik podał argument -
+użyj jego zakresu. Nie przeglądaj całego repozytorium, gdy masz konkretny diff.
 
 ## Checklista
 

@@ -11,8 +11,10 @@ Dist-tag `@latest` w `Makefile` wymusza odpytanie rejestru npm przy **każdym**
 wywołaniu, także gdy pakiet leży już w cache `npx`, więc bez sieci `make html`
 się nie uda. Decki trzeba zbudować przed wyjazdem - gotowe `.html` działają
 offline. Alternatywa: przypiąć wersję (`@marp-team/marp-cli@4.x`) i zainstalować
-lokalnie. `sprawdz-srodowisko.sh` tego nie weryfikuje - sprawdza wyłącznie
-środowisko uczestnika, nie narzędzia prelegenta.
+lokalnie. `sprawdz-srodowisko.sh` zgłasza obecność `npx` w sekcji „Slajdy", ale jako
+`INFO`, nie `BLAD`: brak Node'a nie blokuje żadnego labu, więc nie może przewrócić
+sprawdzenia środowiska uczestnika. Dostępności sieci ani wersji `marp-cli` skrypt
+nie weryfikuje.
 
 ```bash
 make html      # osiem plików .html - to wystarcza do prowadzenia

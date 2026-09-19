@@ -154,6 +154,8 @@ z obu miejsc:
 
 Skrypt wypisze raport. **Każda linia `BLAD` wymaga reakcji przed szkoleniem.**
 Linie `OSTRZEZ` oznaczają, że zadziała, ale część ćwiczeń będzie ograniczona.
+Linia `INFO` w sekcji „Slajdy" dotyczy wyłącznie prowadzącego - uczestnik nie buduje
+decków i brak Node'a niczego mu nie blokuje.
 
 Oczekiwany wynik na czystym środowisku:
 

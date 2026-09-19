@@ -1,9 +1,16 @@
 # Szablony do zabrania do firmy
 
-`settings.json`, hooki, skill, subagent, `skan_sekretow.sh` i `gitignore-fragment`
+`settings.json`, hooki, subagent, `skan_sekretow.sh` i `gitignore-fragment`
 to kopie ze stanu końcowego repozytorium ćwiczeniowego (tag `lab-8-2-koniec`).
 Działają, ale z zaszytymi komendami, ścieżkami i tagami tego repozytorium,
 które wymagają podmiany - kolumna obok wymienia je z numerami linii.
+
+`skills/przeglad-bezpieczenstwa/SKILL.md` jest **jedynym wyjątkiem**: różni się od wersji
+z repozytorium ćwiczeniowego zakresem domyślnym. Tam sięga po tag `lab-1-1-start`,
+którego poza tym repozytorium nie ma - skill przestawałby działać po pierwszym
+wywołaniu. Tutaj domyślnie bierze `git diff origin/main...HEAD`, potem `git diff HEAD~1`.
+Reszta pliku - checklista, format raportu, zasady - jest identyczna.
+
 `CLAUDE.md` i `AI-ZASADY.md` też stamtąd pochodzą, są jednak dokumentami do napisania
 od nowa pod własny projekt. Pozostałe pozycje - `prompty.md`, obie checklisty,
 `szablon-specyfikacji.md`, `ci.yml` i `skrypty/ewaluacja_promptu.py` - powstały
@@ -15,8 +22,8 @@ na potrzeby kursu, w repozytorium ćwiczeniowym ich nie ma; to przykłady do prz
 | `settings.json` | moduł 5 | do `.claude/settings.json` w swoim repo |
 | `hooks/format-po-edycji.sh` | moduł 5 | podmienić `ruff` w trzech miejscach: rozszerzenie pliku (linia 10), ścieżka do lokalnego środowiska (linia 14), składnia komendy (linia 19) |
 | `hooks/blokuj-niebezpieczne.sh` | moduł 5 | przejrzeć listę wzorców; **krótka lista jest cechą, nie brakiem** |
-| `hooks/bramka.sh` | moduł 5 | podmienić `make gate` na swoją bramkę - w liniach 35 i 37 |
-| `skills/przeglad-bezpieczenstwa/` | moduł 5 | dopasować checklistę do swojego stosu; podmienić domyślny zakres `lab-1-1-start` (linie 4 i 22) na własny, np. `origin/main...HEAD` |
+| `hooks/bramka.sh` | moduł 5 | dwa miejsca: linia 35 sprawdza obecność `Makefile`, linia 37 uruchamia `make gate` - obie pod własną bramkę |
+| `skills/przeglad-bezpieczenstwa/` | moduł 5 | dopasować checklistę do swojego stosu; zakres domyślny jest już przenośny - podmienić `origin/main` (linia 22), gdy gałąź główna nazywa się inaczej |
 | `agents/migrator.md` | moduł 6 | dopasować `tools`, `maxTurns` oraz komendę bramki `make gate` (linia 20) |
 | `skan_sekretow.sh` | moduł 8 | dodać wzorce charakterystyczne dla własnych systemów **i rozszerzenia plików własnego stosu (linia 16)** - lista jest zamknięta, poza nią skan milczy |
 | `AI-ZASADY.md` | moduł 8 | **wypełnić sekcje `[DO USTALENIA]`** - bez tego jest bezużyteczny; wymienić przykłady z repozytorium ćwiczeniowego (`app/klasyfikacja_vat.py`, `seed.py`, `make gate`) na własne |

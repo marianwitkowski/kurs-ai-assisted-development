@@ -14,7 +14,7 @@ set -euo pipefail
 WLASCICIEL="${1:-}"
 WYKONAJ="${2:-}"
 REPO_KURS="${REPO_KURS:-kurs-ai-assisted-development}"
-REPO_CWICZENIA="${REPO_CWICZENIA:-rozliczenia-cwiczenia}"
+REPO_CWICZENIA="${REPO_CWICZENIA:-kurs-ai-assisted-development-lab}"
 
 KATALOG="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CWICZENIA="$KATALOG/repo-cwiczeniowe"

@@ -14,7 +14,7 @@ na jednym repozytorium.
 szkoleniem. Piętnaście minut. Pierwsza godzina dnia 1 nie jest na instalację.
 
 ```bash
-git clone --recurse-submodules <ADRES-REPOZYTORIUM-KURSU>
+git clone --recurse-submodules https://github.com/marianwitkowski/kurs-ai-assisted-development.git
 cd kurs-ai-assisted-development/repo-cwiczeniowe
 ../sprawdz-srodowisko.sh
 ```

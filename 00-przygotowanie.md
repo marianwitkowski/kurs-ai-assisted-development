@@ -94,7 +94,7 @@ Materiały i repozytorium ćwiczeniowe są w **jednym klonie** - repozytorium ć
 jest podłączone jako submoduł.
 
 ```bash
-git clone --recurse-submodules <ADRES-REPOZYTORIUM-KURSU>
+git clone --recurse-submodules https://github.com/marianwitkowski/kurs-ai-assisted-development.git
 cd kurs-ai-assisted-development
 ```
 

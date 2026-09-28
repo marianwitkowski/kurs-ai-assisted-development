@@ -4,7 +4,6 @@ Tworzenie oprogramowania z pomocą AI i agentów. Osiem modułów, 48 lekcji, sz
 na jednym repozytorium. **Kurs nie narzuca tempa.**
 
 **Autor:** Marian Witkowski · **Wersja:** 1.0 · **Data:** 2026-09-16
-**Materiał wewnętrzny - nie do dalszej dystrybucji.**
 
 ---
 
